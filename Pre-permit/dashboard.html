@@ -1,0 +1,354 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brimstone Partner &mdash; Pre-Construction Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FDFBF7;
+  --cream-deep: #F7F3EC;
+  --espresso: #2C1810;
+  --espresso-light: #4A3728;
+  --sage: #7A8B6F;
+  --sage-muted: #A3B295;
+  --sage-bg: #F0F2EC;
+  --warm-gray: #8C7E73;
+  --warm-gray-light: #B8ADA5;
+  --warm-border: rgba(44, 24, 16, 0.08);
+  --warm-shadow: rgba(44, 24, 16, 0.04);
+  --accent: #C4763A;
+  --accent-muted: rgba(196, 118, 58, 0.12);
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --radius-lg: 1.25rem;
+  --radius-sm: 0.625rem;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: var(--sans); background: var(--cream); color: var(--espresso); line-height: 1.6; -webkit-font-smoothing: antialiased; }
+
+.topbar { position: sticky; top: 0; z-index: 40; display: flex; justify-content: space-between; align-items: center; padding: 12px 24px; background: rgba(253,251,247,0.95); backdrop-filter: blur(12px); border-bottom: 1px solid var(--warm-border); }
+.topbar-left { display: flex; align-items: center; gap: 10px; }
+.topbar-brand { font-family: var(--serif); font-size: 18px; font-weight: 400; color: var(--espresso); }
+.topbar-badge { display: inline-flex; align-items: center; gap: 4px; padding: 3px 10px; background: var(--accent-muted); color: var(--accent); font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; border-radius: 20px; }
+.topbar-right { display: flex; gap: 8px; align-items: center; }
+
+.btn { padding: 8px 16px; border-radius: var(--radius-sm); border: 1px solid var(--warm-border); background: white; color: var(--espresso); font-family: var(--sans); font-size: 12px; font-weight: 600; cursor: pointer; display: inline-flex; align-items: center; gap: 6px; transition: all 0.15s ease; }
+.btn:hover { background: var(--cream-deep); }
+.btn-accent { background: var(--accent); color: white; border-color: var(--accent); }
+.btn-accent:hover { background: #b56a32; }
+
+.container { max-width: 1200px; margin: 0 auto; padding: 20px 24px; }
+
+.stats-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 1px; background: var(--warm-border); border-radius: var(--radius-lg); overflow: hidden; margin-bottom: 20px; }
+.stat-card { background: white; padding: 20px; text-align: center; }
+.stat-value { font-family: var(--serif); font-size: 28px; color: var(--espresso); line-height: 1; }
+.stat-label { font-size: 11px; font-weight: 600; color: var(--warm-gray); letter-spacing: 0.04em; text-transform: uppercase; margin-top: 6px; }
+
+.filter-bar { display: flex; gap: 8px; align-items: center; flex-wrap: wrap; margin-bottom: 16px; padding: 12px 16px; background: white; border-radius: var(--radius-sm); border: 1px solid var(--warm-border); }
+.filter-bar label { font-size: 11px; font-weight: 700; color: var(--warm-gray); text-transform: uppercase; letter-spacing: 0.04em; }
+.filter-bar select, .filter-bar input { padding: 6px 10px; border: 1px solid var(--warm-border); border-radius: 6px; font-family: var(--sans); font-size: 12px; background: var(--cream); }
+
+.section-title { font-family: var(--serif); font-size: 20px; margin: 20px 0 10px; }
+
+table { width: 100%; border-collapse: collapse; background: white; border-radius: var(--radius-sm); overflow: hidden; border: 1px solid var(--warm-border); margin-bottom: 20px; }
+thead th { background: var(--espresso); color: white; padding: 10px 12px; text-align: left; font-size: 10px; font-weight: 700; letter-spacing: 0.06em; text-transform: uppercase; white-space: nowrap; }
+tbody td { padding: 10px 12px; border-bottom: 1px solid var(--warm-border); font-size: 12px; vertical-align: top; }
+tbody tr:hover { background: var(--cream-deep); }
+.conf-high { color: #22863a; font-weight: 700; }
+.conf-medium { color: var(--accent); font-weight: 600; }
+.conf-low { color: var(--warm-gray); }
+.stage-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 700; letter-spacing: 0.04em; }
+.stage-rumor { background: #fef3c7; color: #92400e; }
+.stage-planning { background: #dbeafe; color: #1e40af; }
+.stage-zoning { background: #ede9fe; color: #5b21b6; }
+.stage-design { background: #d1fae5; color: #065f46; }
+.stage-bidding { background: #fce7f3; color: #9d174d; }
+.type-badge { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 10px; font-weight: 600; background: var(--sage-bg); color: var(--sage); }
+.value-cell { font-weight: 700; color: var(--accent); white-space: nowrap; }
+.project-name { font-weight: 600; color: var(--espresso); max-width: 250px; }
+.project-name a { color: var(--espresso); text-decoration: none; }
+.project-name a:hover { color: var(--accent); text-decoration: underline; }
+.addr-cell { color: var(--espresso-light); white-space: nowrap; }
+.developer-cell { color: var(--sage); font-weight: 500; }
+
+.empty-state { text-align: center; padding: 60px 20px; color: var(--warm-gray); }
+.empty-state h3 { font-family: var(--serif); font-size: 24px; margin-bottom: 8px; color: var(--espresso); }
+
+.footer { text-align: center; padding: 30px 20px; font-size: 11px; color: var(--warm-gray); border-top: 1px solid var(--warm-border); margin-top: 30px; }
+.footer a { color: var(--accent); text-decoration: none; }
+
+.link-btn { color: var(--accent); text-decoration: none; font-size: 11px; font-weight: 600; }
+.link-btn:hover { text-decoration: underline; }
+
+@media (max-width: 768px) {
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .filter-bar { flex-direction: column; align-items: stretch; }
+}
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-left">
+    <span class="topbar-brand">Pre-Construction Intel</span>
+    <span class="topbar-badge">Early Stage</span>
+  </div>
+  <div class="topbar-right">
+    <a href="../index-dashboard.html" class="btn" style="font-size:11px;">Post-Permit Dashboard</a>
+    <button class="btn" onclick="downloadCSV()">
+      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+      Export CSV
+    </button>
+    <button class="btn btn-accent" onclick="location.reload()">Refresh</button>
+  </div>
+</div>
+
+<div class="container">
+  <div class="stats-grid" id="stats-bar">
+    <div class="stat-card"><div class="stat-value" id="stat-total">&mdash;</div><div class="stat-label">Total Leads</div></div>
+    <div class="stat-card"><div class="stat-value" id="stat-high">&mdash;</div><div class="stat-label">High Confidence</div></div>
+    <div class="stat-card"><div class="stat-value" id="stat-value">&mdash;</div><div class="stat-label">Total Est. Value</div></div>
+    <div class="stat-card"><div class="stat-value" id="stat-sources">&mdash;</div><div class="stat-label">Active Sources</div></div>
+    <div class="stat-card"><div class="stat-value" id="stat-new">&mdash;</div><div class="stat-label">New This Week</div></div>
+  </div>
+
+  <div class="filter-bar">
+    <label>Stage:</label>
+    <select id="filter-stage" onchange="applyFilters()">
+      <option value="">All Stages</option>
+      <option value="Rumor">Rumor</option>
+      <option value="Planning">Planning</option>
+      <option value="Zoning">Zoning</option>
+      <option value="Design">Design</option>
+      <option value="Bidding">Bidding</option>
+    </select>
+    <label>Type:</label>
+    <select id="filter-type" onchange="applyFilters()">
+      <option value="">All Types</option>
+      <option value="Commercial">Commercial</option>
+      <option value="Residential">Residential</option>
+      <option value="Mixed-Use">Mixed-Use</option>
+      <option value="Infrastructure">Infrastructure</option>
+      <option value="Government">Government</option>
+    </select>
+    <label>Confidence:</label>
+    <select id="filter-conf" onchange="applyFilters()">
+      <option value="">All</option>
+      <option value="HIGH">High</option>
+      <option value="MEDIUM">Medium</option>
+      <option value="LOW">Low</option>
+    </select>
+    <label>Source:</label>
+    <select id="filter-source" onchange="applyFilters()">
+      <option value="">All Sources</option>
+      <option value="news">Local News</option>
+      <option value="public_bid">Public Bids</option>
+      <option value="firm_announcement">Firm Announcements</option>
+      <option value="council_agenda">Council Agendas</option>
+      <option value="zoning_case">Zoning Cases</option>
+      <option value="plat_record">Plat Records</option>
+    </select>
+    <label>Search:</label>
+    <input type="text" id="filter-search" placeholder="Project, address, developer..." oninput="applyFilters()" style="min-width:180px;">
+  </div>
+
+  <div id="leads-table-container">
+    <div class="empty-state">
+      <h3>Loading leads...</h3>
+      <p>Reading from pre-construction-leads.csv</p>
+    </div>
+  </div>
+</div>
+
+<div class="footer">
+  Brimstone Partner &bull; Texas Construction Intelligence &bull;
+  <a href="mailto:avinash@brimstonepartner.com">avinash@brimstonepartner.com</a> &bull; (832) 380-5845
+</div>
+
+<script>
+let ALL_LEADS = [];
+
+const SOURCE_LABELS = {
+  'news': 'Local News', 'public_bid': 'Public Bids', 'firm_announcement': 'Firm Announcements',
+  'council_agenda': 'Council Agendas', 'zoning_case': 'Zoning Cases', 'plat_record': 'Plat Records',
+};
+
+function stageClass(s) {
+  const m = {'Rumor':'rumor','Planning':'planning','Zoning':'zoning','Design':'design','Bidding':'bidding'};
+  return m[s] || 'rumor';
+}
+
+function confClass(c) {
+  const m = {'HIGH':'conf-high','MEDIUM':'conf-medium','LOW':'conf-low'};
+  return m[c] || 'conf-low';
+}
+
+function formatValue(v) {
+  if (!v) return '';
+  // Try to parse number
+  let n = parseFloat(v.replace(/[$,]/g, ''));
+  if (isNaN(n)) return v;
+  if (v.toLowerCase().includes('m') || v.toLowerCase().includes('million')) n *= (n < 1000 ? 1000000 : 1);
+  if (n >= 1e9) return '$' + (n/1e9).toFixed(1) + 'B';
+  if (n >= 1e6) return '$' + (n/1e6).toFixed(1) + 'M';
+  if (n >= 1e3) return '$' + (n/1e3).toFixed(0) + 'K';
+  return '$' + n.toFixed(0);
+}
+
+function parseCSV(text) {
+  const lines = text.split('\n').filter(l => l.trim());
+  if (lines.length < 2) return [];
+  const headers = parseCSVLine(lines[0]);
+  const data = [];
+  for (let i = 1; i < lines.length; i++) {
+    const vals = parseCSVLine(lines[i]);
+    const obj = {};
+    headers.forEach((h, idx) => { obj[h] = (vals[idx] || '').trim(); });
+    data.push(obj);
+  }
+  return data;
+}
+
+function parseCSVLine(line) {
+  const result = [];
+  let current = '';
+  let inQuotes = false;
+  for (let i = 0; i < line.length; i++) {
+    const ch = line[i];
+    if (ch === '"') {
+      if (inQuotes && line[i+1] === '"') { current += '"'; i++; }
+      else { inQuotes = !inQuotes; }
+    } else if (ch === ',' && !inQuotes) {
+      result.push(current); current = '';
+    } else {
+      current += ch;
+    }
+  }
+  result.push(current);
+  return result;
+}
+
+async function loadData() {
+  try {
+    const resp = await fetch('pre-construction-leads.csv');
+    const text = await resp.text();
+    ALL_LEADS = parseCSV(text);
+    updateStats();
+    applyFilters();
+  } catch(e) {
+    document.getElementById('leads-table-container').innerHTML =
+      '<div class="empty-state"><h3>No data found</h3><p>Run scrape_all.py first to generate leads.</p></div>';
+  }
+}
+
+function updateStats() {
+  const leads = ALL_LEADS;
+  document.getElementById('stat-total').textContent = leads.length;
+  document.getElementById('stat-high').textContent = leads.filter(l => l.ai_confidence === 'HIGH').length;
+
+  // Total estimated value
+  let totalVal = 0;
+  leads.forEach(l => {
+    const v = l.estimated_value_raw || '';
+    const match = v.match(/[\d,.]+/);
+    if (match) {
+      let n = parseFloat(match[0].replace(/,/g, ''));
+      if (/[mM]|million/i.test(v)) n *= 1e6;
+      if (/[bB]|billion/i.test(v)) n *= 1e9;
+      if (/[kK]$/i.test(v)) n *= 1e3;
+      totalVal += n;
+    }
+  });
+  if (totalVal >= 1e9) document.getElementById('stat-value').textContent = '$' + (totalVal/1e9).toFixed(1) + 'B';
+  else if (totalVal >= 1e6) document.getElementById('stat-value').textContent = '$' + (totalVal/1e6).toFixed(0) + 'M';
+  else if (totalVal > 0) document.getElementById('stat-value').textContent = '$' + (totalVal/1e3).toFixed(0) + 'K';
+  else document.getElementById('stat-value').textContent = 'N/A';
+
+  const sources = new Set(leads.map(l => l.source));
+  document.getElementById('stat-sources').textContent = sources.size;
+
+  // New this week (last 7 days)
+  const now = new Date();
+  const week = new Date(now - 7*24*60*60*1000);
+  const weekStr = week.toISOString().slice(0,10);
+  document.getElementById('stat-new').textContent = leads.filter(l => l.discovered_date >= weekStr).length;
+}
+
+function applyFilters() {
+  const stage = document.getElementById('filter-stage').value;
+  const type = document.getElementById('filter-type').value;
+  const conf = document.getElementById('filter-conf').value;
+  const source = document.getElementById('filter-source').value;
+  const search = document.getElementById('filter-search').value.toLowerCase();
+
+  let filtered = ALL_LEADS;
+  if (stage) filtered = filtered.filter(l => l.stage === stage);
+  if (type) filtered = filtered.filter(l => l.project_type === type);
+  if (conf) filtered = filtered.filter(l => l.ai_confidence === conf);
+  if (source) filtered = filtered.filter(l => l.source === source);
+  if (search) filtered = filtered.filter(l =>
+    (l.project_name||'').toLowerCase().includes(search) ||
+    (l.address||'').toLowerCase().includes(search) ||
+    (l.developer_owner||'').toLowerCase().includes(search) ||
+    (l.description||'').toLowerCase().includes(search)
+  );
+
+  renderTable(filtered);
+}
+
+function renderTable(leads) {
+  const container = document.getElementById('leads-table-container');
+  if (!leads.length) {
+    container.innerHTML = '<div class="empty-state"><h3>No leads match filters</h3><p>Try adjusting your filters above.</p></div>';
+    return;
+  }
+
+  let html = `<table>
+    <thead><tr>
+      <th>Project</th><th>Address</th><th>Value</th><th>Sq Ft</th>
+      <th>Developer</th><th>Type</th><th>Stage</th><th>Source</th><th>Confidence</th><th>Date</th>
+    </tr></thead><tbody>`;
+
+  for (const l of leads) {
+    const name = l.project_name || 'Unknown';
+    const nameHtml = l.source_url ? `<a href="${l.source_url}" target="_blank">${escHtml(name.slice(0,60))}</a>` : escHtml(name.slice(0,60));
+    const stg = l.stage || '';
+    const src = SOURCE_LABELS[l.source] || l.source;
+    html += `<tr>
+      <td class="project-name">${nameHtml}</td>
+      <td class="addr-cell">${escHtml((l.address||'').slice(0,35))}</td>
+      <td class="value-cell">${escHtml(l.estimated_value_raw||'')}</td>
+      <td>${escHtml(l.estimated_sqft||'')}</td>
+      <td class="developer-cell">${escHtml((l.developer_owner||'').slice(0,30))}</td>
+      <td>${l.project_type ? '<span class="type-badge">'+escHtml(l.project_type)+'</span>' : ''}</td>
+      <td>${stg ? '<span class="stage-badge stage-'+stageClass(stg)+'">'+escHtml(stg)+'</span>' : ''}</td>
+      <td style="font-size:10px;color:var(--warm-gray);">${escHtml(src)}</td>
+      <td><span class="${confClass(l.ai_confidence)}">${escHtml(l.ai_confidence||'LOW')}</span></td>
+      <td style="font-size:11px;white-space:nowrap;">${escHtml(l.discovered_date||'')}</td>
+    </tr>`;
+  }
+  html += '</tbody></table>';
+  container.innerHTML = html;
+}
+
+function escHtml(s) {
+  const d = document.createElement('div');
+  d.textContent = s;
+  return d.innerHTML;
+}
+
+function downloadCSV() {
+  const a = document.createElement('a');
+  a.href = 'pre-construction-leads.csv';
+  a.download = 'pre-construction-leads.csv';
+  a.click();
+}
+
+loadData();
+</script>
+</body>
+</html>

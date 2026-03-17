@@ -1,0 +1,47 @@
+2026-03-17 06:32:38,549 [pre_construction] INFO: [news] Starting scrape...
+2026-03-17 06:32:59,039 [pre_construction] WARNING: [news] Timeout on https://news.google.com/rss/search?q=%22Austin%20TX%22%20%22planned%20development%22%20OR%20%22breaks%20ground%22%20OR%20%22mixed-use%22%20construction&hl=en-US&gl=US&ceid=US:en (attempt 1/3)
+2026-03-17 06:33:16,462 [pre_construction] INFO: [news] Done — 85 items scraped.
+2026-03-17 06:33:16,767 [pre_construction] INFO:   [news] 85 new items stored
+2026-03-17 06:33:16,767 [pre_construction] INFO: [public_bid] Starting scrape...
+2026-03-17 06:33:19,522 [pre_construction] WARNING: [public_bid] HTTP unknown on https://www.austintexas.gov/financeonline/vendor_connection/index.cfm (attempt 1/3)
+2026-03-17 06:33:21,699 [pre_construction] WARNING: [public_bid] HTTP unknown on https://www.austintexas.gov/financeonline/vendor_connection/index.cfm (attempt 2/3)
+2026-03-17 06:33:25,871 [pre_construction] WARNING: [public_bid] HTTP unknown on https://www.austintexas.gov/financeonline/vendor_connection/index.cfm (attempt 3/3)
+2026-03-17 06:33:25,871 [pre_construction] WARNING: [public_bid] Austin vendor portal returned empty
+2026-03-17 06:33:30,664 [pre_construction] INFO: [public_bid] Done — 0 items scraped.
+2026-03-17 06:33:30,664 [pre_construction] INFO:   [public_bid] 0 new items stored
+2026-03-17 06:33:30,664 [pre_construction] INFO: [firm_announcement] Starting scrape...
+2026-03-17 06:33:41,857 [pre_construction] INFO: [firm_announcement] Done — 18 items scraped.
+2026-03-17 06:33:41,935 [pre_construction] INFO:   [firm_announcement] 18 new items stored
+2026-03-17 06:33:41,935 [pre_construction] INFO: [council_agenda] Starting scrape...
+2026-03-17 06:33:44,458 [pre_construction] WARNING: [council_agenda] HTTP unknown on https://www.austintexas.gov/department/city-council/meetings (attempt 1/3)
+2026-03-17 06:33:46,630 [pre_construction] WARNING: [council_agenda] HTTP unknown on https://www.austintexas.gov/department/city-council/meetings (attempt 2/3)
+2026-03-17 06:33:50,804 [pre_construction] WARNING: [council_agenda] HTTP unknown on https://www.austintexas.gov/department/city-council/meetings (attempt 3/3)
+2026-03-17 06:33:50,804 [pre_construction] INFO: [council_agenda] Primary failed, trying fallback: https://www.austintexas.gov/planning-commission
+2026-03-17 06:33:52,970 [pre_construction] WARNING: [council_agenda] HTTP unknown on https://www.austintexas.gov/planning-commission (attempt 1/3)
+2026-03-17 06:33:55,141 [pre_construction] WARNING: [council_agenda] HTTP unknown on https://www.austintexas.gov/planning-commission (attempt 2/3)
+2026-03-17 06:33:59,318 [pre_construction] WARNING: [council_agenda] HTTP unknown on https://www.austintexas.gov/planning-commission (attempt 3/3)
+2026-03-17 06:34:01,493 [pre_construction] WARNING: [council_agenda] HTTP unknown on https://www.austintexas.gov/planning-commission (attempt 1/3)
+2026-03-17 06:34:03,667 [pre_construction] WARNING: [council_agenda] HTTP unknown on https://www.austintexas.gov/planning-commission (attempt 2/3)
+2026-03-17 06:34:07,850 [pre_construction] WARNING: [council_agenda] HTTP unknown on https://www.austintexas.gov/planning-commission (attempt 3/3)
+2026-03-17 06:34:07,851 [pre_construction] INFO: [council_agenda] Done — 0 items scraped.
+2026-03-17 06:34:07,851 [pre_construction] INFO:   [council_agenda] 0 new items stored
+2026-03-17 06:34:07,851 [pre_construction] INFO: [zoning_case] Starting scrape...
+2026-03-17 06:34:10,502 [pre_construction] WARNING: [zoning_case] HTTP unknown on https://www.austintexas.gov/zoning (attempt 1/3)
+2026-03-17 06:34:12,673 [pre_construction] WARNING: [zoning_case] HTTP unknown on https://www.austintexas.gov/zoning (attempt 2/3)
+2026-03-17 06:34:16,843 [pre_construction] WARNING: [zoning_case] HTTP unknown on https://www.austintexas.gov/zoning (attempt 3/3)
+2026-03-17 06:34:16,843 [pre_construction] INFO: [zoning_case] Primary failed, trying fallback: https://abc.austintexas.gov/web/permit/public-search-other
+2026-03-17 06:34:21,904 [pre_construction] INFO: [zoning_case] Done — 0 items scraped.
+2026-03-17 06:34:21,904 [pre_construction] INFO:   [zoning_case] 0 new items stored
+2026-03-17 06:34:21,904 [pre_construction] INFO: [plat_record] Starting scrape...
+2026-03-17 06:34:24,505 [pre_construction] WARNING: [plat_record] HTTP unknown on https://travis.tx.publicsearch.us/ (attempt 1/3)
+2026-03-17 06:34:26,628 [pre_construction] WARNING: [plat_record] HTTP unknown on https://travis.tx.publicsearch.us/ (attempt 2/3)
+2026-03-17 06:34:30,743 [pre_construction] WARNING: [plat_record] HTTP unknown on https://travis.tx.publicsearch.us/ (attempt 3/3)
+2026-03-17 06:34:30,743 [pre_construction] WARNING: [plat_record] Travis County public search returned empty — may need Playwright
+2026-03-17 06:34:42,016 [pre_construction] INFO: [plat_record] Done — 50 items scraped.
+2026-03-17 06:34:42,231 [pre_construction] INFO:   [plat_record] 50 new items stored
+2026-03-17 06:34:42,231 [pre_construction] INFO: 
+Scraping complete: 6/6 sources succeeded, 153 total items
+2026-03-17 06:34:42,245 [pre_construction] INFO: Analyzing 147 scrapes (method: regex)...
+2026-03-17 06:34:43,432 [pre_construction] INFO: Analysis complete — 147 new leads extracted from 147 scrapes.
+2026-03-17 06:34:43,437 [pre_construction] INFO: CSV exported: 147 leads -> C:\Users\avina\OneDrive\Desktop\Claude Projects\Jobs\austin-permits\Pre-permit\pre-construction-leads.csv
+2026-03-17 06:34:43,440 [pre_construction] INFO: Report generated: C:\Users\avina\OneDrive\Desktop\Claude Projects\Jobs\austin-permits\Pre-permit\pre-construction-report.md
