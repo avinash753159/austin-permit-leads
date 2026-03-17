@@ -923,7 +923,11 @@ function showDashboard() {
 
 // ─── City switcher ───
 function switchCity(city) {
-  window.location.search = '?city=' + city;
+  // If on landing page, switch city and go straight to dashboard
+  const params = new URLSearchParams(window.location.search);
+  params.set('city', city);
+  params.set('open', '1');
+  window.location.search = params.toString();
 }
 
 // ─── Scroll reveal ───
@@ -1187,6 +1191,11 @@ const cityBtn = document.getElementById('city-btn-' + urlCity);
 if (cityBtn) cityBtn.classList.add('active');
 const dashBtn = document.getElementById('dash-btn-' + urlCity);
 if (dashBtn) dashBtn.classList.add('active');
+
+// Auto-open dashboard if came from city switcher
+if (new URLSearchParams(window.location.search).get('open') === '1') {
+  showDashboard();
+}
 </script>
 </body>
 </html>
