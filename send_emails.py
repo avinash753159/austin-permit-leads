@@ -43,8 +43,13 @@ def fetch_permits():
     def clean(n):
         if not n: return ''
         n = re.sub(r'\s*[\*]*\s*\(?MAIN\)?\s*[\*]*\s*', '', n, flags=re.IGNORECASE)
-        n = re.sub(r'\s*,?\s*(LLC|Inc\.?|L\.?\s*P\.?|Ltd\.?|Corp\.?)\s*$', '', n, flags=re.IGNORECASE)
+        n = re.sub(r'\s*[\{\(]\s*formal?ly[^}\)]*[\}\)]\s*', '', n, flags=re.IGNORECASE)
+        n = re.sub(r'\s*\(d/b/a[^)]*\)\s*', ' ', n, flags=re.IGNORECASE)
+        n = re.sub(r'\s*,?\s*(LLC|Inc\.?|L\.?\s*P\.?|Ltd\.?|Corp\.?|Company|Co\.?)\s*$', '', n, flags=re.IGNORECASE)
         n = re.sub(r'\*+', '', n)
+        # Fix missing spaces before capital letters (e.g. "ReedConstruction" -> "Reed Construction")
+        n = re.sub(r'([a-z])([A-Z])', r'\1 \2', n)
+        n = re.sub(r'\s{2,}', ' ', n)
         if n == n.upper() and len(n) > 3: n = n.title()
         return n.strip().rstrip(',').strip()
 
@@ -61,7 +66,7 @@ def fetch_permits():
                 phone = ''
         permits.append({
             'date': (p.get('issue_date') or '')[:10],
-            'addr': p.get('original_address1', ''),
+            'addr': (p.get('original_address1', '') or '').title(),
             'sqft': sqft,
             'contractor': contractor,
             'phone': phone,
@@ -75,47 +80,72 @@ def fetch_permits():
     return permits
 
 
+# Track which permits have been used so each email is unique
+used_permits = set()
+
 def get_relevant_permits(category):
-    """Get top permits relevant to a trade category."""
+    """Get top permits relevant to a trade category. Rotates so each email is unique."""
+    global used_permits
     permits = fetch_permits()
     relevant = []
 
     cat = category.lower()
     for p in permits:
         sqft = p['sqft']
+        # Create a unique key for this permit
+        pkey = f"{p['contractor']}_{p['addr']}_{sqft}"
+
         if 'electric' in cat:
             if (p['class'] == 'Commercial' and sqft > 500) or (sqft > 5000):
-                relevant.append(p)
+                relevant.append((pkey, p))
         elif 'plumb' in cat:
             if p['work'] in ('New', 'Addition and Remodel') and sqft > 1000:
-                relevant.append(p)
+                relevant.append((pkey, p))
         elif 'hvac' in cat or 'mechanic' in cat:
             if (p['class'] == 'Commercial' and sqft > 500) or (sqft > 5000):
-                relevant.append(p)
+                relevant.append((pkey, p))
         elif 'roof' in cat:
             if 'roof' in p['desc'].lower() or (p['work'] == 'New' and sqft > 1000):
-                relevant.append(p)
+                relevant.append((pkey, p))
         elif 'lumber' in cat or 'wood' in cat or 'timber' in cat:
             if p['work'] == 'New' and p['class'] == 'Residential' and sqft > 2000:
-                relevant.append(p)
+                relevant.append((pkey, p))
         elif 'window' in cat or 'door' in cat:
             if p['work'] == 'New' and sqft > 2000:
-                relevant.append(p)
+                relevant.append((pkey, p))
         elif 'concrete' in cat:
             if p['work'] == 'New' and sqft > 1000:
-                relevant.append(p)
+                relevant.append((pkey, p))
         elif 'equipment' in cat or 'rental' in cat:
             if sqft > 5000:
-                relevant.append(p)
+                relevant.append((pkey, p))
         elif 'drywall' in cat or 'interior' in cat:
             if 'Remodel' in p['work'] and sqft > 5000:
-                relevant.append(p)
+                relevant.append((pkey, p))
         else:
             if sqft > 5000:
-                relevant.append(p)
+                relevant.append((pkey, p))
 
-    relevant.sort(key=lambda x: x['sqft'], reverse=True)
-    return relevant[:3]
+    relevant.sort(key=lambda x: x[1]['sqft'], reverse=True)
+
+    # Pick permits not yet used, fall back to used ones if needed
+    result = []
+    for pkey, p in relevant:
+        if pkey not in used_permits:
+            result.append(p)
+            used_permits.add(pkey)
+            if len(result) >= 3:
+                break
+
+    # If not enough unique ones, fill from top
+    if len(result) < 2:
+        for pkey, p in relevant:
+            if p not in result:
+                result.append(p)
+                if len(result) >= 3:
+                    break
+
+    return result
 
 
 def make_short_name(company):
