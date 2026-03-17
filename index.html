@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Texas Permit Intelligence</title>
+<title>Brimstone Partner &mdash; Texas Construction Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -566,16 +566,47 @@ footer a:hover { color: var(--accent); }
 
 <!-- ══════════ LANDING PAGE ══════════ -->
 <section class="landing" id="landing-page">
+
+  <div style="font-family: var(--serif); font-size: 22px; color: var(--espresso); margin-bottom: 8px; letter-spacing: -0.01em;">Brimstone Partner</div>
   <div class="landing-badge">
     <span class="live-dot"></span>
-    <span id="landing-city-badge">Austin, Texas</span> &middot; Live permit data
+    Texas Construction Intelligence &middot; Live
   </div>
 
   <h1>Know who's building what,<br><em>before your competitors.</em></h1>
 
   <p class="landing-description">
-    Every new construction permit filed in <span id="landing-city-name">Austin</span> &mdash; contractor name, phone number, project size, and address. Updated in real time from city records.
+    Every new construction permit filed across Texas &mdash; contractor name, phone number, project size, and address. Updated in real time from city records.
   </p>
+
+  <!-- ── Texas Map ── -->
+  <div style="margin: 32px 0; position: relative; display: inline-block;">
+    <svg viewBox="0 0 400 380" width="320" style="fill: none; stroke: var(--warm-gray-light); stroke-width: 1.5;">
+      <!-- Simplified Texas outline -->
+      <path d="M120,10 L200,10 L210,25 L230,20 L260,30 L290,15 L310,25 L330,20 L350,30 L360,50 L365,80 L360,110 L370,140 L375,170 L365,200 L350,230 L340,260 L350,290 L330,310 L300,320 L270,350 L240,370 L210,360 L190,340 L170,350 L150,340 L130,320 L110,300 L90,310 L70,290 L60,260 L50,230 L40,200 L45,170 L50,140 L60,110 L70,80 L80,50 L90,30 Z" fill="var(--cream-deep)" stroke="var(--warm-gray-light)" stroke-width="1.5"/>
+      <!-- City dots -->
+      <circle cx="220" cy="240" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/><!-- Austin -->
+      <circle cx="195" cy="270" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/><!-- San Antonio -->
+      <circle cx="235" cy="130" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/><!-- Dallas -->
+      <!-- City labels -->
+      <text x="235" y="244" font-family="var(--sans)" font-size="11" font-weight="600" fill="var(--espresso)">Austin</text>
+      <text x="210" y="278" font-family="var(--sans)" font-size="11" font-weight="600" fill="var(--espresso)">San Antonio</text>
+      <text x="250" y="134" font-family="var(--sans)" font-size="11" font-weight="600" fill="var(--espresso)">Dallas</text>
+      <!-- Coming soon dots (hollow) -->
+      <circle cx="300" cy="260" r="5" fill="none" stroke="var(--warm-gray-light)" stroke-width="1.5" stroke-dasharray="2,2"/><!-- Houston -->
+      <circle cx="250" cy="115" r="5" fill="none" stroke="var(--warm-gray-light)" stroke-width="1.5" stroke-dasharray="2,2"/><!-- Fort Worth -->
+      <text x="310" y="264" font-family="var(--sans)" font-size="9" fill="var(--warm-gray-light)" font-style="italic">Houston (soon)</text>
+      <text x="260" y="112" font-family="var(--sans)" font-size="9" fill="var(--warm-gray-light)" font-style="italic">Ft Worth (soon)</text>
+    </svg>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <div class="toggle-group" style="justify-content: center; display: flex;">
+      <button class="toggle-btn" onclick="switchCity('austin')" id="city-btn-austin">Austin</button>
+      <button class="toggle-btn" onclick="switchCity('sanantonio')" id="city-btn-sanantonio">San Antonio</button>
+      <button class="toggle-btn" onclick="switchCity('dallas')" id="city-btn-dallas">Dallas</button>
+    </div>
+  </div>
 
   <div class="landing-features">
     <div class="landing-feature">
@@ -601,14 +632,6 @@ footer a:hover { color: var(--accent); }
     </div>
   </div>
 
-  <div style="margin-bottom: 20px;">
-    <div class="toggle-group" style="justify-content: center; display: flex;">
-      <button class="toggle-btn" onclick="switchCity('austin')" id="city-btn-austin">Austin</button>
-      <button class="toggle-btn" onclick="switchCity('sanantonio')" id="city-btn-sanantonio">San Antonio</button>
-      <button class="toggle-btn" onclick="switchCity('dallas')" id="city-btn-dallas">Dallas</button>
-    </div>
-  </div>
-
   <button class="btn-access" onclick="showDashboard()">
     Access the data
     <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
@@ -618,11 +641,60 @@ footer a:hover { color: var(--accent); }
     <strong>2.3 million+</strong> permits in the database &middot; Updated continuously from city records
   </p>
 
-  <p style="margin-top: 32px; font-size: 12px; color: var(--warm-gray-light);">
-    Also covering <a href="?city=dallas" style="color: var(--warm-gray); text-decoration: underline;">Dallas</a>,
-    <a href="?city=sanantonio" style="color: var(--warm-gray); text-decoration: underline;">San Antonio</a> &middot;
-    Houston &amp; Fort Worth coming soon
-  </p>
+  <!-- ── Why Brimstone vs competitors ── -->
+  <div style="margin-top: 56px; max-width: 700px; text-align: left;">
+    <h2 style="font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--espresso); text-align: center; margin-bottom: 24px;">
+      Why Brimstone Partner?
+    </h2>
+    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+      <thead>
+        <tr style="border-bottom: 2px solid var(--warm-border);">
+          <th style="padding: 10px 12px; text-align: left; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light);"></th>
+          <th style="padding: 10px 12px; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);">Brimstone</th>
+          <th style="padding: 10px 12px; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light);">Construction Monitor</th>
+          <th style="padding: 10px 12px; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light);">ConstructConnect</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr style="border-bottom: 1px solid var(--warm-border);">
+          <td style="padding: 10px 12px; font-weight: 600;">Texas-focused</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">Yes</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">National</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">National</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--warm-border);">
+          <td style="padding: 10px 12px; font-weight: 600;">Contractor phone numbers</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">Included</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Extra cost</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Not included</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--warm-border);">
+          <td style="padding: 10px 12px; font-weight: 600;">Starting price</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">Free</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">$96/mo</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">$299/mo</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--warm-border);">
+          <td style="padding: 10px 12px; font-weight: 600;">Real-time updates</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">Live API</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Weekly reports</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Delayed</td>
+        </tr>
+        <tr style="border-bottom: 1px solid var(--warm-border);">
+          <td style="padding: 10px 12px; font-weight: 600;">CSV export</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">Included</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Included</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Add-on</td>
+        </tr>
+        <tr>
+          <td style="padding: 10px 12px; font-weight: 600;">Contracts</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">None</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Monthly</td>
+          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Annual</td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </section>
 
 <!-- ══════════ DASHBOARD ══════════ -->
@@ -737,8 +809,9 @@ footer a:hover { color: var(--accent); }
 
   <footer>
     <div class="footer-divider"></div>
-    Data sourced from the <a href="https://data.austintexas.gov/Building-and-Development/Issued-Construction-Permits/3syk-w9eu" target="_blank">City of Austin Open Data Portal</a>. Updated continuously.<br>
-    Not affiliated with the City of Austin or Travis County.
+    Brimstone Partner &middot; Texas Construction Intelligence<br>
+    Data sourced from municipal open data portals. Updated continuously.<br>
+    <a href="mailto:avinash@brimstonepartner.com">avinash@brimstonepartner.com</a>
   </footer>
 </div>
 
