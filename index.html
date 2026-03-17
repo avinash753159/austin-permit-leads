@@ -682,10 +682,23 @@ footer a:hover { color: var(--accent); }
         <span class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;">Houston</span>
         <span class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;">Fort Worth</span>
       </div>
-      <button class="btn btn-export" onclick="downloadCSV()">
+      <button class="btn btn-export" onclick="showExportGate()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Export CSV
       </button>
+
+      <!-- Email gate modal -->
+      <div id="export-modal" style="display:none; position:fixed; inset:0; background:rgba(44,24,16,0.4); z-index:100; display:none; align-items:center; justify-content:center;">
+        <div style="background:white; border-radius:var(--radius-lg); padding:36px; max-width:400px; width:90%; box-shadow:0 20px 60px rgba(44,24,16,0.2); text-align:center;">
+          <h3 style="font-family:var(--serif); font-size:1.3rem; color:var(--espresso); margin-bottom:8px;">Export your leads</h3>
+          <p style="font-size:13px; color:var(--warm-gray); margin-bottom:20px; line-height:1.5;">Enter your email to download the full CSV with contractor names, phone numbers, and project details.</p>
+          <input type="email" id="export-email" placeholder="you@company.com" style="width:100%; padding:12px 16px; border:1px solid rgba(44,24,16,0.12); border-radius:var(--radius-sm); font-family:var(--sans); font-size:14px; margin-bottom:12px; background:var(--cream);">
+          <div style="display:flex; gap:8px;">
+            <button class="btn btn-primary" style="flex:1;" onclick="submitExportEmail()">Download CSV</button>
+            <button class="btn btn-outline" onclick="closeExportGate()">Cancel</button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 
@@ -1193,6 +1206,29 @@ function downloadCSV() {
   a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
   a.download = `${CITY.name.toLowerCase().replace(/\s/g,'-')}-permits-${new Date().toISOString().split('T')[0]}.csv`;
   a.click();
+}
+
+// ─── Export email gate ───
+const collectedEmails = JSON.parse(localStorage.getItem('brimstone_emails') || '[]');
+
+function showExportGate() {
+  // If already gave email, just download
+  if (collectedEmails.length > 0) { downloadCSV(); return; }
+  const modal = document.getElementById('export-modal');
+  modal.style.display = 'flex';
+}
+
+function closeExportGate() {
+  document.getElementById('export-modal').style.display = 'none';
+}
+
+function submitExportEmail() {
+  const email = document.getElementById('export-email').value;
+  if (!email || !email.includes('@')) { document.getElementById('export-email').focus(); return; }
+  collectedEmails.push({ email, date: new Date().toISOString(), city: CITY.name });
+  localStorage.setItem('brimstone_emails', JSON.stringify(collectedEmails));
+  closeExportGate();
+  downloadCSV();
 }
 
 function handleSubscribe() {
