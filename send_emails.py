@@ -118,44 +118,121 @@ def get_relevant_permits(category):
     return relevant[:3]
 
 
+def make_short_name(company):
+    """Create a short abbreviation for the company."""
+    # Known abbreviations
+    abbrevs = {
+        'Hill Country Electric Supply': 'HCES',
+        'Summit Electric Supply': 'Summit',
+        'Crawford Electric Supply': 'Crawford',
+        'Dealers Electrical Supply': 'Dealers',
+        'Elliott Electric Supply': 'Elliott',
+        'Moore Supply South': 'Moore Supply',
+        'Moore Supply North': 'Moore Supply',
+        'SRS Building Products': 'SRS',
+        'Lone Star Materials': 'Lone Star',
+        'Austin Lumber': 'Austin Lumber',
+        'Ringer Windows': 'Ringer',
+        'Accolade Windows & Doors': 'Accolade',
+        'Austin Equipment': 'Austin Equipment',
+        'TimberTown Austin': 'TimberTown',
+        'US Lumber Brokers': 'US Lumber',
+        'Eastside Lumber & Decking': 'Eastside',
+        'JW Materials': 'JW Materials',
+        '360 Metal Roofing Supply': '360 Metal',
+        'Austin Snaploc Supply': 'Snaploc',
+        'Montopolis Supply': 'Montopolis',
+        'Budget Roofing Supply': 'Budget Roofing',
+        'Sunbelt Rentals': 'Sunbelt',
+        "Jon's Rental": "Jon's",
+        'HL Equipment': 'HL Equipment',
+        'Builders FirstSource': 'BFS',
+        'BCS Concrete': 'BCS',
+        'CP Electric': 'CP Electric',
+        'SALT Electric': 'SALT',
+        'TCS Mechanical': 'TCS',
+        'G&S Mechanical': 'G&S',
+        'Biggs Plumbing': 'Biggs',
+        'Westmoreland Plumbing': 'Westmoreland',
+        'Texas Plumbing & Drain': 'Texas Plumbing',
+        'Novo Construction': 'Novo',
+        'Real International Construction': 'Real International',
+        'Structura Inc': 'Structura',
+        'Joseph Design Build': 'JDB',
+        'Topos Collective': 'Topos',
+        'AWhiddon Construction': 'AWhiddon',
+        'KB Home Austin': 'KB Home',
+        'Brookfield Residential TX': 'Brookfield',
+    }
+    return abbrevs.get(company, company.split()[0])
+
+
+def get_trade_context(category):
+    """Return a trade-specific relevance line."""
+    cat = category.lower()
+    if 'electric' in cat and 'sub' in cat:
+        return "does electrical work", "electrical bid"
+    elif 'electric' in cat:
+        return "supplies electrical materials", "electrical supply quote"
+    elif 'plumb' in cat and 'sub' in cat:
+        return "does plumbing work", "plumbing bid"
+    elif 'plumb' in cat:
+        return "supplies plumbing materials", "plumbing supply opportunity"
+    elif 'hvac' in cat or 'mechanic' in cat:
+        return "does mechanical/HVAC work", "mechanical bid"
+    elif 'roof' in cat:
+        return "supplies roofing materials", "roofing supply opportunity"
+    elif 'lumber' in cat or 'wood' in cat or 'timber' in cat:
+        return "supplies framing lumber and building materials", "lumber order"
+    elif 'concrete' in cat:
+        return "does concrete and foundation work", "concrete pour"
+    elif 'window' in cat or 'door' in cat:
+        return "supplies windows and doors", "window and door specification"
+    elif 'equipment' in cat or 'rental' in cat:
+        return "rents construction equipment", "equipment rental"
+    elif 'drywall' in cat or 'interior' in cat:
+        return "supplies drywall and interior materials", "drywall and steel stud order"
+    elif 'general' in cat or 'contractor' in cat:
+        return "builds in Austin", "competitive intelligence"
+    else:
+        return "works in construction", "new project opportunity"
+
+
 def build_email(company, category):
     top = get_relevant_permits(category)
+    short = make_short_name(company)
+    does_what, opp_type = get_trade_context(category)
+    is_gc = 'general' in category.lower() or 'contractor' in category.lower()
 
     lines = ["Hi,", ""]
+    lines.append("I'm Avinash. I help construction companies find new projects before they hit the bid boards.")
+    lines.append("")
 
-    if top and top[0]['contractor']:
+    if is_gc and top and top[0]['contractor']:
+        # GC gets competitive intel angle
         p = top[0]
-        lines.append(f"{p['contractor']} just pulled a permit for a {p['sqft']:,} sqft project at {p['addr']}.")
-        if p['phone']:
-            lines.append(f"Their contact number is {p['phone']}.")
-        cat_lower = category.lower()
-        if 'electric' in cat_lower:
-            lines.append("Since you supply electrical materials, this could be worth a quote.")
-        elif 'plumb' in cat_lower:
-            lines.append("This project will need plumbing, could be worth reaching out.")
-        elif 'hvac' in cat_lower or 'mechanic' in cat_lower:
-            lines.append("This will need mechanical work, could be worth a bid.")
-        elif 'roof' in cat_lower:
-            lines.append("This project will need roofing material.")
-        elif 'lumber' in cat_lower or 'wood' in cat_lower:
-            lines.append("A build this size needs serious framing lumber.")
-        elif 'concrete' in cat_lower:
-            lines.append("Every one of these starts with a foundation pour.")
-        elif 'window' in cat_lower or 'door' in cat_lower:
-            lines.append("A build this size will need windows and doors specified.")
-        elif 'equipment' in cat_lower or 'rental' in cat_lower:
-            lines.append("A project this size will need equipment on site soon.")
-        elif 'drywall' in cat_lower or 'interior' in cat_lower:
-            lines.append("A remodel this size means a lot of drywall and steel studs.")
+        lines.append(f"{p['contractor']} just filed for {p['sqft']:,} sqft at {p['addr']}.")
+        if len(top) > 1 and top[1]['contractor']:
+            p2 = top[1]
+            lines.append(f"{p2['contractor']} also filed for {p2['sqft']:,} sqft at {p2['addr']}.")
+        lines.append(f"I put together a competitive landscape report for {short}. It shows who's filing what and where. It's attached.")
+    elif top and top[0]['contractor']:
+        p = top[0]
+        phone_bit = f" Their contact is {p['phone']}." if p['phone'] else ""
+        lines.append(f"{p['contractor']} just pulled a permit for a {p['sqft']:,} sqft project at {p['addr']}.{phone_bit} Since {short} {does_what}, this could be a {opp_type} worth looking into.")
 
-    if len(top) > 1 and top[1]['contractor']:
-        p2 = top[1]
+        if len(top) > 1 and top[1]['contractor']:
+            p2 = top[1]
+            phone_bit2 = f" at {p2['phone']}" if p2['phone'] else ""
+            lines.append(f"{p2['contractor']}{phone_bit2} also filed for a {p2['sqft']:,} sqft {p2['work'].lower()} at {p2['addr']}.")
+
         lines.append("")
-        phone_bit = f" at {p2['phone']}" if p2['phone'] else ""
-        lines.append(f"Also saw {p2['contractor']}{phone_bit} filed for a {p2['sqft']:,} sqft {p2['work'].lower()} at {p2['addr']}.")
+        lines.append(f"I put together a personalized one-page report for {short} with the top opportunities in your space. It's attached.")
+    else:
+        lines.append(f"462 building permits were filed in Austin in the last two weeks. I put together a personalized report for {short} with the most relevant opportunities. It's attached.")
 
     lines.append("")
-    lines.append("I built a tool that tracks every new permit filed in Austin in real time. Attached is a one-page report with the top opportunities for your business. Full dashboard here:")
+    lines.append("I also put together a tool (looking for feedback) that tracks every new permit filed in Austin in real time:")
     lines.append("")
     lines.append(DASHBOARD_URL)
     lines.append("")
@@ -163,10 +240,15 @@ def build_email(company, category):
     lines.append("Brimstone Partner")
     lines.append("(832) 380-5845")
     lines.append("avinash@brimstonepartner.com")
+    lines.append("2021 Guadalupe St, Suite 260, Austin, TX 78705")
 
-    subject = ""
-    if top and top[0]['contractor']:
-        subject = f"{top[0]['contractor']} just filed for {top[0]['sqft']:,} sqft at {top[0]['addr'].split()[0]} {top[0]['addr'].split()[1] if len(top[0]['addr'].split()) > 1 else ''}"
+    # Subject
+    if is_gc and top and top[0]['contractor']:
+        subject = f"{top[0]['contractor']} filed for {top[0]['sqft']:,} sqft. Here's what else is happening."
+    elif top and top[0]['contractor']:
+        addr_parts = top[0]['addr'].split()
+        addr_short = f"{addr_parts[0]} {addr_parts[1]}" if len(addr_parts) > 1 else addr_parts[0]
+        subject = f"{top[0]['contractor']} just filed for {top[0]['sqft']:,} sqft at {addr_short}"
     else:
         subject = "New construction permits in Austin this week"
 
