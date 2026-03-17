@@ -281,10 +281,11 @@ tbody tr:nth-child(even) {{ background: #fafbfc; }}
 .cp {{ color: #D4A843; font-weight: 600; white-space: nowrap; }}
 .cs {{ font-weight: 700; }}
 .cw {{ font-size: 7.5px; color: #555; line-height: 1.3; }}
-.footer {{ margin-top: 14px; padding-top: 8px; border-top: 1px solid #eee; display: flex; justify-content: space-between; font-size: 7.5px; color: #aaa; }}
+.cta-block {{ text-align: center; margin: 16px 0 10px; padding: 14px 20px; background: #2C3E6B; border-radius: 6px; }}
+.cta-block a {{ color: #D4A843; font-size: 14px; font-weight: 800; text-decoration: none; letter-spacing: 0.01em; }}
+.cta-block p {{ color: #a8b4d0; font-size: 8px; margin-top: 4px; }}
+.footer {{ margin-top: 10px; padding-top: 8px; border-top: 1px solid #eee; display: flex; justify-content: space-between; font-size: 7.5px; color: #aaa; }}
 .footer a {{ color: #2C3E6B; text-decoration: none; }}
-.cta-inline {{ display: inline-block; background: #2C3E6B; color: white; padding: 3px 10px; border-radius: 3px; font-size: 7px; font-weight: 700; margin-left: 6px; }}
-.cta-inline span {{ color: #D4A843; }}
 @page {{ size: A4; margin: 0; }}
 @media print {{ body {{ padding: 28px 32px; }} }}
 </style>
@@ -326,8 +327,12 @@ tbody tr:nth-child(even) {{ background: #fafbfc; }}
   <div class="callout-label">{strategy_label}</div>
   <p>{strategy}</p>
 </div>
+<div class="cta-block">
+  <a href="https://brimstone-permits-production.up.railway.app">brimstone-permits-production.up.railway.app</a>
+  <p>Access the full dashboard. Filter, search, and export all Austin permit data in real time.</p>
+</div>
 <div class="footer">
-  <div>Brimstone Partner &bull; Texas Construction Intelligence <a class="cta-inline" href="https://brimstone-permits-production.up.railway.app">Full Dashboard &rarr; <span>brimstone-permits-production.up.railway.app</span></a></div>
+  <div>Brimstone Partner &bull; Texas Construction Intelligence</div>
   <div>Avinash Nayak, PhD &bull; (832) 380-5845 &bull; <a href="mailto:avinash@brimstonepartner.com">avinash@brimstonepartner.com</a></div>
 </div>
 </body>

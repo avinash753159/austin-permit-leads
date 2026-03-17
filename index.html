@@ -702,6 +702,19 @@ footer a:hover { color: var(--accent); }
     </div>
   </div>
 
+  <!-- Weekly updates popup (15 sec delay) -->
+  <div id="weekly-popup" style="display:none; position:fixed; bottom:24px; right:24px; z-index:90; max-width:360px; width:90%;">
+    <div style="background:white; border-radius:var(--radius-lg); padding:28px; box-shadow:0 16px 48px rgba(44,24,16,0.15); border:1px solid var(--warm-border); position:relative;">
+      <button onclick="closeWeeklyPopup()" style="position:absolute; top:10px; right:14px; background:none; border:none; font-size:18px; color:var(--warm-gray-light); cursor:pointer; line-height:1;">&times;</button>
+      <h3 style="font-family:var(--serif); font-size:1.1rem; color:var(--espresso); margin-bottom:6px;">Get weekly permit updates</h3>
+      <p style="font-size:12px; color:var(--warm-gray); margin-bottom:14px; line-height:1.5;">New permits delivered to your inbox every Monday. Free.</p>
+      <div id="weekly-popup-form" style="display:flex; gap:6px;">
+        <input type="email" id="weekly-popup-email" placeholder="you@company.com" style="flex:1; padding:10px 12px; border:1px solid rgba(44,24,16,0.12); border-radius:var(--radius-sm); font-family:var(--sans); font-size:13px; background:var(--cream);">
+        <button class="btn btn-primary" onclick="submitWeeklyPopup()" style="padding:10px 16px; font-size:12px;">Subscribe</button>
+      </div>
+    </div>
+  </div>
+
   <!-- Coffee/donate modal -->
   <div id="coffee-modal" style="display:none; position:fixed; inset:0; background:rgba(44,24,16,0.4); z-index:100; align-items:center; justify-content:center;">
     <div style="background:white; border-radius:var(--radius-lg); padding:40px; max-width:420px; width:90%; box-shadow:0 20px 60px rgba(44,24,16,0.2); text-align:center;">
@@ -1222,6 +1235,31 @@ function downloadCSV() {
   a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
   a.download = `${CITY.name.toLowerCase().replace(/\s/g,'-')}-permits-${new Date().toISOString().split('T')[0]}.csv`;
   a.click();
+}
+
+// ─── Weekly popup (15 sec delay) ───
+setTimeout(() => {
+  if (!localStorage.getItem('brimstone_weekly_dismissed')) {
+    document.getElementById('weekly-popup').style.display = 'block';
+  }
+}, 15000);
+
+function closeWeeklyPopup() {
+  document.getElementById('weekly-popup').style.display = 'none';
+  localStorage.setItem('brimstone_weekly_dismissed', '1');
+}
+
+function submitWeeklyPopup() {
+  const email = document.getElementById('weekly-popup-email').value;
+  if (!email || !email.includes('@')) { document.getElementById('weekly-popup-email').focus(); return; }
+  fetch('/api/subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email })
+  }).catch(() => {});
+  document.getElementById('weekly-popup-form').innerHTML = '<span style="color:var(--sage);font-weight:600;font-size:13px;">Subscribed. See you Monday.</span>';
+  localStorage.setItem('brimstone_weekly_dismissed', '1');
+  setTimeout(closeWeeklyPopup, 3000);
 }
 
 // ─── Export email gate ───
