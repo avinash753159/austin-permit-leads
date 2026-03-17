@@ -365,21 +365,23 @@ async def send_all(leads):
             viewport={'width': 1280, 'height': 900}
         )
 
-        page = browser.pages[0] if browser.pages else await browser.new_page()
+        # Keep a main page for Gmail login — don't close this one
+        main_page = browser.pages[0] if browser.pages else await browser.new_page()
 
         # Check if logged into Gmail
-        await page.goto('https://mail.google.com', wait_until='domcontentloaded', timeout=30000)
+        await main_page.goto('https://mail.google.com', wait_until='domcontentloaded', timeout=30000)
         await asyncio.sleep(3)
 
-        current_url = page.url
+        current_url = main_page.url
         if 'accounts.google.com' in current_url or 'signin' in current_url:
             print("\n  Please log into Gmail in the browser window that just opened.")
             print("  Sign in with: avinash@brimstonepartner.com")
             print("  Press ENTER here when you're logged in and see your inbox.\n")
             input("  Press ENTER to continue...")
 
-        print(f"\n  Sending {len(leads)} emails...\n")
+        print(f"\n  Creating {len(leads)} drafts...\n")
 
+        success_count = 0
         for i, lead in enumerate(leads):
             company = lead['Company']
             email = lead['Email']
@@ -393,6 +395,7 @@ async def send_all(leads):
             # Build email
             subject, body = build_email(company, category)
 
+            page = None
             try:
                 # Open compose in a new tab
                 page = await browser.new_page()
@@ -460,14 +463,17 @@ async def send_all(leads):
                 print(f"    Saved as draft!")
                 await page.close()
 
+                success_count += 1
+
             except Exception as e:
                 print(f"    Error: {e}")
-                try:
-                    await page.close()
-                except:
-                    pass
+                if page:
+                    try:
+                        await page.close()
+                    except:
+                        pass
 
-        print(f"\n  Done! {len(leads)} drafts created in Gmail.")
+        print(f"\n  Done! {success_count}/{len(leads)} drafts created in Gmail.")
         print(f"  Go to Gmail > Drafts to review and send.")
         await browser.close()
 
