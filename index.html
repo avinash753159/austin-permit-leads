@@ -579,27 +579,20 @@ footer a:hover { color: var(--accent); }
     Every new construction permit filed across Texas &mdash; contractor name, phone number, project size, and address. Updated in real time from city records.
   </p>
 
-  <!-- ── Texas Map (real geographic outline) ── -->
-  <div style="margin: 32px 0; position: relative; display: inline-block;">
-    <svg xmlns="http://www.w3.org/2000/svg" viewBox="395 420 310 310" width="340" height="340">
-      <!-- Real Texas state boundary -->
+  <!-- ── Texas Map + Legend ── -->
+  <div style="margin: 32px 0; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; justify-content: center;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="395 420 310 310" width="200" height="200">
       <path fill="#F7F3EC" stroke="#B8ADA5" stroke-width="1.2" d="M531.1,433.4l22.7,1.1l31.1,1.1l-2.3,23.5l-0.3,18.2l0.1,2.1l4.3,3.8l1.7,0.8l1.8,0.3l0.7-1.3l0.9,0.9l1.7,0.5l1.6-0.7l1.1,0.4l-0.3,3.4l4.3,1l2.7,0.8l4,0.5l2.2,1.8l3.2-1.6l2.8,0.4l2,2.8l1.1,0.3l-0.2,2l3.1,1.2l2.8-1.8l1.5,0.4l2.4,0.2l0.4,1.9l4.6,2l2.7-0.2l2-4.1h0.3l1.1,1.9l4.4,1l3.3,1.2l3.3,0.8l2.1-0.8l0.8-2.5h3.7l1.9,0.8l3.1-1.6h0.7l0.4,1.1h4.3l2.4-1.3l1.7,0.3l1.4,1.9l2.9,1.7l3.5,1.1l2.7,1.4l2.4,1.6l3.3-0.9l1.9,1l0.5,10.1l0.3,9.7l0.7,9.5l0.5,4l2.7,4.6l1.1,4.1l3.9,6.3l0.5,2.9l0.5,1l-0.7,7.5l-2.7,4.4l1,2.9l-0.4,2.5l-0.8,7.3l-1.4,2.7l0.6,4.4l-5.7,1.6l-9.9,4.5l-1,1.9l-2.6,1.9l-2.1,1.5l-1.3,0.8l-5.7,5.3l-2.7,2.1l-5.3,3.2l-5.7,2.4l-6.3,3.4l-1.8,1.5l-5.8,3.6l-3.4,0.6l-3.9,5.5l-4,0.3l-1,1.9l2.3,1.9l-1.5,5.5l-1.3,4.5l-1.1,3.9l-0.8,4.5l0.8,2.4l1.8,7l1,6.1l1.8,2.7l-1,1.5l-3.1,1.9l-5.7-3.9l-5.5-1.1l-1.3,0.5l-3.2-0.6l-4.2-3.1l-5.2-1.1l-7.6-3.4l-2.1-3.9l-1.3-6.5l-3.2-1.9l-0.6-2.3l0.6-0.6l0.3-3.4l-1.3-0.6l-0.6-1l1.3-4.4l-1.6-2.3l-3.2-1.3l-3.4-4.4l-3.6-6.6l-4.2-2.6l0.2-1.9l-5.3-12.3l-0.8-4.2l-1.8-1.9l-0.2-1.5l-6-5.3l-2.6-3.1v-1.1l-2.6-2.1l-6.8-1.1l-7.4-0.6l-3.1-2.3l-4.5,1.8l-3.6,1.5l-2.3,3.2l-1,3.7l-4.4,6.1l-2.4,2.4l-2.6-1l-1.8-1.1l-1.9-0.6l-3.9-2.3v-0.6l-1.8-1.9l-5.2-2.1l-7.4-7.8l-2.3-4.7v-8.1l-3.2-6.5l-0.5-2.7l-1.6-1l-1.1-2.1l-5-2.1l-1.3-1.6l-7.1-7.9l-1.3-3.2l-4.7-2.3l-1.5-4.4l-2.6-2.9l-1.9-0.5l-0.6-4.7l8,0.7l29,2.7l29,1.6l2.3-23.8l3.9-55.6l1.6-18.7l1.4,0"/>
-      <!-- ★ Dallas — 32.78°N, 96.80°W -->
-      <polygon points="623,476 626,482 633,482 628,487 629,494 623,490 617,494 618,487 613,482 620,482" fill="#C4763A"/>
-      <text x="636" y="488" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="9" font-weight="700" fill="#2C1810">Dallas</text>
-      <!-- ★ Fort Worth — 32.75°N, 97.33°W -->
-      <polygon points="608,478 610,482 615,482 611,485 612,490 608,487 604,490 605,485 601,482 606,482" fill="none" stroke="#B8ADA5" stroke-width="0.8"/>
-      <text x="583" y="476" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="7.5" fill="#B8ADA5" font-style="italic">Ft Worth (soon)</text>
-      <!-- ★ Austin — 30.27°N, 97.74°W -->
-      <polygon points="580,555 583,561 590,561 585,566 586,573 580,569 574,573 575,566 570,561 577,561" fill="#C4763A"/>
-      <text x="593" y="567" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="9" font-weight="700" fill="#2C1810">Austin</text>
-      <!-- ★ San Antonio — 29.42°N, 98.49°W -->
-      <polygon points="560,585 563,591 570,591 565,596 566,603 560,599 554,603 555,596 550,591 557,591" fill="#C4763A"/>
-      <text x="573" y="597" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="9" font-weight="700" fill="#2C1810">San Antonio</text>
-      <!-- ★ Houston — 29.76°N, 95.37°W -->
-      <polygon points="650,570 652,574 657,574 653,577 654,582 650,579 646,582 647,577 643,574 648,574" fill="none" stroke="#B8ADA5" stroke-width="0.8"/>
-      <text x="660" y="578" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="7.5" fill="#B8ADA5" font-style="italic">Houston (soon)</text>
     </svg>
+    <div style="text-align: left; font-size: 14px; line-height: 2.2;">
+      <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light); margin-bottom: 8px;">Currently serving</div>
+      <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block;"></span><span style="font-weight: 600; color: var(--espresso);">Dallas</span></div>
+      <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block;"></span><span style="font-weight: 600; color: var(--espresso);">Austin</span></div>
+      <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block;"></span><span style="font-weight: 600; color: var(--espresso);">San Antonio</span></div>
+      <div style="margin-top: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light); margin-bottom: 4px;">Coming soon</div>
+      <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border: 1.5px solid var(--warm-gray-light); border-radius: 50%; display: inline-block;"></span><span style="color: var(--warm-gray-light);">Houston</span></div>
+      <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border: 1.5px solid var(--warm-gray-light); border-radius: 50%; display: inline-block;"></span><span style="color: var(--warm-gray-light);">Fort Worth</span></div>
+    </div>
   </div>
 
   <div style="margin-bottom: 20px;">
