@@ -597,9 +597,9 @@ footer a:hover { color: var(--accent); }
 
   <div style="margin-bottom: 20px;">
     <div class="toggle-group" style="justify-content: center; display: flex;">
-      <a class="toggle-btn" href="?city=austin&open=1" onclick="localStorage.setItem('openCity','austin'); return true;" id="city-btn-austin" style="text-decoration:none;">Austin</a>
-      <a class="toggle-btn" href="?city=sanantonio&open=1" onclick="localStorage.setItem('openCity','sanantonio'); return true;" id="city-btn-sanantonio" style="text-decoration:none;">San Antonio</a>
-      <a class="toggle-btn" href="?city=dallas&open=1" onclick="localStorage.setItem('openCity','dallas'); return true;" id="city-btn-dallas" style="text-decoration:none;">Dallas</a>
+      <button class="toggle-btn" data-city="austin" onclick="switchCity('austin')" id="city-btn-austin">Austin</button>
+      <button class="toggle-btn" data-city="sanantonio" onclick="switchCity('sanantonio')" id="city-btn-sanantonio">San Antonio</button>
+      <button class="toggle-btn" data-city="dallas" onclick="switchCity('dallas')" id="city-btn-dallas">Dallas</button>
     </div>
   </div>
 
@@ -677,9 +677,9 @@ footer a:hover { color: var(--accent); }
     </div>
     <div class="topbar-right" style="display:flex; gap:6px; align-items:center;">
       <div class="toggle-group" id="topbar-cities" style="display:flex; gap:4px;">
-        <a class="toggle-btn" href="?city=austin&open=1" onclick="localStorage.setItem('openCity','austin'); return true;" id="dash-btn-austin" style="padding:6px 12px; font-size:11px; text-decoration:none;">Austin</a>
-        <a class="toggle-btn" href="?city=sanantonio&open=1" onclick="localStorage.setItem('openCity','sanantonio'); return true;" id="dash-btn-sanantonio" style="padding:6px 12px; font-size:11px; text-decoration:none;">San Antonio</a>
-        <a class="toggle-btn" href="?city=dallas&open=1" onclick="localStorage.setItem('openCity','dallas'); return true;" id="dash-btn-dallas" style="padding:6px 12px; font-size:11px; text-decoration:none;">Dallas</a>
+        <button class="toggle-btn" data-city="austin" onclick="switchCity('austin')" id="dash-btn-austin" style="padding:6px 12px; font-size:11px;">Austin</button>
+        <button class="toggle-btn" data-city="sanantonio" onclick="switchCity('sanantonio')" id="dash-btn-sanantonio" style="padding:6px 12px; font-size:11px;">San Antonio</button>
+        <button class="toggle-btn" data-city="dallas" onclick="switchCity('dallas')" id="dash-btn-dallas" style="padding:6px 12px; font-size:11px;">Dallas</button>
         <span class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;">Houston</span>
         <span class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;">Fort Worth</span>
       </div>
@@ -708,7 +708,7 @@ footer a:hover { color: var(--accent); }
         <div class="filter-row">
           <span class="filter-label">Period</span>
           <div class="range-group">
-            <input type="range" id="filter-days" min="1" max="90" value="30" oninput="updateDaysLabel()" onchange="fetchPermits()">
+            <input type="range" id="filter-days" min="1" max="90" value="30" oninput="updateDaysLabel()" onchange="debouncedFetch()">
             <span class="range-value" id="days-label">30 days</span>
           </div>
         </div>
@@ -910,7 +910,7 @@ const CITIES = {
 const urlCity = new URLSearchParams(window.location.search).get('city')
   || localStorage.getItem('openCity')
   || 'austin';
-const CITY = CITIES[urlCity] || CITIES.austin;
+let CITY = CITIES[urlCity] || CITIES.austin;
 
 const PAGE_SIZE = 50;
 let currentPage = 0, allData = [], filteredData = [], activeContractor = null;
@@ -925,11 +925,21 @@ function showDashboard() {
 
 // ─── City switcher ───
 function switchCity(city) {
-  // If on landing page, switch city and go straight to dashboard
-  const params = new URLSearchParams(window.location.search);
-  params.set('city', city);
-  params.set('open', '1');
-  window.location.search = params.toString();
+  // Swap the active city config and reload dashboard
+  const newCity = CITIES[city];
+  if (!newCity) return;
+  // Update the global
+  CITY = newCity;
+  // Update labels
+  document.getElementById('topbar-brand').textContent = newCity.name + ' Permits';
+  // Update active buttons
+  document.querySelectorAll('[data-city]').forEach(el => {
+    el.classList.toggle('active', el.dataset.city === city);
+  });
+  // Show dashboard and fetch
+  document.getElementById('landing-page').style.display = 'none';
+  document.getElementById('dashboard').classList.add('active');
+  fetchPermits();
 }
 
 // ─── Scroll reveal ───
@@ -988,6 +998,10 @@ function fmtPhone(p) {
   return p;
 }
 function esc(s) { if (!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ─── Debounce for slider ───
+let fetchTimer;
+function debouncedFetch() { clearTimeout(fetchTimer); fetchTimer = setTimeout(fetchPermits, 300); }
 
 // ─── Fetch ───
 async function fetchPermits() {
@@ -1202,11 +1216,8 @@ if (cityBtn) cityBtn.classList.add('active');
 const dashBtn = document.getElementById('dash-btn-' + urlCity);
 if (dashBtn) dashBtn.classList.add('active');
 
-// Auto-open dashboard if came from city switcher
-const shouldOpen = new URLSearchParams(window.location.search).get('open') === '1'
-  || localStorage.getItem('openCity');
-if (shouldOpen) {
-  localStorage.removeItem('openCity');
+// Auto-open dashboard if came from city switcher (URL param)
+if (new URLSearchParams(window.location.search).get('open') === '1') {
   showDashboard();
 }
 </script>
