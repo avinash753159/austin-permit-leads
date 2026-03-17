@@ -725,12 +725,12 @@ footer a:hover { color: var(--accent); }
     <div style="background:white; border-radius:var(--radius-lg); padding:40px; max-width:420px; width:90%; box-shadow:0 20px 60px rgba(44,24,16,0.2); text-align:center;">
       <h3 style="font-family:var(--serif); font-size:1.4rem; color:var(--espresso); margin-bottom:10px;">Your download is ready</h3>
       <p style="font-size:14px; color:var(--warm-gray); line-height:1.6; margin-bottom:20px;">
-        This data is accurate and free for now. We're looking for feedback on how we can make it more useful for you.
+        This data is accurate and free for now. I'm looking for feedback on how I can make it more useful for you.
       </p>
       <p style="font-size:13px; color:var(--warm-gray-light); margin-bottom:16px;">
-        If you found this valuable, feel free to buy us a coffee.
+        If you found this valuable, feel free to buy me a coffee.
       </p>
-      <img src="qr-code.png" alt="Buy us a coffee" style="width:180px; height:180px; border-radius:12px; border:1px solid var(--warm-border); margin-bottom:20px;">
+      <img src="qr-code.png" alt="Buy me a coffee" style="width:180px; height:180px; border-radius:12px; border:1px solid var(--warm-border); margin-bottom:20px;">
       <br>
       <button class="btn btn-primary" onclick="closeCoffeeModal()" style="margin-top:8px;">Close</button>
     </div>
@@ -1327,7 +1327,7 @@ function handleSubscribe() {
     headers: { 'Content-Type': 'application/json' },
     body: JSON.stringify({ email })
   }).catch(() => {});
-  document.getElementById('cta-form').innerHTML = '<span style="color:var(--sage);font-weight:600;font-size:14px;">Subscribed. You\'ll hear from us shortly.</span>';
+  document.getElementById('cta-form').innerHTML = '<span style="color:var(--sage);font-weight:600;font-size:14px;">Subscribed. You\'ll hear from me shortly.</span>';
 }
 
 // ─── Init city labels ───
