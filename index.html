@@ -1,14 +1,1192 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <link rel="icon" type="image/svg+xml" href="/austin-permit-leads/favicon.svg" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Brimstone &mdash; Texas Construction Intelligence</title>
-    <script type="module" crossorigin src="/austin-permit-leads/assets/index-D_1UJto1.js"></script>
-    <link rel="stylesheet" crossorigin href="/austin-permit-leads/assets/index-D5B7D-2W.css">
-  </head>
-  <body>
-    <div id="root"></div>
-  </body>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Brimstone Partner &mdash; Texas Construction Intelligence</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root {
+  --cream: #FDFBF7;
+  --cream-deep: #F7F3EC;
+  --espresso: #2C1810;
+  --espresso-light: #4A3728;
+  --sage: #7A8B6F;
+  --sage-muted: #A3B295;
+  --sage-bg: #F0F2EC;
+  --warm-gray: #8C7E73;
+  --warm-gray-light: #B8ADA5;
+  --warm-border: rgba(44, 24, 16, 0.08);
+  --warm-shadow: rgba(44, 24, 16, 0.04);
+  --accent: #C4763A;
+  --accent-muted: rgba(196, 118, 58, 0.12);
+  --serif: 'DM Serif Display', Georgia, serif;
+  --sans: 'Plus Jakarta Sans', system-ui, sans-serif;
+  --ease: cubic-bezier(0.16, 1, 0.3, 1);
+  --radius-lg: 1.25rem;
+  --radius-sm: 0.625rem;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  font-family: var(--sans);
+  background: var(--cream);
+  color: var(--espresso);
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
+body::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  pointer-events: none;
+  opacity: 0.025;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+}
+
+/* ═══════════ LANDING PAGE ═══════════ */
+.landing {
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 48px 24px;
+  text-align: center;
+  position: relative;
+}
+.landing-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+  color: var(--sage);
+  background: var(--sage-bg);
+  padding: 8px 16px;
+  border-radius: 100px;
+  margin-bottom: 32px;
+}
+.live-dot {
+  width: 8px;
+  height: 8px;
+  background: #4CAF50;
+  border-radius: 50%;
+  box-shadow: 0 0 8px rgba(76, 175, 80, 0.6);
+  animation: pulse-dot 2s ease-in-out infinite;
+}
+@keyframes pulse-dot {
+  0%, 100% { box-shadow: 0 0 4px rgba(76, 175, 80, 0.4); }
+  50% { box-shadow: 0 0 12px rgba(76, 175, 80, 0.8); }
+}
+.landing h1 {
+  font-family: var(--serif);
+  font-size: clamp(2.8rem, 6vw, 4.5rem);
+  font-weight: 400;
+  line-height: 1.08;
+  letter-spacing: -0.025em;
+  color: var(--espresso);
+  max-width: 720px;
+  text-wrap: balance;
+  margin-bottom: 24px;
+}
+.landing h1 em { font-style: italic; color: var(--accent); }
+.landing-description {
+  font-size: 17px;
+  color: var(--warm-gray);
+  max-width: 520px;
+  line-height: 1.7;
+  margin-bottom: 48px;
+}
+.landing-features {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  max-width: 760px;
+  margin-bottom: 56px;
+}
+.landing-feature {
+  text-align: center;
+}
+.landing-feature-icon {
+  width: 48px;
+  height: 48px;
+  background: white;
+  border: 1px solid var(--warm-border);
+  border-radius: 14px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 14px;
+  box-shadow: 0 4px 12px var(--warm-shadow);
+}
+.landing-feature-icon svg { width: 22px; height: 22px; stroke: var(--accent); fill: none; stroke-width: 1.5; stroke-linecap: round; stroke-linejoin: round; }
+.landing-feature h3 {
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--espresso);
+  margin-bottom: 4px;
+}
+.landing-feature p {
+  font-size: 13px;
+  color: var(--warm-gray);
+  line-height: 1.5;
+}
+.btn-access {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 36px;
+  background: var(--espresso);
+  color: var(--cream);
+  border: none;
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  letter-spacing: 0.01em;
+}
+.btn-access:hover { background: var(--espresso-light); transform: translateY(-2px); box-shadow: 0 12px 32px rgba(44,24,16,0.15); }
+.btn-access:active { transform: scale(0.97) translateY(0); }
+.btn-access svg { transition: transform 0.3s var(--ease); }
+.btn-access:hover svg { transform: translateX(3px); }
+
+.landing-proof {
+  margin-top: 40px;
+  font-size: 12px;
+  color: var(--warm-gray-light);
+  letter-spacing: 0.02em;
+}
+.landing-proof strong { color: var(--warm-gray); font-weight: 600; }
+
+/* ═══════════ DASHBOARD ═══════════ */
+.dashboard { display: none; }
+.dashboard.active { display: block; }
+
+/* Top Bar */
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 48px;
+  border-bottom: 1px solid var(--warm-border);
+  background: rgba(253,251,247,0.9);
+  backdrop-filter: blur(12px);
+  -webkit-backdrop-filter: blur(12px);
+  position: sticky;
+  top: 0;
+  z-index: 40;
+}
+.topbar-left {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+.topbar-brand {
+  font-family: var(--serif);
+  font-size: 18px;
+  color: var(--espresso);
+}
+.topbar-live {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--sage);
+  background: var(--sage-bg);
+  padding: 4px 12px;
+  border-radius: 100px;
+}
+.topbar-live .live-dot { width: 6px; height: 6px; }
+.topbar-right { display: flex; gap: 8px; }
+
+/* Stats */
+.stats-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 1px;
+  max-width: 1400px;
+  margin: 32px auto 0;
+  padding: 0 48px;
+}
+.stat-card {
+  background: white;
+  padding: 28px 24px;
+  text-align: center;
+  border: 1px solid var(--warm-border);
+  transition: all 0.3s var(--ease);
+}
+.stat-card:first-child { border-radius: var(--radius-lg) 0 0 var(--radius-lg); }
+.stat-card:last-child { border-radius: 0 var(--radius-lg) var(--radius-lg) 0; }
+.stat-card:hover { background: var(--cream-deep); }
+.stat-value {
+  font-family: var(--serif);
+  font-size: 2rem;
+  font-weight: 400;
+  color: var(--espresso);
+  line-height: 1;
+  font-variant-numeric: tabular-nums;
+}
+.stat-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warm-gray-light);
+  margin-top: 8px;
+}
+
+/* Card Shell */
+.card-outer {
+  background: rgba(44,24,16,0.03);
+  border: 1px solid rgba(44,24,16,0.05);
+  padding: 6px;
+  border-radius: calc(var(--radius-lg) + 6px);
+  max-width: 1400px;
+  margin: 24px auto;
+  margin-left: max(calc((100% - 1400px)/2), 48px);
+  margin-right: max(calc((100% - 1400px)/2), 48px);
+}
+.card-inner {
+  background: white;
+  border-radius: var(--radius-lg);
+  box-shadow: 0 20px 40px -15px var(--warm-shadow), inset 0 1px 0 rgba(255,255,255,0.8);
+  overflow: hidden;
+}
+
+/* ─── FILTER BAR ─── */
+.filter-bar {
+  padding: 20px 28px;
+  border-bottom: 1px solid var(--warm-border);
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.filter-row {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+}
+.filter-label {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--warm-gray-light);
+  min-width: 50px;
+}
+
+/* Range Slider */
+.range-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+  max-width: 400px;
+}
+.range-group input[type="range"] {
+  flex: 1;
+  -webkit-appearance: none;
+  appearance: none;
+  height: 4px;
+  background: rgba(44,24,16,0.08);
+  border-radius: 4px;
+  outline: none;
+}
+.range-group input[type="range"]::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  background: var(--espresso);
+  border-radius: 50%;
+  cursor: pointer;
+  box-shadow: 0 2px 8px rgba(44,24,16,0.2);
+  transition: transform 0.2s var(--ease);
+}
+.range-group input[type="range"]::-webkit-slider-thumb:hover { transform: scale(1.15); }
+.range-value {
+  font-size: 13px;
+  font-weight: 600;
+  color: var(--espresso);
+  min-width: 72px;
+  text-align: center;
+  background: var(--cream);
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--warm-border);
+  font-variant-numeric: tabular-nums;
+}
+
+/* Toggle Buttons */
+.toggle-group { display: flex; gap: 6px; flex-wrap: wrap; }
+.toggle-btn {
+  padding: 8px 16px;
+  border: 1px solid var(--warm-border);
+  border-radius: 100px;
+  font-family: var(--sans);
+  font-size: 12.5px;
+  font-weight: 500;
+  color: var(--warm-gray);
+  background: white;
+  cursor: pointer;
+  transition: all 0.25s var(--ease);
+  user-select: none;
+}
+.toggle-btn:hover { border-color: rgba(44,24,16,0.15); color: var(--espresso-light); }
+.toggle-btn.active {
+  background: var(--espresso);
+  color: var(--cream);
+  border-color: var(--espresso);
+}
+.toggle-btn.active:hover { background: var(--espresso-light); }
+
+/* Min Value Input */
+.value-input {
+  padding: 8px 14px;
+  border: 1px solid var(--warm-border);
+  border-radius: var(--radius-sm);
+  font-family: var(--sans);
+  font-size: 13px;
+  font-weight: 500;
+  color: var(--espresso);
+  background: var(--cream);
+  width: 140px;
+  transition: all 0.2s var(--ease);
+}
+.value-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-muted); }
+
+.filter-actions {
+  display: flex;
+  gap: 8px;
+  margin-left: auto;
+}
+
+/* ─── TOP CONTRACTORS ─── */
+.top-section {
+  padding: 16px 28px;
+  border-bottom: 1px solid var(--warm-border);
+}
+.top-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 12px;
+}
+.top-header h3 {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warm-gray-light);
+}
+.top-header a {
+  font-size: 11px;
+  font-weight: 600;
+  color: var(--accent);
+  text-decoration: none;
+  cursor: pointer;
+  display: none;
+}
+.top-header a:hover { text-decoration: underline; }
+.top-list { display: flex; flex-wrap: wrap; gap: 8px; }
+.top-chip {
+  background: var(--cream);
+  border: 1px solid var(--warm-border);
+  padding: 7px 14px;
+  border-radius: 100px;
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.3s var(--ease);
+  color: var(--espresso-light);
+}
+.top-chip:hover { background: var(--accent-muted); border-color: var(--accent); color: var(--accent); transform: translateY(-1px); }
+.top-chip.active { background: var(--espresso); color: var(--cream); border-color: var(--espresso); }
+.top-chip strong { font-weight: 600; }
+.top-chip .chip-count { color: var(--warm-gray-light); margin-left: 6px; font-size: 11px; }
+.top-chip.active .chip-count { color: rgba(253,251,247,0.6); }
+
+/* ─── TABLE ─── */
+.table-scroll { overflow-x: auto; }
+table { width: 100%; border-collapse: collapse; }
+thead th {
+  padding: 14px 16px;
+  text-align: left;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--warm-gray-light);
+  border-bottom: 2px solid var(--warm-border);
+  white-space: nowrap;
+  background: rgba(253,251,247,0.6);
+  position: sticky;
+  top: 0;
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+}
+td {
+  padding: 14px 16px;
+  border-bottom: 1px solid rgba(44,24,16,0.04);
+  font-size: 13.5px;
+  vertical-align: top;
+}
+tr { transition: background 0.15s ease; }
+tr:hover { background: rgba(44,24,16,0.015); }
+tr:last-child td { border-bottom: none; }
+
+.contractor-name { font-weight: 600; color: var(--espresso); font-size: 13px; }
+.contractor-phone { color: var(--accent); text-decoration: none; font-weight: 600; font-size: 13px; transition: color 0.2s ease; }
+.contractor-phone:hover { color: var(--espresso); text-decoration: underline; }
+.permit-value { font-weight: 600; color: var(--sage); font-variant-numeric: tabular-nums; }
+.sqft-cell { font-variant-numeric: tabular-nums; font-weight: 500; }
+.address-cell { font-weight: 500; color: var(--espresso-light); max-width: 220px; }
+.permit-type-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+}
+.badge-residential { background: rgba(196,118,58,0.08); color: var(--accent); }
+.badge-commercial { background: rgba(122,139,111,0.12); color: var(--sage); }
+.badge-new { background: rgba(44,24,16,0.06); color: var(--espresso-light); }
+.badge-remodel { background: rgba(196,118,58,0.08); color: #A0784A; }
+.badge-demolition { background: rgba(220,50,50,0.08); color: #B44; }
+
+.description-cell {
+  max-width: 240px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: var(--warm-gray);
+  font-size: 12.5px;
+}
+.description-cell:hover { white-space: normal; overflow: visible; color: var(--espresso-light); }
+
+.loading { text-align: center; padding: 80px 20px; color: var(--warm-gray-light); font-size: 14px; font-weight: 500; }
+.spinner {
+  display: inline-block; width: 20px; height: 20px;
+  border: 2px solid rgba(44,24,16,0.08); border-top-color: var(--accent);
+  border-radius: 50%; animation: spin 0.8s cubic-bezier(0.5,0,0.5,1) infinite;
+  margin-right: 10px; vertical-align: middle;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.empty { text-align: center; padding: 80px 20px; color: var(--warm-gray-light); font-size: 15px; }
+
+/* ─── PAGINATION ─── */
+.pagination { display: flex; justify-content: center; align-items: center; gap: 6px; padding: 24px 48px; max-width: 1400px; margin: 0 auto; }
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 10px 20px; border: none; border-radius: 100px; font-family: var(--sans); font-size: 13px; font-weight: 600; cursor: pointer; transition: all 0.3s var(--ease); letter-spacing: 0.01em; }
+.btn:active { transform: scale(0.97); }
+.btn-primary { background: var(--espresso); color: var(--cream); }
+.btn-primary:hover { background: var(--espresso-light); transform: translateY(-1px); }
+.btn-export { background: var(--sage-bg); color: var(--sage); border: 1px solid rgba(122,139,111,0.2); }
+.btn-export:hover { background: var(--sage-muted); color: white; }
+.btn-outline { background: white; color: var(--espresso); border: 1px solid var(--warm-border); }
+.btn-outline:hover { background: var(--cream-deep); }
+.btn-page-active { background: var(--espresso); color: var(--cream); border: 1px solid var(--espresso); }
+.results-count { color: var(--warm-gray-light); font-size: 12px; font-weight: 500; margin-left: 12px; }
+
+/* ─── CTA ─── */
+.cta-outer { max-width: 1400px; margin: 32px auto; padding: 0 48px; }
+.cta-banner {
+  background: white;
+  border: 1px solid var(--warm-border);
+  border-radius: var(--radius-lg);
+  padding: 36px 40px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 20px;
+  box-shadow: 0 20px 40px -15px var(--warm-shadow);
+}
+.cta-text h3 { font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--espresso); margin-bottom: 6px; }
+.cta-text p { font-size: 14px; color: var(--warm-gray); max-width: 420px; line-height: 1.6; }
+.cta-form { display: flex; gap: 8px; align-items: center; }
+.cta-form input[type="email"] {
+  padding: 12px 16px; border: 1px solid rgba(44,24,16,0.12); border-radius: var(--radius-sm);
+  font-family: var(--sans); font-size: 14px; width: 260px; background: var(--cream); transition: all 0.2s var(--ease);
+}
+.cta-form input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-muted); }
+
+footer {
+  text-align: center; padding: 48px; color: var(--warm-gray-light); font-size: 12px; letter-spacing: 0.02em; max-width: 1400px; margin: 0 auto;
+}
+footer a { color: var(--warm-gray); text-decoration: none; }
+footer a:hover { color: var(--accent); }
+.footer-divider { width: 40px; height: 1px; background: var(--warm-border); margin: 0 auto 20px; }
+
+/* ─── ANIMATIONS ─── */
+.reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+.reveal.visible { opacity: 1; transform: translateY(0); }
+@keyframes fadeRow { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: translateY(0); } }
+
+/* ─── RESPONSIVE ─── */
+@media (max-width: 1024px) {
+  .stats-grid { grid-template-columns: repeat(3, 1fr); }
+  .landing-features { grid-template-columns: repeat(3, 1fr); gap: 16px; }
+}
+@media (max-width: 768px) {
+  .topbar { padding: 12px 20px; }
+  .stats-grid { grid-template-columns: repeat(2, 1fr); padding: 0 20px; }
+  .stat-card { border-radius: 0 !important; }
+  .stat-card:first-child { border-radius: var(--radius-lg) 0 0 0 !important; }
+  .stat-card:nth-child(2) { border-radius: 0 var(--radius-lg) 0 0 !important; }
+  .card-outer { margin-left: 20px; margin-right: 20px; }
+  .filter-bar { padding: 16px 20px; }
+  .top-section { padding: 14px 20px; }
+  th, td { padding: 10px 12px; }
+  .cta-outer { padding: 0 20px; }
+  .cta-banner { padding: 28px 24px; }
+  .cta-form { flex-direction: column; width: 100%; }
+  .cta-form input[type="email"] { width: 100%; }
+  .pagination { padding: 20px; }
+  .landing-features { grid-template-columns: 1fr; max-width: 300px; }
+  footer { padding: 32px 20px; }
+}
+@media (max-width: 480px) {
+  .stats-grid { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<!-- ══════════ LANDING PAGE ══════════ -->
+<section class="landing" id="landing-page">
+
+  <div style="font-family: var(--serif); font-size: 22px; color: var(--espresso); margin-bottom: 8px; letter-spacing: -0.01em;">Brimstone</div>
+  <div class="landing-badge">
+    <span class="live-dot"></span>
+    Texas Construction Intelligence &middot; Live
+  </div>
+
+  <h1>Know who's building what,<br><em>before your competitors.</em></h1>
+
+  <p class="landing-description">
+    Every new construction permit filed across Texas &mdash; contractor name, phone number, project size, and address. Updated in real time from city records.
+  </p>
+
+  <!-- ── Texas Map + Legend ── -->
+  <div style="margin: 32px 0; display: flex; align-items: center; gap: 32px; flex-wrap: wrap; justify-content: center;">
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="395 420 310 310" width="200" height="200">
+      <path fill="#F7F3EC" stroke="#B8ADA5" stroke-width="1.2" d="M531.1,433.4l22.7,1.1l31.1,1.1l-2.3,23.5l-0.3,18.2l0.1,2.1l4.3,3.8l1.7,0.8l1.8,0.3l0.7-1.3l0.9,0.9l1.7,0.5l1.6-0.7l1.1,0.4l-0.3,3.4l4.3,1l2.7,0.8l4,0.5l2.2,1.8l3.2-1.6l2.8,0.4l2,2.8l1.1,0.3l-0.2,2l3.1,1.2l2.8-1.8l1.5,0.4l2.4,0.2l0.4,1.9l4.6,2l2.7-0.2l2-4.1h0.3l1.1,1.9l4.4,1l3.3,1.2l3.3,0.8l2.1-0.8l0.8-2.5h3.7l1.9,0.8l3.1-1.6h0.7l0.4,1.1h4.3l2.4-1.3l1.7,0.3l1.4,1.9l2.9,1.7l3.5,1.1l2.7,1.4l2.4,1.6l3.3-0.9l1.9,1l0.5,10.1l0.3,9.7l0.7,9.5l0.5,4l2.7,4.6l1.1,4.1l3.9,6.3l0.5,2.9l0.5,1l-0.7,7.5l-2.7,4.4l1,2.9l-0.4,2.5l-0.8,7.3l-1.4,2.7l0.6,4.4l-5.7,1.6l-9.9,4.5l-1,1.9l-2.6,1.9l-2.1,1.5l-1.3,0.8l-5.7,5.3l-2.7,2.1l-5.3,3.2l-5.7,2.4l-6.3,3.4l-1.8,1.5l-5.8,3.6l-3.4,0.6l-3.9,5.5l-4,0.3l-1,1.9l2.3,1.9l-1.5,5.5l-1.3,4.5l-1.1,3.9l-0.8,4.5l0.8,2.4l1.8,7l1,6.1l1.8,2.7l-1,1.5l-3.1,1.9l-5.7-3.9l-5.5-1.1l-1.3,0.5l-3.2-0.6l-4.2-3.1l-5.2-1.1l-7.6-3.4l-2.1-3.9l-1.3-6.5l-3.2-1.9l-0.6-2.3l0.6-0.6l0.3-3.4l-1.3-0.6l-0.6-1l1.3-4.4l-1.6-2.3l-3.2-1.3l-3.4-4.4l-3.6-6.6l-4.2-2.6l0.2-1.9l-5.3-12.3l-0.8-4.2l-1.8-1.9l-0.2-1.5l-6-5.3l-2.6-3.1v-1.1l-2.6-2.1l-6.8-1.1l-7.4-0.6l-3.1-2.3l-4.5,1.8l-3.6,1.5l-2.3,3.2l-1,3.7l-4.4,6.1l-2.4,2.4l-2.6-1l-1.8-1.1l-1.9-0.6l-3.9-2.3v-0.6l-1.8-1.9l-5.2-2.1l-7.4-7.8l-2.3-4.7v-8.1l-3.2-6.5l-0.5-2.7l-1.6-1l-1.1-2.1l-5-2.1l-1.3-1.6l-7.1-7.9l-1.3-3.2l-4.7-2.3l-1.5-4.4l-2.6-2.9l-1.9-0.5l-0.6-4.7l8,0.7l29,2.7l29,1.6l2.3-23.8l3.9-55.6l1.6-18.7l1.4,0"/>
+    </svg>
+    <div style="text-align: left; font-size: 14px; line-height: 2.2;">
+      <div style="font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light); margin-bottom: 8px;">Currently serving</div>
+      <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block;"></span><span style="font-weight: 600; color: var(--espresso);">Dallas</span></div>
+      <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block;"></span><span style="font-weight: 600; color: var(--espresso);">Austin</span></div>
+      <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; background: var(--accent); border-radius: 50%; display: inline-block;"></span><span style="font-weight: 600; color: var(--espresso);">San Antonio</span></div>
+      <div style="margin-top: 8px; font-size: 11px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light); margin-bottom: 4px;">Coming soon</div>
+      <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border: 1.5px solid var(--warm-gray-light); border-radius: 50%; display: inline-block;"></span><span style="color: var(--warm-gray-light);">Houston</span></div>
+      <div style="display: flex; align-items: center; gap: 8px;"><span style="width: 8px; height: 8px; border: 1.5px solid var(--warm-gray-light); border-radius: 50%; display: inline-block;"></span><span style="color: var(--warm-gray-light);">Fort Worth</span></div>
+    </div>
+  </div>
+
+  <div style="margin-bottom: 20px;">
+    <div class="toggle-group" style="justify-content: center; display: flex;">
+      <button class="toggle-btn" onclick="switchCity('austin')" id="city-btn-austin">Austin</button>
+      <button class="toggle-btn" onclick="switchCity('sanantonio')" id="city-btn-sanantonio">San Antonio</button>
+      <button class="toggle-btn" onclick="switchCity('dallas')" id="city-btn-dallas">Dallas</button>
+    </div>
+  </div>
+
+  <div class="landing-features">
+    <div class="landing-feature">
+      <div class="landing-feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M15 10l4.553-2.276A1 1 0 0121 8.618v6.764a1 1 0 01-1.447.894L15 14M5 18h8a2 2 0 002-2V8a2 2 0 00-2-2H5a2 2 0 00-2 2v8a2 2 0 002 2z"/></svg>
+      </div>
+      <h3>Find projects first</h3>
+      <p>A GC pulls a permit on Monday. You call them Tuesday &mdash; before the job hits any bid board. You're first in line.</p>
+    </div>
+    <div class="landing-feature">
+      <div class="landing-feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M3 5a2 2 0 012-2h3.28a1 1 0 01.948.684l1.498 4.493a1 1 0 01-.502 1.21l-2.257 1.13a11.042 11.042 0 005.516 5.516l1.13-2.257a1 1 0 011.21-.502l4.493 1.498a1 1 0 01.684.949V19a2 2 0 01-2 2h-1C9.716 21 3 14.284 3 6V5z"/></svg>
+      </div>
+      <h3>Call the GC directly</h3>
+      <p>Every permit includes the general contractor's name, company, and phone number. No middlemen, no bid boards.</p>
+    </div>
+    <div class="landing-feature">
+      <div class="landing-feature-icon">
+        <svg viewBox="0 0 24 24"><path d="M12 10v6m0 0l-3-3m3 3l3-3M3 17V7a2 2 0 012-2h6l2 2h6a2 2 0 012 2v8a2 2 0 01-2 2H5a2 2 0 01-2-2z"/></svg>
+      </div>
+      <h3>Track the big players</h3>
+      <p>See which contractors are pulling the most permits. Land one relationship with a busy GC and you've got work for months.</p>
+    </div>
+  </div>
+
+  <!-- ── Why Brimstone ── -->
+  <div style="margin-top: 48px; max-width: 660px; width: 100%; padding: 0 20px;">
+    <h2 style="font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--espresso); text-align: center; margin-bottom: 24px;">
+      Why Brimstone
+    </h2>
+    <div style="background: white; border: 1px solid var(--warm-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 24px var(--warm-shadow);">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr>
+            <th style="padding: 14px 16px; text-align: left; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light); background: var(--cream); border-bottom: 2px solid var(--warm-border);"></th>
+            <th style="padding: 14px 16px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: rgba(196,118,58,0.04); border-bottom: 2px solid var(--accent);">Brimstone</th>
+            <th style="padding: 14px 16px; text-align: center; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warm-gray-light); background: var(--cream); border-bottom: 2px solid var(--warm-border);">Construction Monitor</th>
+            <th style="padding: 14px 16px; text-align: center; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warm-gray-light); background: var(--cream); border-bottom: 2px solid var(--warm-border);">ConstructConnect</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid var(--warm-border);">Focus</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; border-bottom: 1px solid var(--warm-border); background: rgba(196,118,58,0.02);">Texas only</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">National</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">National</td></tr>
+          <tr><td style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid var(--warm-border);">Contractor phones</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; border-bottom: 1px solid var(--warm-border); background: rgba(196,118,58,0.02);">Included</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Extra cost</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Not included</td></tr>
+          <tr><td style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid var(--warm-border);">Price</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; border-bottom: 1px solid var(--warm-border); background: rgba(196,118,58,0.02);">Free to start</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">$96/mo</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">$299/mo</td></tr>
+          <tr><td style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid var(--warm-border);">Updates</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; border-bottom: 1px solid var(--warm-border); background: rgba(196,118,58,0.02);">Real-time</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Weekly</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Delayed</td></tr>
+          <tr><td style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid var(--warm-border);">CSV export</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; border-bottom: 1px solid var(--warm-border); background: rgba(196,118,58,0.02);">Included</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Included</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Add-on</td></tr>
+          <tr><td style="padding: 12px 16px; font-weight: 600;">Contracts</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; background: rgba(196,118,58,0.02);">None</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light);">Monthly</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light);">Annual</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <div style="margin-top: 40px;">
+    <button class="btn-access" onclick="showDashboard()">
+      Access the data
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+  </div>
+
+  <p class="landing-proof" style="margin-top: 24px;">
+    <strong>2.3 million+</strong> permits in the database &middot; Updated continuously from city records
+  </p>
+</section>
+
+<!-- ══════════ DASHBOARD ══════════ -->
+<div class="dashboard" id="dashboard">
+
+  <!-- Sticky Top Bar -->
+  <div class="topbar">
+    <div class="topbar-left">
+      <span class="topbar-brand" id="topbar-brand">Austin Permits</span>
+      <span class="topbar-live"><span class="live-dot"></span> Live</span>
+    </div>
+    <div class="topbar-right" style="display:flex; gap:6px; align-items:center;">
+      <div class="toggle-group" id="topbar-cities" style="display:flex; gap:4px;">
+        <button class="toggle-btn" onclick="switchCity('austin')" id="dash-btn-austin" style="padding:6px 12px; font-size:11px;">Austin</button>
+        <button class="toggle-btn" onclick="switchCity('sanantonio')" id="dash-btn-sanantonio" style="padding:6px 12px; font-size:11px;">San Antonio</button>
+        <button class="toggle-btn" onclick="switchCity('dallas')" id="dash-btn-dallas" style="padding:6px 12px; font-size:11px;">Dallas</button>
+        <button class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;" disabled>Houston</button>
+        <button class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;" disabled>Fort Worth</button>
+      </div>
+      <button class="btn btn-export" onclick="downloadCSV()">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        Export CSV
+      </button>
+    </div>
+  </div>
+
+  <!-- Stats -->
+  <div class="stats-grid" id="stats-bar">
+    <div class="stat-card"><div class="stat-value" id="stat-total">&mdash;</div><div class="stat-label">Permits filed</div></div>
+    <div class="stat-card"><div class="stat-value" id="stat-sqft">&mdash;</div><div class="stat-label">Total sq ft</div></div>
+    <div class="stat-card"><div class="stat-value" id="stat-residential">&mdash;</div><div class="stat-label">Residential</div></div>
+    <div class="stat-card"><div class="stat-value" id="stat-commercial">&mdash;</div><div class="stat-label">Commercial</div></div>
+    <div class="stat-card"><div class="stat-value" id="stat-contractors">&mdash;</div><div class="stat-label">Contractors</div></div>
+  </div>
+
+  <!-- Main Card -->
+  <div class="card-outer">
+    <div class="card-inner">
+
+      <!-- Filters -->
+      <div class="filter-bar">
+        <div class="filter-row">
+          <span class="filter-label">Period</span>
+          <div class="range-group">
+            <input type="range" id="filter-days" min="1" max="90" value="30" oninput="updateDaysLabel()" onchange="fetchPermits()">
+            <span class="range-value" id="days-label">30 days</span>
+          </div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">Type</span>
+          <div class="toggle-group" id="type-toggles">
+            <button class="toggle-btn active" data-value="">All</button>
+            <button class="toggle-btn" data-value="Residential">Residential</button>
+            <button class="toggle-btn" data-value="Commercial">Commercial</button>
+          </div>
+          <span class="filter-label" style="margin-left: 16px;">Work</span>
+          <div class="toggle-group" id="work-toggles">
+            <button class="toggle-btn active" data-value="">All</button>
+            <button class="toggle-btn" data-value="New">New build</button>
+            <button class="toggle-btn" data-value="Addition and Remodel">Remodel</button>
+            <button class="toggle-btn" data-value="Demolition">Demolition</button>
+          </div>
+        </div>
+        <div class="filter-row">
+          <span class="filter-label">Min sqft</span>
+          <input type="number" class="value-input" id="filter-min-sqft" placeholder="e.g. 1000" min="0" step="100" onchange="fetchPermits()">
+          <!-- filters auto-apply -->
+        </div>
+      </div>
+
+      <!-- Top Contractors -->
+      <div class="top-section" id="top-contractors" style="display:none;">
+        <div class="top-header">
+          <h3>Most active contractors</h3>
+          <a id="reset-filter" onclick="resetFilter()">Show all</a>
+        </div>
+        <div class="top-list" id="top-list"></div>
+      </div>
+
+      <!-- Table -->
+      <div class="table-scroll">
+        <div class="loading" id="loading"><span class="spinner"></span> Fetching permits&hellip;</div>
+        <table id="permits-table" style="display:none;">
+          <thead>
+            <tr>
+              <th>Issued</th>
+              <th>Address</th>
+              <th>Class</th>
+              <th>Work</th>
+              <th>Description</th>
+              <th>Sq ft</th>
+              <th>Contractor</th>
+              <th>Phone</th>
+            </tr>
+          </thead>
+          <tbody id="permits-body"></tbody>
+        </table>
+        <div class="empty" id="empty-state" style="display:none;">No permits found matching your filters.</div>
+      </div>
+
+    </div>
+  </div>
+
+  <div class="pagination" id="pagination"></div>
+
+  <!-- CTA -->
+  <div class="cta-outer">
+    <div class="cta-banner">
+      <div class="cta-text">
+        <h3>Get this delivered weekly</h3>
+        <p>A curated report of new permits in your trade area, with contractor contacts and project details. Never miss a bid opportunity.</p>
+      </div>
+      <div class="cta-form" id="cta-form">
+        <input type="email" id="cta-email-input" placeholder="you@company.com">
+        <button class="btn btn-primary" onclick="handleSubscribe()">Subscribe</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-divider"></div>
+    Brimstone Partner &middot; Texas Construction Intelligence<br>
+    Data sourced from municipal open data portals. Updated continuously.<br>
+    <a href="mailto:avinash@brimstonepartner.com">avinash@brimstonepartner.com</a>
+  </footer>
+</div>
+
+<script>
+// ─── MULTI-CITY CONFIG ───
+const CITIES = {
+  austin: {
+    name: 'Austin',
+    state: 'TX',
+    api: 'https://data.austintexas.gov/resource/3syk-w9eu.json',
+    type: 'socrata',
+    buildQuery(since, permitClass, workClass) {
+      let w = `issue_date >= '${since}' AND permittype='BP'`;
+      if (permitClass) w += ` AND permit_class_mapped='${permitClass}'`;
+      if (workClass) w += ` AND work_class='${workClass}'`;
+      return `${this.api}?$where=${encodeURIComponent(w)}&$order=${encodeURIComponent('issue_date DESC')}&$limit=5000`;
+    },
+    normalize(p) {
+      return {
+        date: p.issue_date,
+        address: p.original_address1 || p.permit_location || '',
+        city: p.original_city || 'Austin',
+        zip: p.original_zip || '',
+        type: p.permit_class_mapped || '',
+        work: p.work_class || '',
+        description: p.description || '',
+        sqft: Math.max(parseInt(p.total_new_add_sqft)||0, parseInt(p.remodel_repair_sqft)||0),
+        value: parseFloat(p.total_job_valuation) || 0,
+        contractor: cleanName(p.contractor_company_name || p.contractor_full_name || ''),
+        phone: p.contractor_phone || '',
+        lat: p.latitude || '',
+        lng: p.longitude || ''
+      };
+    }
+  },
+  sanantonio: {
+    name: 'San Antonio',
+    state: 'TX',
+    api: 'https://data.sanantonio.gov/api/3/action/datastore_search',
+    type: 'ckan',
+    buildQuery(since, permitClass, workClass) {
+      let filters = {};
+      // Filter to building-related permits only
+      if (permitClass === 'Residential') filters['PERMIT TYPE'] = 'Res New Building Permit';
+      else if (permitClass === 'Commercial') filters['PERMIT TYPE'] = 'Comm New Building Permit';
+      let url = `${this.api}?resource_id=c21106f9-3ef5-4f3a-8604-f992b4db7512&limit=5000&sort=DATE ISSUED desc`;
+      if (Object.keys(filters).length) url += `&filters=${encodeURIComponent(JSON.stringify(filters))}`;
+      return url;
+    },
+    normalize(r) {
+      const pt = (r['PERMIT TYPE'] || '').toLowerCase();
+      let type = '';
+      if (pt.includes('res')) type = 'Residential';
+      else if (pt.includes('comm')) type = 'Commercial';
+      let work = r['WORK TYPE'] || '';
+      if (!work && pt.includes('new')) work = 'New';
+      return {
+        date: r['DATE ISSUED'] || '',
+        address: r['ADDRESS'] || r['PROJECT NAME'] || '',
+        city: 'San Antonio',
+        zip: '',
+        type,
+        work,
+        description: r['PERMIT TYPE'] || '',
+        sqft: parseFloat(r['AREA (SF)']) || 0,
+        value: parseFloat(r['DECLARED VALUATION']) || 0,
+        contractor: cleanName(r['PRIMARY CONTACT'] || ''),
+        phone: '',
+        lat: r['Y_COORD'] || '',
+        lng: r['X_COORD'] || ''
+      };
+    }
+  },
+  dallas: {
+    name: 'Dallas',
+    state: 'TX',
+    api: 'https://www.dallasopendata.com/resource/e7gq-4sah.json',
+    type: 'socrata',
+    note: 'Historical data (2019). Updated dataset pending.',
+    buildQuery(since, permitClass, workClass) {
+      let w = "issued_date > '01/01/19'";
+      if (permitClass === 'Residential') w += " AND permit_type LIKE '%Single Family%'";
+      else if (permitClass === 'Commercial') w += " AND permit_type LIKE '%Multi Family%'";
+      return `${this.api}?$where=${encodeURIComponent(w)}&$order=${encodeURIComponent('issued_date DESC')}&$limit=5000`;
+    },
+    normalize(p) {
+      // Dallas puts contractor info in one field: "COMPANY NAME ADDRESS (PHONE)"
+      let contractor = '', phone = '';
+      const raw = p.contractor || '';
+      const phoneMatch = raw.match(/\((\d{3})\)\s*(\d{3})-(\d{4})/);
+      if (phoneMatch) phone = phoneMatch[0];
+      // Name is everything before the first number in address
+      const nameMatch = raw.match(/^([A-Z][A-Z &.\-/']+?)(?:\s+\d)/i);
+      contractor = nameMatch ? nameMatch[1].trim() : raw.split(/\d/)[0].trim();
+
+      const pt = (p.permit_type || '').toLowerCase();
+      let type = '';
+      if (pt.includes('single family')) type = 'Residential';
+      else if (pt.includes('multi family') || pt.includes('commercial')) type = 'Commercial';
+
+      return {
+        date: p.issued_date ? '20' + p.issued_date.split('/')[2] + '-' + p.issued_date.split('/')[0].padStart(2,'0') + '-' + p.issued_date.split('/')[1].padStart(2,'0') : '',
+        address: p.street_address || '',
+        city: 'Dallas',
+        zip: p.zip_code || '',
+        type,
+        work: p.work_description || '',
+        description: p.permit_type || '',
+        sqft: parseInt(p.area) || 0,
+        value: parseFloat(p.value) || 0,
+        contractor: cleanName(contractor),
+        phone,
+        lat: '', lng: ''
+      };
+    }
+  }
+};
+
+// Pick city from URL param or default to Austin
+const urlCity = new URLSearchParams(window.location.search).get('city') || 'austin';
+const CITY = CITIES[urlCity] || CITIES.austin;
+
+const PAGE_SIZE = 50;
+let currentPage = 0, allData = [], filteredData = [], activeContractor = null;
+
+// ─── Landing → Dashboard ───
+function showDashboard() {
+  document.getElementById('landing-page').style.display = 'none';
+  const dash = document.getElementById('dashboard');
+  dash.classList.add('active');
+  fetchPermits();
+}
+
+// ─── City switcher ───
+function switchCity(city) {
+  window.location.search = '?city=' + city;
+}
+
+// ─── Scroll reveal ───
+const obs = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); }}), { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => obs.observe(el));
+
+// ─── Toggle buttons ───
+document.querySelectorAll('.toggle-group').forEach(group => {
+  group.querySelectorAll('.toggle-btn').forEach(btn => {
+    btn.addEventListener('click', () => {
+      group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      fetchPermits();
+    });
+  });
+});
+
+// ─── Days slider ───
+function updateDaysLabel() {
+  const v = document.getElementById('filter-days').value;
+  document.getElementById('days-label').textContent = v === '1' ? '1 day' : v + ' days';
+}
+
+// ─── Clean contractor name ───
+function cleanName(name) {
+  if (!name) return '';
+  return name
+    .replace(/\s*[\*]*\s*\(?MAIN\)?\s*[\*]*/gi, '')
+    .replace(/\s*[\{\(]\s*formal?ly[^}\)]*[\}\)]\s*/gi, '')
+    .replace(/\s*\(d\/b\/a[^)]*\)\s*/gi, ' ')
+    .replace(/\s*\(registered trade name\)\s*/gi, '')
+    .replace(/\*+/g, '')
+    .replace(/\s{2,}/g, ' ')
+    .replace(/,\s*$/, '')
+    .trim();
+}
+
+// ─── Formatters ───
+function fmtMoney(v) { if (!v || v <= 1) return '\u2014'; if (v>=1e6) return '$'+(v/1e6).toFixed(1)+'M'; if (v>=1e3) return '$'+Math.round(v/1e3).toLocaleString()+'K'; return '$'+v.toLocaleString(); }
+function fmtDate(d) { if (!d) return '\u2014'; const dt=new Date(d); return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][dt.getMonth()]+' '+dt.getDate(); }
+function fmtPhone(p) {
+  if (!p) return '\u2014';
+  let d = p.replace(/\D/g,'');
+  // Take last 10 digits if longer (strip country code or junk)
+  if (d.length > 10) d = d.slice(-10);
+  if (d.length === 10) return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6);
+  if (d.length < 7) return '\u2014'; // too short to be valid
+  return p;
+}
+function esc(s) { if (!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// ─── Fetch ───
+async function fetchPermits() {
+  const loading = document.getElementById('loading');
+  const table = document.getElementById('permits-table');
+  const empty = document.getElementById('empty-state');
+
+  loading.style.display = 'block';
+  table.style.display = 'none';
+  empty.style.display = 'none';
+  document.getElementById('top-contractors').style.display = 'none';
+  activeContractor = null;
+
+  const days = document.getElementById('filter-days').value;
+  const permitClass = document.querySelector('#type-toggles .active').dataset.value;
+  const workClass = document.querySelector('#work-toggles .active').dataset.value;
+  const minSqft = document.getElementById('filter-min-sqft').value;
+
+  const since = new Date();
+  since.setDate(since.getDate() - parseInt(days));
+  const sinceStr = since.toISOString().split('T')[0];
+
+  const url = CITY.buildQuery(sinceStr, permitClass, workClass);
+
+  try {
+    const resp = await fetch(url);
+    if (!resp.ok) throw new Error(resp.status);
+    let raw = await resp.json();
+
+    // CKAN wraps results differently
+    if (CITY.type === 'ckan') {
+      raw = raw.result.records;
+      // Client-side date filter for CKAN
+      raw = raw.filter(r => (r['DATE ISSUED']||'') >= sinceStr);
+    }
+
+    // Normalize all records to common shape
+    allData = raw.map(r => CITY.normalize(r)).filter(r => r.contractor || r.address);
+
+    // Client-side sqft filter
+    if (minSqft) {
+      const min = parseInt(minSqft);
+      allData = allData.filter(p => p.sqft >= min);
+    }
+
+    // Client-side work filter (for cities that don't support it in API)
+    if (workClass && CITY.type === 'ckan') {
+      allData = allData.filter(p => p.work.toLowerCase().includes(workClass.toLowerCase()));
+    }
+
+    filteredData = allData;
+    currentPage = 0;
+    updateStats();
+    updateTopContractors();
+    renderPage();
+  } catch (err) {
+    loading.innerHTML = 'Unable to load data. <button class="btn btn-primary" onclick="fetchPermits()" style="margin-left:12px;">Retry</button>';
+  }
+}
+
+function updateStats() {
+  const total = filteredData.length;
+  const totalSqft = filteredData.reduce((s,p) => s + (p.sqft||0), 0);
+  const res = filteredData.filter(p => p.type==='Residential').length;
+  const com = filteredData.filter(p => p.type==='Commercial').length;
+  const contractors = new Set(filteredData.map(p => p.contractor).filter(Boolean)).size;
+
+  animateVal('stat-total', total);
+  animateVal('stat-residential', res);
+  animateVal('stat-commercial', com);
+  animateVal('stat-contractors', contractors);
+  // Sqft as formatted
+  const el = document.getElementById('stat-sqft');
+  if (totalSqft >= 1e6) el.textContent = (totalSqft/1e6).toFixed(1) + 'M';
+  else if (totalSqft >= 1e3) el.textContent = Math.round(totalSqft/1e3).toLocaleString() + 'K';
+  else el.textContent = totalSqft.toLocaleString();
+}
+
+function animateVal(id, end) {
+  const el = document.getElementById(id);
+  if (end === 0) { el.textContent = '0'; return; }
+  const dur = 600, start = performance.now();
+  (function step(now) {
+    const p = Math.min((now-start)/dur,1), e = 1-Math.pow(1-p,3);
+    el.textContent = Math.round(e*end).toLocaleString();
+    if (p<1) requestAnimationFrame(step);
+  })(performance.now());
+}
+
+function updateTopContractors() {
+  const counts = {};
+  filteredData.forEach(p => { const n = p.contractor; if (n) counts[n] = (counts[n]||0)+1; });
+  const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,12);
+  const list = document.getElementById('top-list');
+  list.innerHTML = sorted.map(([name,count]) =>
+    `<div class="top-chip" onclick="toggleContractor(this, '${esc(name.replace(/'/g,"\\'"))}')" data-name="${esc(name)}"><strong>${esc(name)}</strong><span class="chip-count">${count}</span></div>`
+  ).join('');
+  document.getElementById('top-contractors').style.display = sorted.length ? 'block' : 'none';
+  document.getElementById('reset-filter').style.display = 'none';
+}
+
+function toggleContractor(el, name) {
+  if (activeContractor === name) {
+    resetFilter();
+    return;
+  }
+  activeContractor = name;
+  document.querySelectorAll('.top-chip').forEach(c => c.classList.remove('active'));
+  el.classList.add('active');
+  document.getElementById('reset-filter').style.display = 'inline';
+  filteredData = allData.filter(p => p.contractor === name);
+  currentPage = 0;
+  updateStats();
+  renderPage();
+}
+
+function resetFilter() {
+  activeContractor = null;
+  document.querySelectorAll('.top-chip').forEach(c => c.classList.remove('active'));
+  document.getElementById('reset-filter').style.display = 'none';
+  filteredData = allData;
+  currentPage = 0;
+  updateStats();
+  renderPage();
+}
+
+function renderPage() {
+  const loading = document.getElementById('loading');
+  const table = document.getElementById('permits-table');
+  const empty = document.getElementById('empty-state');
+  const tbody = document.getElementById('permits-body');
+
+  loading.style.display = 'none';
+  if (!filteredData.length) { table.style.display='none'; empty.style.display='block'; document.getElementById('pagination').innerHTML=''; return; }
+
+  table.style.display = 'table';
+  empty.style.display = 'none';
+
+  const start = currentPage * PAGE_SIZE;
+  const page = filteredData.slice(start, start + PAGE_SIZE);
+
+  tbody.innerHTML = page.map((p,i) => {
+    const classBadge = p.type==='Residential' ? 'badge-residential' : 'badge-commercial';
+    const workBadge = (p.work||'').toLowerCase().includes('new') ? 'badge-new' : (p.work||'').toLowerCase().includes('dem') ? 'badge-demolition' : 'badge-remodel';
+    const cleanPhone = p.phone ? p.phone.replace(/\D/g,'').slice(-10) : '';
+    const phoneLink = cleanPhone.length === 10 ? `<a class="contractor-phone" href="tel:${cleanPhone}">${fmtPhone(p.phone)}</a>` : '\u2014';
+    const valStr = p.value > 1 ? fmtMoney(p.value) : '';
+
+    return `<tr style="animation:fadeRow .3s ${i*12}ms both">
+      <td style="white-space:nowrap">${fmtDate(p.date)}</td>
+      <td class="address-cell">${esc(p.address)||'\u2014'}</td>
+      <td><span class="permit-type-badge ${classBadge}">${p.type||'\u2014'}</span></td>
+      <td><span class="permit-type-badge ${workBadge}">${esc(p.work)||'\u2014'}</span></td>
+      <td class="description-cell" title="${esc(p.description)}">${esc(p.description)||'\u2014'}</td>
+      <td class="sqft-cell">${p.sqft ? p.sqft.toLocaleString() : '\u2014'}${valStr ? `<br><span style="font-size:11px;color:var(--sage)">${valStr}</span>` : ''}</td>
+      <td class="contractor-name">${esc(p.contractor)||'\u2014'}</td>
+      <td style="white-space:nowrap">${phoneLink}</td>
+    </tr>`;
+  }).join('');
+
+  renderPagination();
+}
+
+function renderPagination() {
+  const tp = Math.ceil(filteredData.length/PAGE_SIZE), pag = document.getElementById('pagination');
+  if (tp<=1) { pag.innerHTML=`<span class="results-count">${filteredData.length.toLocaleString()} permits</span>`; return; }
+  let h='';
+  if (currentPage>0) h+=`<button class="btn btn-outline" onclick="goPage(${currentPage-1})">&larr;</button>`;
+  const s=Math.max(0,currentPage-3), e=Math.min(tp,currentPage+4);
+  for (let i=s;i<e;i++) h+=`<button class="btn ${i===currentPage?'btn-page-active':'btn-outline'}" onclick="goPage(${i})">${i+1}</button>`;
+  if (currentPage<tp-1) h+=`<button class="btn btn-outline" onclick="goPage(${currentPage+1})">&rarr;</button>`;
+  h+=`<span class="results-count">${filteredData.length.toLocaleString()} permits</span>`;
+  pag.innerHTML=h;
+}
+
+function goPage(n) { currentPage=n; renderPage(); document.querySelector('.card-inner').scrollIntoView({behavior:'smooth',block:'start'}); }
+
+function downloadCSV() {
+  if (!filteredData.length) { alert('No data to export.'); return; }
+  const hdr = ['Issue Date','Address','City','Zip','Type','Work Class','Description','Sq Ft','Value','Contractor','Phone','Lat','Lng'];
+  const rows = filteredData.map(p => [
+    fmtDate(p.date),
+    (p.address||'').replace(/,/g,''),
+    p.city||'', p.zip||'',
+    p.type||'', p.work||'',
+    (p.description||'').replace(/,/g,' ').replace(/\n/g,' '),
+    p.sqft||'', p.value||'',
+    (p.contractor||'').replace(/,/g,''),
+    p.phone||'',
+    p.lat||'', p.lng||''
+  ]);
+  const csv = [hdr,...rows].map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
+  a.download = `${CITY.name.toLowerCase().replace(/\s/g,'-')}-permits-${new Date().toISOString().split('T')[0]}.csv`;
+  a.click();
+}
+
+function handleSubscribe() {
+  const email = document.getElementById('cta-email-input').value;
+  if (!email||!email.includes('@')) { document.getElementById('cta-email-input').focus(); return; }
+  document.getElementById('cta-form').innerHTML = '<span style="color:var(--sage);font-weight:600;font-size:14px;">Subscribed. You\'ll hear from us shortly.</span>';
+}
+
+// ─── Init city labels ───
+document.getElementById('landing-city-badge').textContent = CITY.name + ', ' + CITY.state;
+document.getElementById('landing-city-name').textContent = CITY.name;
+document.getElementById('topbar-brand').textContent = CITY.name + ' Permits';
+// Highlight active city button (landing + dashboard)
+const cityBtn = document.getElementById('city-btn-' + urlCity);
+if (cityBtn) cityBtn.classList.add('active');
+const dashBtn = document.getElementById('dash-btn-' + urlCity);
+if (dashBtn) dashBtn.classList.add('active');
+</script>
+</body>
 </html>
