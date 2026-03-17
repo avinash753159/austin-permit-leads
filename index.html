@@ -770,9 +770,12 @@ function updateDaysLabel() {
 function cleanName(name) {
   if (!name) return '';
   return name
-    .replace(/\s*\(MAIN\)\s*/gi, '')
-    .replace(/\s*\(main\)\s*/gi, '')
-    .replace(/\s*\(Main\)\s*/gi, '')
+    .replace(/\s*[\*]*\s*\(?MAIN\)?\s*[\*]*/gi, '')
+    .replace(/\s*[\{\(]\s*formal?ly[^}\)]*[\}\)]\s*/gi, '')
+    .replace(/\s*\(d\/b\/a[^)]*\)\s*/gi, ' ')
+    .replace(/\s*\(registered trade name\)\s*/gi, '')
+    .replace(/\*+/g, '')
+    .replace(/\s{2,}/g, ' ')
     .replace(/,\s*$/, '')
     .trim();
 }
