@@ -1,0 +1,26 @@
+name: Weekly Permit Report
+
+on:
+  schedule:
+    # Every Monday at 8am Central (14:00 UTC)
+    - cron: '0 14 * * 1'
+  workflow_dispatch: # Allow manual trigger
+
+jobs:
+  send-report:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Send weekly permit emails
+        env:
+          EMAIL_FROM: ${{ secrets.EMAIL_FROM }}
+          EMAIL_PASSWORD: ${{ secrets.EMAIL_PASSWORD }}
+          EMAIL_TO: ${{ secrets.EMAIL_TO }}
+          SMTP_HOST: ${{ secrets.SMTP_HOST }}
+          SMTP_PORT: ${{ secrets.SMTP_PORT }}
+        run: python weekly_email.py
