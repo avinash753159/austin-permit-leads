@@ -931,7 +931,7 @@ function switchCity(city) {
   // Update the global
   CITY = newCity;
   // Update labels
-  document.getElementById('topbar-brand').textContent = newCity.name + ' Permits' + (newCity.note ? ' (' + newCity.note + ')' : '');
+  document.getElementById('topbar-brand').textContent = newCity.name + ' Permits';
   // Update active buttons
   document.querySelectorAll('[data-city]').forEach(el => {
     el.classList.toggle('active', el.dataset.city === city);
