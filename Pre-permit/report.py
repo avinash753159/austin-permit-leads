@@ -183,25 +183,13 @@ def generate_dashboard():
     with open(dashboard_path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    # Replace the loadData function with embedded data using string markers
+    # Embed data directly into the initial ALL_LEADS declaration
     json_str = json.dumps(json_leads, ensure_ascii=True)
 
-    # Find and replace the loadData function between markers
-    marker_start = 'async function loadData() {'
-    marker_end = '}\n\nloadData();'
-
-    start_idx = html.find(marker_start)
-    end_idx = html.find(marker_end)
-
-    if start_idx >= 0 and end_idx >= 0:
-        replacement = f"""async function loadData() {{
-  ALL_LEADS = {json_str};
-  updateStats();
-  applyFilters();
-}}
-
-loadData();"""
-        html = html[:start_idx] + replacement + html[end_idx + len(marker_end):]
+    # Replace the empty array initialization with actual data
+    old_init = 'let ALL_LEADS = [];'
+    new_init = f'let ALL_LEADS = {json_str};'
+    html = html.replace(old_init, new_init, 1)
 
     with open(dashboard_path, 'w', encoding='utf-8') as f:
         f.write(html)
