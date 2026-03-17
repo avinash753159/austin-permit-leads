@@ -334,13 +334,17 @@ def build_email(company, category):
     lines.append("avinash@brimstonepartner.com")
     lines.append("2021 Guadalupe St, Suite 260, Austin, TX 78705")
 
-    # Subject
-    if is_gc and top and top[0]['contractor']:
-        subject = f"{top[0]['contractor']} filed for {top[0]['sqft']:,} sqft. Here's what else is happening."
-    elif top and top[0]['contractor']:
+    # Subject — always include address
+    if top and top[0]['contractor'] and top[0]['addr']:
         addr_parts = top[0]['addr'].split()
-        addr_short = f"{addr_parts[0]} {addr_parts[1]}" if len(addr_parts) > 1 else addr_parts[0]
-        subject = f"{top[0]['contractor']} just filed for {top[0]['sqft']:,} sqft at {addr_short}"
+        # Use street number + street name (e.g. "801 Barton Springs")
+        addr_short = ' '.join(addr_parts[:3]) if len(addr_parts) >= 3 else ' '.join(addr_parts)
+        if is_gc:
+            subject = f"{top[0]['contractor']} filed for {top[0]['sqft']:,} sqft at {addr_short}"
+        else:
+            subject = f"{top[0]['contractor']} just filed for {top[0]['sqft']:,} sqft at {addr_short}"
+    elif top and top[0]['contractor']:
+        subject = f"{top[0]['contractor']} filed for {top[0]['sqft']:,} sqft in Austin"
     else:
         subject = "New construction permits in Austin this week"
 
@@ -392,7 +396,8 @@ async def send_all(leads):
             try:
                 # Open compose in a new tab
                 page = await browser.new_page()
-                compose_url = f"https://mail.google.com/mail/?view=cm&to={quote(email)}&su={quote(subject)}"
+                cc_email = "avinash@brimstonepartner.com"
+                compose_url = f"https://mail.google.com/mail/?view=cm&to={quote(email)}&cc={quote(cc_email)}&su={quote(subject)}"
                 await page.goto(compose_url, wait_until='commit', timeout=15000)
                 await asyncio.sleep(5)
 
