@@ -298,53 +298,67 @@ async def send_all(leads):
             subject, body = build_email(company, category)
 
             try:
-                # Click compose button
-                compose_btn = await page.wait_for_selector('[gh="cm"]', timeout=10000)
-                if not compose_btn:
-                    compose_btn = await page.query_selector('.T-I.T-I-KE.L3')
-                if compose_btn:
-                    await compose_btn.click()
-                    await asyncio.sleep(2)
+                # Use compose URL but don't wait for full load (Gmail redirects)
+                compose_url = f"https://mail.google.com/mail/?view=cm&to={quote(email)}&su={quote(subject)}"
+                await page.goto(compose_url, wait_until='commit', timeout=15000)
+                await asyncio.sleep(5)
 
-                # Fill To field
-                to_field = await page.wait_for_selector('[name="to"], [aria-label="To recipients"]', timeout=5000)
-                if to_field:
-                    await to_field.fill(email)
-                    await asyncio.sleep(0.5)
+                # Wait for compose window to appear
+                body_field = None
+                for selector in ['[aria-label="Message Body"]', '[role="textbox"][g_editable="true"]', '.Am.aiL.Al.editable', '[contenteditable="true"]']:
+                    try:
+                        body_field = await page.wait_for_selector(selector, timeout=5000)
+                        if body_field:
+                            break
+                    except:
+                        continue
 
-                # Fill Subject
-                subj_field = await page.query_selector('[name="subjectbox"]')
-                if subj_field:
-                    await subj_field.fill(subject)
-                    await asyncio.sleep(0.3)
-
-                # Fill Body
-                body_field = await page.query_selector('[aria-label="Message Body"], [role="textbox"][g_editable="true"]')
                 if body_field:
                     await body_field.click()
-                    await page.keyboard.type(body, delay=2)
-                    await asyncio.sleep(0.5)
+                    await page.keyboard.type(body, delay=1)
+                    await asyncio.sleep(1)
+                    print(f"    Filled email body")
+                else:
+                    print(f"    Could not find body field, saving partial draft")
 
                 # Attach PDF
                 if os.path.exists(pdf_path):
                     file_inputs = await page.query_selector_all('input[type="file"]')
+                    attached = False
                     for fi in file_inputs:
                         try:
                             await fi.set_input_files(pdf_path)
                             print(f"    Attached: {os.path.basename(pdf_path)}")
+                            attached = True
                             await asyncio.sleep(3)
                             break
                         except:
                             continue
+                    if not attached:
+                        print(f"    Could not attach PDF")
 
-                # Save as draft — close compose window
+                # Save as draft (close compose, Gmail auto-saves)
                 await asyncio.sleep(1)
-                close_btn = await page.query_selector('[aria-label="Save & close"]')
-                if close_btn:
-                    await close_btn.click()
-                else:
+
+                # Try Save & Close button first
+                saved = False
+                for label in ['Save & close', 'Save & Close', 'Close']:
+                    try:
+                        btn = await page.query_selector(f'[aria-label="{label}"]')
+                        if btn:
+                            await btn.click()
+                            saved = True
+                            break
+                    except:
+                        continue
+
+                if not saved:
+                    # Ctrl+S to force save, then Escape to close
+                    await page.keyboard.press('Control+s')
+                    await asyncio.sleep(1)
                     await page.keyboard.press('Escape')
-                await asyncio.sleep(1)
+
+                await asyncio.sleep(2)
                 print(f"    Saved as draft!")
 
             except Exception as e:
