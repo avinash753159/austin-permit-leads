@@ -803,7 +803,7 @@ const CITIES = {
       let w = `issue_date >= '${since}' AND permittype='BP'`;
       if (permitClass) w += ` AND permit_class_mapped='${permitClass}'`;
       if (workClass) w += ` AND work_class='${workClass}'`;
-      return `${this.api}?$where=${encodeURIComponent(w)}&$order=${encodeURIComponent('issue_date DESC')}&$limit=5000`;
+      return `${this.api}?$where=${encodeURIComponent(w)}&$order=${encodeURIComponent('issue_date DESC')}&$limit=50000`;
     },
     normalize(p) {
       return {
@@ -833,7 +833,7 @@ const CITIES = {
       if (permitClass === 'Residential') where += ` AND "PERMIT TYPE" LIKE '%Res%'`;
       else if (permitClass === 'Commercial') where += ` AND "PERMIT TYPE" LIKE '%Comm%'`;
       if (workClass) where += ` AND "WORK TYPE" = '${workClass}'`;
-      const sql = `SELECT * FROM "c21106f9-3ef5-4f3a-8604-f992b4db7512" WHERE ${where} ORDER BY "DATE ISSUED" DESC LIMIT 5000`;
+      const sql = `SELECT * FROM "c21106f9-3ef5-4f3a-8604-f992b4db7512" WHERE ${where} ORDER BY "DATE ISSUED" DESC LIMIT 50000`;
       return `${this.api}?sql=${encodeURIComponent(sql)}`;
     },
     normalize(r) {
@@ -865,12 +865,13 @@ const CITIES = {
     state: 'TX',
     api: 'https://www.dallasopendata.com/resource/e7gq-4sah.json',
     type: 'socrata',
-    note: 'Historical data (2019). Updated dataset pending.',
+    note: 'Historical data (2019)',
     buildQuery(since, permitClass, workClass) {
-      let w = "issued_date > '01/01/19'";
+      // Dallas data is 2019 only — use issued_date range within 2019
+      let w = "issued_date IS NOT NULL";
       if (permitClass === 'Residential') w += " AND permit_type LIKE '%Single Family%'";
       else if (permitClass === 'Commercial') w += " AND permit_type LIKE '%Multi Family%'";
-      return `${this.api}?$where=${encodeURIComponent(w)}&$order=${encodeURIComponent('issued_date DESC')}&$limit=5000`;
+      return `${this.api}?$where=${encodeURIComponent(w)}&$order=${encodeURIComponent('issued_date DESC')}&$limit=50000`;
     },
     normalize(p) {
       // Dallas puts contractor info in one field: "COMPANY NAME ADDRESS (PHONE)"
@@ -930,7 +931,7 @@ function switchCity(city) {
   // Update the global
   CITY = newCity;
   // Update labels
-  document.getElementById('topbar-brand').textContent = newCity.name + ' Permits';
+  document.getElementById('topbar-brand').textContent = newCity.name + ' Permits' + (newCity.note ? ' (' + newCity.note + ')' : '');
   // Update active buttons
   document.querySelectorAll('[data-city]').forEach(el => {
     el.classList.toggle('active', el.dataset.city === city);
