@@ -338,7 +338,8 @@ async def send_all(leads):
                 print(f"    Saved as draft!")
                 await asyncio.sleep(1)
 
-        print(f"\n  Done! {len(leads)} drafts created in Gmail.")\n        print(f"  Go to Gmail > Drafts to review and send.")
+        print(f"\n  Done! {len(leads)} drafts created in Gmail.")
+        print(f"  Go to Gmail > Drafts to review and send.")
         await browser.close()
 
 
