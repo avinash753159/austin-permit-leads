@@ -11,9 +11,11 @@ echo  [3] Open San Antonio Dashboard
 echo  [4] Pull Contractor Leads (CSV)
 echo  [5] Open Outreach Leads (with emails)
 echo  [6] Open PDFs Folder
-echo  [7] Generate All 41 PDFs
-echo  [8] Create Gmail Drafts (with PDFs attached)
+echo  [7] Generate All 61 PDFs
+echo  [8] Create Gmail Drafts - OLD 41 (already sent)
 echo  [9] View Collected Emails (admin)
+echo  [10] Create Gmail Drafts - NEW 20 ONLY
+echo  [11] Open New PDFs Folder
 echo  [0] Exit
 echo.
 set /p choice=Choose:
@@ -37,17 +39,31 @@ if "%choice%"=="5" start "" "%~dp0outreach-leads.csv"
 if "%choice%"=="6" start "" "%~dp0PDFs"
 if "%choice%"=="7" (
     echo.
-    echo Generating 41 personalized PDFs...
+    echo Generating 61 personalized PDFs...
     python "%~dp0generate_pdfs.py"
     echo.
     pause
 )
 if "%choice%"=="8" (
     echo.
-    echo How many drafts to create? (Enter a number, or 'all')
-    set /p num=Number:
-    python "%~dp0send_emails.py" %num%
+    echo WARNING: These are the OLD 41 leads you already sent.
+    echo Are you sure? (y/n)
+    set /p confirm=Confirm:
+    if /i "%confirm%"=="y" (
+        echo How many drafts to create? (Enter a number, or 'all')
+        set /p num=Number:
+        python "%~dp0send_emails.py" %num%
+    )
     pause
 )
 if "%choice%"=="9" start "" "https://brimstone-permits-production.up.railway.app/api/leads"
+if "%choice%"=="10" (
+    echo.
+    echo  Creating Gmail drafts for 20 NEW leads only...
+    echo  (PDFs from PDFs-New folder, no duplicates with old 41)
+    echo.
+    python "%~dp0send_emails.py" --new all
+    pause
+)
+if "%choice%"=="11" start "" "%~dp0PDFs-New"
 if "%choice%"=="0" exit

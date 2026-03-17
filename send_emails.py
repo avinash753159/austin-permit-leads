@@ -22,9 +22,12 @@ from urllib.request import urlopen
 from urllib.parse import quote
 
 DASHBOARD_URL = "https://brimstone-permits-production.up.railway.app"
-PDF_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'PDFs')
-SESSION_DIR = os.path.join(os.path.dirname(os.path.abspath(__file__)), '.gmail-session')
-LEADS_FILE = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'outreach-leads.csv')
+BASE_DIR = os.path.dirname(os.path.abspath(__file__))
+PDF_DIR = os.path.join(BASE_DIR, 'PDFs')
+PDF_NEW_DIR = os.path.join(BASE_DIR, 'PDFs-New')
+SESSION_DIR = os.path.join(BASE_DIR, '.gmail-session')
+LEADS_FILE = os.path.join(BASE_DIR, 'outreach-leads.csv')
+LEADS_NEW_FILE = os.path.join(BASE_DIR, 'outreach-leads-new.csv')
 
 # ─── Permit data cache ───
 PERMIT_CACHE = None
@@ -122,6 +125,27 @@ def get_relevant_permits(category):
         elif 'drywall' in cat or 'interior' in cat:
             if 'Remodel' in p['work'] and sqft > 5000:
                 relevant.append((pkey, p))
+        elif 'fire' in cat or 'sprinkler' in cat:
+            if p['class'] == 'Commercial' and sqft > 500:
+                relevant.append((pkey, p))
+        elif 'steel' in cat or 'iron' in cat or 'metal fab' in cat or 'weld' in cat:
+            if (p['class'] == 'Commercial' and sqft > 2000) or sqft > 5000:
+                relevant.append((pkey, p))
+        elif 'paint' in cat:
+            if sqft > 3000:
+                relevant.append((pkey, p))
+        elif 'demol' in cat or 'excavat' in cat or 'paving' in cat or 'site' in cat:
+            if p['work'] == 'New' and sqft > 2000:
+                relevant.append((pkey, p))
+        elif 'fence' in cat:
+            if p['work'] == 'New' and p['class'] == 'Residential' and sqft > 1500:
+                relevant.append((pkey, p))
+        elif 'glass' in cat or 'glaz' in cat:
+            if (p['class'] == 'Commercial' and sqft > 1000) or (p['work'] == 'New' and sqft > 3000):
+                relevant.append((pkey, p))
+        elif 'floor' in cat or 'tile' in cat:
+            if 'Remodel' in p['work'] and sqft > 3000:
+                relevant.append((pkey, p))
         else:
             if sqft > 5000:
                 relevant.append((pkey, p))
@@ -193,6 +217,26 @@ def make_short_name(company):
         'AWhiddon Construction': 'AWhiddon',
         'KB Home Austin': 'KB Home',
         'Brookfield Residential TX': 'Brookfield',
+        '360 Electrical Contractors': '360 Electric',
+        'Fire King LLC': 'Fire King',
+        'Concrete Contractors of Austin': 'CCA',
+        'Comanche Roofing': 'Comanche',
+        'Austin Iron': 'Austin Iron',
+        'Clarke Kent Plumbing': 'Clarke Kent',
+        'Stallion Paving': 'Stallion',
+        'Patriot Erectors': 'Patriot',
+        'Tex Painting': 'Tex Painting',
+        'Venditti Demolition': 'Venditti',
+        'Allied Fence & Security': 'Allied Fence',
+        'Austin Glass & Mirror': 'Austin Glass',
+        'Floor Masters ATX': 'Floor Masters',
+        'Binswanger Glass': 'Binswanger',
+        'EmpireWorks': 'EmpireWorks',
+        'BEC Austin': 'BEC',
+        'Apple Fence Company': 'Apple Fence',
+        'Reliant Plumbing': 'Reliant',
+        'Welding Austin': 'Welding Austin',
+        'Reconstruction Experts': 'ReconExp',
     }
     return abbrevs.get(company, company.split()[0])
 
@@ -222,6 +266,20 @@ def get_trade_context(category):
         return "rents construction equipment", "equipment rental"
     elif 'drywall' in cat or 'interior' in cat:
         return "supplies drywall and interior materials", "drywall and steel stud order"
+    elif 'fire' in cat or 'sprinkler' in cat:
+        return "installs fire protection systems", "fire sprinkler bid"
+    elif 'steel' in cat or 'iron' in cat or 'metal fab' in cat or 'weld' in cat:
+        return "does steel fabrication and erection", "structural steel bid"
+    elif 'paint' in cat:
+        return "does commercial and residential painting", "painting contract"
+    elif 'demol' in cat or 'excavat' in cat or 'paving' in cat or 'site' in cat:
+        return "handles demolition and site prep", "site work opportunity"
+    elif 'fence' in cat:
+        return "installs commercial and residential fencing", "fencing contract"
+    elif 'glass' in cat or 'glaz' in cat:
+        return "does commercial glazing and glass work", "glazing bid"
+    elif 'floor' in cat or 'tile' in cat:
+        return "installs commercial flooring", "flooring contract"
     elif 'general' in cat or 'contractor' in cat:
         return "builds in Austin", "competitive intelligence"
     else:
@@ -326,7 +384,7 @@ async def send_all(leads):
             print(f"  [{i+1}/{len(leads)}] {company} ({email})")
 
             # Generate PDF for this lead
-            pdf_path = os.path.join(PDF_DIR, f"{company.replace(' ', '-').replace('/', '-')}-Report.pdf")
+            pdf_path = os.path.join(PDF_DIR, f"{company.replace(' ', '-').replace('/', '-').replace('&', 'and')}-Report.pdf")
 
             # Build email
             subject, body = build_email(company, category)
@@ -410,18 +468,30 @@ async def send_all(leads):
 
 
 def main():
+    global PDF_DIR
     limit = None
     priority_filter = "HIGH"
+    use_new = False
+    leads_file = LEADS_FILE
 
-    if len(sys.argv) > 1:
-        arg = sys.argv[1]
+    args = sys.argv[1:]
+    if "--new" in args:
+        use_new = True
+        args.remove("--new")
+        leads_file = LEADS_NEW_FILE
+        PDF_DIR = PDF_NEW_DIR
+        priority_filter = None  # Send all new leads by default
+        print("\n  ** NEW LEADS ONLY MODE — using 20 new contacts **")
+
+    if args:
+        arg = args[0]
         if arg == "all":
             priority_filter = None
         elif arg.isdigit():
             limit = int(arg)
 
     leads = []
-    with open(LEADS_FILE, 'r', encoding='utf-8') as f:
+    with open(leads_file, 'r', encoding='utf-8') as f:
         for row in csv.DictReader(f):
             if priority_filter and row.get('Priority', '') != priority_filter:
                 continue
@@ -436,7 +506,7 @@ def main():
         return
 
     print(f"\n  Found {len(leads)} leads to email.")
-    print(f"  This will open a browser, log into Gmail, and send each email with a PDF attachment.")
+    print(f"  This will open a browser, log into Gmail, and create each draft with a PDF attachment.")
     print(f"  First run: you'll need to sign into Gmail once.\n")
 
     asyncio.run(send_all(leads))
