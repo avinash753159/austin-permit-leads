@@ -1,7 +1,8 @@
 @echo off
 echo.
 echo  ====================================
-echo   Austin Permit Intelligence
+echo   Brimstone Partner
+echo   Texas Construction Intelligence
 echo  ====================================
 echo.
 echo  [1] Open Landing Page (local)
@@ -10,7 +11,9 @@ echo  [3] Open San Antonio Dashboard
 echo  [4] Open Dallas Dashboard
 echo  [5] Pull Contractor Leads (CSV)
 echo  [6] Open Lead CSV File
-echo  [7] Open Email Templates
+echo  [7] Open Outreach Leads (with emails)
+echo  [8] Open Email Templates
+echo  [9] Setup Email (sign in with Google)
 echo  [0] Exit
 echo.
 set /p choice=Choose:
@@ -30,5 +33,12 @@ if "%choice%"=="5" (
 if "%choice%"=="6" (
     for %%f in ("%~dp0austin-contractor-leads-*.csv") do start "" "%%f"
 )
-if "%choice%"=="7" start "" "%~dp0outreach-email.md"
+if "%choice%"=="7" start "" "%~dp0outreach-leads.csv"
+if "%choice%"=="8" start "" "%~dp0outreach-email.md"
+if "%choice%"=="9" (
+    echo.
+    echo Setting up email for avinash@brimstonepartner.com...
+    python "%~dp0setup_email.py"
+    pause
+)
 if "%choice%"=="0" exit
