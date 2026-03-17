@@ -597,9 +597,9 @@ footer a:hover { color: var(--accent); }
 
   <div style="margin-bottom: 20px;">
     <div class="toggle-group" style="justify-content: center; display: flex;">
-      <button class="toggle-btn" onclick="switchCity('austin')" id="city-btn-austin">Austin</button>
-      <button class="toggle-btn" onclick="switchCity('sanantonio')" id="city-btn-sanantonio">San Antonio</button>
-      <button class="toggle-btn" onclick="switchCity('dallas')" id="city-btn-dallas">Dallas</button>
+      <a class="toggle-btn" href="?city=austin&open=1" id="city-btn-austin" style="text-decoration:none;">Austin</a>
+      <a class="toggle-btn" href="?city=sanantonio&open=1" id="city-btn-sanantonio" style="text-decoration:none;">San Antonio</a>
+      <a class="toggle-btn" href="?city=dallas&open=1" id="city-btn-dallas" style="text-decoration:none;">Dallas</a>
     </div>
   </div>
 
@@ -677,11 +677,11 @@ footer a:hover { color: var(--accent); }
     </div>
     <div class="topbar-right" style="display:flex; gap:6px; align-items:center;">
       <div class="toggle-group" id="topbar-cities" style="display:flex; gap:4px;">
-        <button class="toggle-btn" onclick="switchCity('austin')" id="dash-btn-austin" style="padding:6px 12px; font-size:11px;">Austin</button>
-        <button class="toggle-btn" onclick="switchCity('sanantonio')" id="dash-btn-sanantonio" style="padding:6px 12px; font-size:11px;">San Antonio</button>
-        <button class="toggle-btn" onclick="switchCity('dallas')" id="dash-btn-dallas" style="padding:6px 12px; font-size:11px;">Dallas</button>
-        <button class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;" disabled>Houston</button>
-        <button class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;" disabled>Fort Worth</button>
+        <a class="toggle-btn" href="?city=austin&open=1" id="dash-btn-austin" style="padding:6px 12px; font-size:11px; text-decoration:none;">Austin</a>
+        <a class="toggle-btn" href="?city=sanantonio&open=1" id="dash-btn-sanantonio" style="padding:6px 12px; font-size:11px; text-decoration:none;">San Antonio</a>
+        <a class="toggle-btn" href="?city=dallas&open=1" id="dash-btn-dallas" style="padding:6px 12px; font-size:11px; text-decoration:none;">Dallas</a>
+        <span class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;">Houston</span>
+        <span class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;">Fort Worth</span>
       </div>
       <button class="btn btn-export" onclick="downloadCSV()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
