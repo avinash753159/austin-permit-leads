@@ -771,3 +771,383 @@ Avinash Nayak, PhD
 Brimstone Partner
 (832) 380-5845
 avinash@brimstonepartner.com
+
+---
+
+## EMAIL 42 — 360 Electrical Contractors
+**To:** rconner@360electricalcontractors.com
+**Subject:** 22 new commercial permits in Austin, all need electrical subs
+
+Hi,
+
+22 new commercial projects were permitted in Austin in the last two weeks, including a 12,056 sqft new facility by Flintco on E Riverside Dr and a 96,600 sqft interior remodel by Turner Construction at River Place Blvd. Both will need electrical subcontractors.
+
+With 30+ years in commercial electrical, I figured you'd want early access to these before the bid boards fill up. Full list with GC names and phone numbers:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 43 — Fire King LLC
+**To:** estimating@firekingllc.com
+**Subject:** 22 new commercial permits in Austin, all need fire sprinkler systems
+
+Hi,
+
+22 new commercial builds were permitted in Austin in the last two weeks. Flintco filed for a 12,056 sqft new facility on E Riverside Dr. Turner Construction filed for a 96,600 sqft remodel at River Place Blvd. D.H. Allen filed two warehouse remodels totaling over 200,000 sqft on Freidrich Ln.
+
+Every one of these needs fire protection. Since your estimating team reviews construction drawings, thought you'd want the GC contacts early:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 44 — Concrete Contractors of Austin
+**To:** bids@concretecontractorsofaustin.com
+**Subject:** 12,000 sqft commercial foundation on E Riverside, plus 93 new homes
+
+Hi,
+
+Flintco just pulled a permit for a 12,056 sqft new commercial facility at 5309 E Riverside Dr. There are also 93 new residential builds permitted in the last two weeks, every one starting with a foundation pour. Since you handle commercial and industrial concrete $1M+, the Flintco project alone could be a fit.
+
+Full list with GC contacts and project details:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 45 — Comanche Roofing
+**To:** info@comancheroofing.com
+**Subject:** Empire Roofing pulling 165,000 sqft of re-roof permits in Austin
+
+Hi,
+
+Empire Roofing Companies just filed permits for re-roofs at 2200 Denton Dr (109,720 sqft) and 9230 Neils Thompson Dr (56,000 sqft). Plus 93 new residential builds and 22 commercial permits filed in the last two weeks. All need roofing.
+
+I built a tool that tracks every new permit filed in Austin in real time with GC contacts:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 46 — Austin Iron
+**To:** zach@austiniron.com
+**Subject:** 12,000 sqft commercial build on E Riverside needs structural steel
+
+Hi Zach,
+
+Flintco just pulled a permit for a 12,056 sqft new commercial facility at 5309 E Riverside Dr. D.H. Allen also filed two warehouse remodels totaling over 200,000 sqft on Freidrich Ln. Both will likely need structural steel fabrication and erection.
+
+I track every new Austin permit in real time with GC names and phone numbers:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 47 — Clarke Kent Plumbing
+**To:** dispatch@clarkekentplumbing.com
+**Subject:** 93 new residential builds and 22 commercial permits in Austin
+
+Hi,
+
+93 new residential builds and 22 new commercial projects were permitted in Austin in the last two weeks. Milestone Community Builders filed 7 homes up to 6,600 sqft. Flintco filed a 12,056 sqft commercial facility. Every one needs plumbing.
+
+Full permit list with GC contacts and project details:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 48 — Stallion Paving
+**To:** admin@stallionpaving.com
+**Subject:** 93 new home foundations + commercial site work permits in Austin
+
+Hi,
+
+93 new residential builds were permitted in Austin in the last two weeks, all needing foundation pours and site prep. Flintco also pulled a 12,056 sqft commercial facility permit on E Riverside Dr. Zapalac/Reed filed for a 195,774 sqft remodel on E Howard Ln.
+
+Since you do foundations, paving, and site work, thought you'd want early access to these GC contacts:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 49 — Patriot Erectors
+**To:** contact@patrioterectors.com
+**Subject:** New commercial builds in Austin need structural steel
+
+Hi,
+
+Flintco just pulled a permit for a 12,056 sqft new commercial facility at 5309 E Riverside Dr. D.H. Allen filed two large warehouse remodels on Freidrich Ln. Turner Construction filed for a 96,600 sqft remodel at River Place Blvd. Multiple projects that could need steel erection.
+
+I track every new Austin permit in real time:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 50 — Tex Painting
+**To:** admin@texpainting.com
+**Subject:** 462 new building permits in Austin, painting needed across the board
+
+Hi,
+
+462 building permits were filed in Austin in the last two weeks. 93 new residential builds, 22 commercial projects, and 106 remodels. Every one of them will need painting at some point. Highlights include a 96,600 sqft interior remodel by Turner Construction and a 16,388 sqft luxury home.
+
+Full list with GC contacts:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 51 — Venditti Demolition
+**To:** Info@VendittiLLC.com
+**Subject:** 195,000 sqft remodel on E Howard Ln, demo work likely needed
+
+Hi,
+
+Zapalac/Reed Construction just filed for a 195,774 sqft remodel at 6719 E Howard Ln. D.H. Allen filed two warehouse remodels totaling over 200,000 sqft on Freidrich Ln. Turner Construction filed for a 96,600 sqft interior remodel. Large remodels often start with demolition.
+
+Plus 93 new residential builds needing site prep. Full permit list:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 52 — Allied Fence & Security
+**To:** Contact@AlliedFenceAndSecurity.com
+**Subject:** 93 new homes permitted in Austin, all need fencing
+
+Hi,
+
+93 new residential builds were permitted in Austin in the last two weeks. Milestone Community Builders filed 7 permits for homes in the Eternity Terrace development. Brookfield Residential filed 7 permits. Taylor Morrison filed 9. Every new home needs a fence.
+
+Since you've been Austin's fence company since 1950, figured you'd want early access to these builder contacts:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 53 — Austin Glass & Mirror
+**To:** info@austinglass.com
+**Subject:** New commercial permits in Austin, glazing opportunities
+
+Hi,
+
+22 new commercial projects were permitted in Austin in the last two weeks. Flintco filed for a 12,056 sqft new facility on E Riverside. Turner Construction filed a 96,600 sqft interior remodel at River Place Blvd. Both will need commercial glazing work.
+
+Since you've been doing commercial glazing in Austin since 1984, thought you'd want GC contact info early:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 54 — Floor Masters ATX
+**To:** info@floormastersatx.com
+**Subject:** 106 remodel permits in Austin, all need flooring
+
+Hi,
+
+106 remodel permits were filed in Austin in the last two weeks. Turner Construction filed for a 96,600 sqft interior remodel at River Place Blvd. D.H. Allen filed two warehouse remodels totaling over 200,000 sqft. These remodels will need flooring installation.
+
+Full list with GC contacts and project details:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 55 — Binswanger Glass
+**To:** branch019@binswangerglass.com
+**Subject:** 22 commercial permits filed in Austin, glazing needed
+
+Hi,
+
+22 new commercial builds were permitted in Austin in the last two weeks. Flintco filed for a 12,056 sqft new facility on E Riverside Dr. Also 93 new residential builds, including a 16,388 sqft luxury home at 2514 Wooldridge Dr. Both commercial and residential glass opportunities.
+
+Full permit list with GC contacts:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 56 — EmpireWorks
+**To:** sruiz@empireworks.com
+**Subject:** 165,000 sqft of re-roof permits just filed in Austin
+
+Hi Sam,
+
+Empire Roofing Companies just filed permits for 165,000 sqft of re-roofs at Denton Dr and Neils Thompson Dr. There are also 93 new residential builds and 22 commercial projects permitted in the last two weeks. All need roofing.
+
+I track every new permit filed in Austin in real time:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 57 — BEC Austin
+**To:** info@becaustin.com
+**Subject:** 462 permits filed in Austin in 2 weeks. Want to track the competition?
+
+Hi,
+
+462 building permits were filed in Austin in the last two weeks. Novo Construction filed 12 permits totaling over 130,000 sqft. Turner Construction filed for 96,600 sqft at River Place. Flintco pulled a 12,056 sqft new build on E Riverside.
+
+I built a tool that tracks every permit filed in Austin in real time. Useful for tracking competitor activity:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 58 — Apple Fence Company
+**To:** info@applefenceaustin.com
+**Subject:** 93 new home builds in Austin, fencing opportunities
+
+Hi,
+
+93 new residential builds were permitted in Austin in the last two weeks. Milestone Community Builders filed 7 homes, Brookfield filed 7, and Taylor Morrison filed 9. Many are in the Leander/north Austin growth corridor, right in your area.
+
+Full list with builder contacts:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 59 — Reliant Plumbing
+**To:** service@reliantplumbing.com
+**Subject:** 93 new residential builds permitted in Austin, plumbing needed
+
+Hi,
+
+93 new residential builds were permitted in Austin in the last two weeks. Milestone Community Builders filed 7 permits for 5,000+ sqft homes. Perry Homes filed for a 4,292 sqft home at Binnewater Way. Every one needs plumbing.
+
+Full list with builder contacts:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 60 — Welding Austin
+**To:** kyle@weldingaustin.com
+**Subject:** New commercial permits in Austin need custom metalwork
+
+Hi Kyle,
+
+Flintco just pulled a permit for a 12,056 sqft new commercial facility at 5309 E Riverside Dr. D.H. Allen filed two warehouse remodels totaling over 200,000 sqft. Commercial builds often need custom metal fabrication, railings, and structural welding.
+
+I track every new permit filed in Austin with GC contacts:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com
+
+---
+
+## EMAIL 61 — Reconstruction Experts
+**To:** Matt.Pullin@reconexp.com
+**Subject:** 165,000 sqft of re-roof permits in Austin, plus 93 new builds
+
+Hi Matt,
+
+Empire Roofing just filed permits for 165,000 sqft of commercial re-roofs in Austin. Plus 93 new residential builds and 22 commercial permits in the last two weeks. If you're looking for roofing bid opportunities, this is a good pipeline.
+
+Full permit list with GC contacts:
+
+https://brimstone-permits-production.up.railway.app
+
+Avinash Nayak, PhD
+Brimstone Partner
+(832) 380-5845
+avinash@brimstonepartner.com

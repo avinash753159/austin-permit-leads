@@ -39,7 +39,7 @@ def fmt_phone(p):
 
 def fetch_permits():
     print("Fetching Austin permit data...")
-    where = "issue_date >= '2026-03-03' AND permittype='BP'"
+    where = "issue_date >= '2026-03-03' AND permittype='BP'"  # Last ~14 days
     url = f"https://data.austintexas.gov/resource/3syk-w9eu.json?$where={quote(where)}&$order={quote('issue_date DESC')}&$limit=50000"
     with urlopen(url) as resp:
         data = json.loads(resp.read())
@@ -84,6 +84,20 @@ def get_relevant(permits, category):
             if s > 5000: out.append(p)
         elif 'drywall' in cat or 'interior' in cat:
             if 'Remodel' in p['work'] and s > 5000: out.append(p)
+        elif 'fire' in cat or 'sprinkler' in cat:
+            if p['cls'] == 'Commercial' and s > 500: out.append(p)
+        elif 'steel' in cat or 'iron' in cat or 'metal fab' in cat or 'weld' in cat:
+            if (p['cls'] == 'Commercial' and s > 2000) or s > 5000: out.append(p)
+        elif 'paint' in cat:
+            if s > 3000: out.append(p)
+        elif 'demol' in cat or 'excavat' in cat or 'paving' in cat or 'site' in cat:
+            if p['work'] == 'New' and s > 2000: out.append(p)
+        elif 'fence' in cat:
+            if p['work'] == 'New' and p['cls'] == 'Residential' and s > 1500: out.append(p)
+        elif 'glass' in cat or 'glaz' in cat:
+            if (p['cls'] == 'Commercial' and s > 1000) or (p['work'] == 'New' and s > 3000): out.append(p)
+        elif 'floor' in cat or 'tile' in cat:
+            if 'Remodel' in p['work'] and s > 3000: out.append(p)
         elif 'general' in cat or 'contractor' in cat:
             if s > 3000: out.append(p)
         else:
@@ -118,6 +132,13 @@ def trade_focus(category):
     if 'window' in cat or 'door' in cat: return 'Windows & Doors', 'builds needing window/door specification'
     if 'equipment' in cat or 'rental' in cat: return 'Equipment Rental', 'projects needing equipment on site'
     if 'drywall' in cat or 'interior' in cat: return 'Drywall & Interior', 'remodels needing drywall and steel studs'
+    if 'fire' in cat or 'sprinkler' in cat: return 'Fire Protection', 'commercial projects needing fire sprinkler bids'
+    if 'steel' in cat or 'iron' in cat or 'metal fab' in cat or 'weld' in cat: return 'Steel & Metal Fabrication', 'projects needing structural steel or custom metalwork'
+    if 'paint' in cat: return 'Painting', 'projects needing interior/exterior painting'
+    if 'demol' in cat or 'excavat' in cat or 'paving' in cat or 'site' in cat: return 'Site Work & Excavation', 'projects needing demolition, excavation, or paving'
+    if 'fence' in cat: return 'Fencing', 'new builds needing perimeter fencing'
+    if 'glass' in cat or 'glaz' in cat: return 'Glass & Glazing', 'projects needing commercial glass and glazing'
+    if 'floor' in cat or 'tile' in cat: return 'Flooring', 'projects needing flooring installation'
     if 'general' in cat or 'contractor' in cat: return 'Competitive Intelligence', 'competitor permit activity'
     return 'Building Materials', 'construction opportunities'
 
@@ -151,6 +172,22 @@ def why_it_matters(p, category):
         return 'Heavy equipment needed on site.'
     if 'drywall' in cat or 'interior' in cat:
         return 'Interior finish-out, drywall needed.'
+    if 'fire' in cat or 'sprinkler' in cat:
+        return 'Commercial build, fire sprinkler system needed.'
+    if 'steel' in cat or 'iron' in cat or 'metal fab' in cat or 'weld' in cat:
+        return f"{p['sqft']:,} sqft, structural steel or metalwork needed."
+    if 'paint' in cat:
+        if 'Remodel' in p['work']: return 'Remodel, painting needed.'
+        return f"{p['sqft']:,} sqft new build, painting needed."
+    if 'demol' in cat or 'excavat' in cat or 'paving' in cat or 'site' in cat:
+        return 'New build, site prep and excavation needed.'
+    if 'fence' in cat:
+        return 'New residential build, perimeter fencing needed.'
+    if 'glass' in cat or 'glaz' in cat:
+        if p['cls'] == 'Commercial': return 'Commercial build, glazing/storefront needed.'
+        return f"{p['sqft']:,} sqft build, windows/glass needed."
+    if 'floor' in cat or 'tile' in cat:
+        return f"{p['sqft']:,} sqft, flooring installation needed."
     if 'general' in cat or 'contractor' in cat:
         return f"Competitor activity, {p['sqft']:,} sqft."
     return 'Construction opportunity.'
@@ -281,9 +318,10 @@ tbody tr:nth-child(even) {{ background: #fafbfc; }}
 .cp {{ color: #D4A843; font-weight: 600; white-space: nowrap; }}
 .cs {{ font-weight: 700; }}
 .cw {{ font-size: 7.5px; color: #555; line-height: 1.3; }}
-.cta-block {{ text-align: center; margin: 16px 0 10px; padding: 14px 20px; background: #2C3E6B; border-radius: 6px; }}
-.cta-block a {{ color: #D4A843; font-size: 14px; font-weight: 800; text-decoration: none; letter-spacing: 0.01em; }}
-.cta-block p {{ color: #a8b4d0; font-size: 8px; margin-top: 4px; }}
+.cta-block {{ text-align: center; margin: 16px 0 10px; padding: 16px 20px; background: #2C3E6B; border-radius: 6px; }}
+.cta-label {{ color: white; font-size: 11px; font-weight: 700; margin-bottom: 6px; }}
+.cta-block a {{ color: #D4A843; font-size: 16px; font-weight: 800; text-decoration: underline; text-underline-offset: 4px; letter-spacing: 0.01em; }}
+.cta-block p {{ color: #a8b4d0; font-size: 8px; margin-top: 6px; }}
 .footer {{ margin-top: 10px; padding-top: 8px; border-top: 1px solid #eee; display: flex; justify-content: space-between; font-size: 7.5px; color: #aaa; }}
 .footer a {{ color: #2C3E6B; text-decoration: none; }}
 @page {{ size: A4; margin: 0; }}
@@ -328,8 +366,9 @@ tbody tr:nth-child(even) {{ background: #fafbfc; }}
   <p>{strategy}</p>
 </div>
 <div class="cta-block">
-  <a href="https://brimstone-permits-production.up.railway.app">brimstone-permits-production.up.railway.app</a>
-  <p>Access the full dashboard. Filter, search, and export all Austin permit data in real time.</p>
+  <div class="cta-label">ACCESS ALL PERMITS</div>
+  <a href="https://brimstone-permits-production.up.railway.app">Click Here to Open the Full Dashboard</a>
+  <p>Filter by contractor, project type, and size. Export as CSV. Updated in real time.</p>
 </div>
 <div class="footer">
   <div>Brimstone Partner &bull; Texas Construction Intelligence</div>
@@ -362,6 +401,16 @@ SHORT_NAMES = {
     'Structura Inc': 'Structura', 'Joseph Design Build': 'JDB',
     'Topos Collective': 'Topos', 'AWhiddon Construction': 'AWhiddon',
     'KB Home Austin': 'KB Home', 'Brookfield Residential TX': 'Brookfield',
+    '360 Electrical Contractors': '360 Electric', 'Fire King LLC': 'Fire King',
+    'Concrete Contractors of Austin': 'CCA', 'Comanche Roofing': 'Comanche',
+    'Austin Iron': 'Austin Iron', 'Clarke Kent Plumbing': 'Clarke Kent',
+    'Stallion Paving': 'Stallion', 'Patriot Erectors': 'Patriot',
+    'Tex Painting': 'Tex Painting', 'Venditti Demolition': 'Venditti',
+    'Allied Fence & Security': 'Allied Fence', 'Austin Glass & Mirror': 'Austin Glass',
+    'Floor Masters ATX': 'Floor Masters', 'Binswanger Glass': 'Binswanger',
+    'EmpireWorks': 'EmpireWorks', 'BEC Austin': 'BEC',
+    'Apple Fence Company': 'Apple Fence', 'Reliant Plumbing': 'Reliant',
+    'Welding Austin': 'Welding Austin', 'Reconstruction Experts': 'ReconExp',
 }
 
 
