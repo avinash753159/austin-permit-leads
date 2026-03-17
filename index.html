@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Austin Permit Intelligence</title>
+<title>Texas Permit Intelligence</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=DM+Serif+Display:ital@0;1&family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -568,14 +568,20 @@ footer a:hover { color: var(--accent); }
 <section class="landing" id="landing-page">
   <div class="landing-badge">
     <span class="live-dot"></span>
-    Austin, Texas &middot; Live permit data
+    <span id="landing-city-badge">Austin, Texas</span> &middot; Live permit data
   </div>
 
   <h1>Know who's building what,<br><em>before your competitors do.</em></h1>
 
   <p class="landing-description">
-    Every new construction permit filed in Austin &mdash; with the contractor's name, phone number, project size, and address. Updated in real time from city records.
+    Every new construction permit filed in <span id="landing-city-name">Austin</span> &mdash; with the contractor's name, phone number, project size, and address. Updated in real time from city records.
   </p>
+
+  <div class="toggle-group" style="margin-bottom: 32px; justify-content: center; display: flex;">
+    <button class="toggle-btn" onclick="switchCity('austin')" id="city-btn-austin">Austin</button>
+    <button class="toggle-btn" onclick="switchCity('sanantonio')" id="city-btn-sanantonio">San Antonio</button>
+    <button class="toggle-btn" onclick="switchCity('dallas')" id="city-btn-dallas">Dallas</button>
+  </div>
 
   <div class="landing-features">
     <div class="landing-feature">
@@ -617,7 +623,7 @@ footer a:hover { color: var(--accent); }
   <!-- Sticky Top Bar -->
   <div class="topbar">
     <div class="topbar-left">
-      <span class="topbar-brand">Austin Permits</span>
+      <span class="topbar-brand" id="topbar-brand">Austin Permits</span>
       <span class="topbar-live"><span class="live-dot"></span> Live</span>
     </div>
     <div class="topbar-right">
@@ -734,7 +740,124 @@ footer a:hover { color: var(--accent); }
 </div>
 
 <script>
-const API = 'https://data.austintexas.gov/resource/3syk-w9eu.json';
+// ─── MULTI-CITY CONFIG ───
+const CITIES = {
+  austin: {
+    name: 'Austin',
+    state: 'TX',
+    api: 'https://data.austintexas.gov/resource/3syk-w9eu.json',
+    type: 'socrata',
+    buildQuery(since, permitClass, workClass) {
+      let w = `issue_date >= '${since}' AND permittype='BP'`;
+      if (permitClass) w += ` AND permit_class_mapped='${permitClass}'`;
+      if (workClass) w += ` AND work_class='${workClass}'`;
+      return `${this.api}?$where=${encodeURIComponent(w)}&$order=${encodeURIComponent('issue_date DESC')}&$limit=5000`;
+    },
+    normalize(p) {
+      return {
+        date: p.issue_date,
+        address: p.original_address1 || p.permit_location || '',
+        city: p.original_city || 'Austin',
+        zip: p.original_zip || '',
+        type: p.permit_class_mapped || '',
+        work: p.work_class || '',
+        description: p.description || '',
+        sqft: Math.max(parseInt(p.total_new_add_sqft)||0, parseInt(p.remodel_repair_sqft)||0),
+        value: parseFloat(p.total_job_valuation) || 0,
+        contractor: cleanName(p.contractor_company_name || p.contractor_full_name || ''),
+        phone: p.contractor_phone || '',
+        lat: p.latitude || '',
+        lng: p.longitude || ''
+      };
+    }
+  },
+  sanantonio: {
+    name: 'San Antonio',
+    state: 'TX',
+    api: 'https://data.sanantonio.gov/api/3/action/datastore_search',
+    type: 'ckan',
+    buildQuery(since, permitClass, workClass) {
+      let filters = {};
+      // Filter to building-related permits only
+      if (permitClass === 'Residential') filters['PERMIT TYPE'] = 'Res New Building Permit';
+      else if (permitClass === 'Commercial') filters['PERMIT TYPE'] = 'Comm New Building Permit';
+      let url = `${this.api}?resource_id=c21106f9-3ef5-4f3a-8604-f992b4db7512&limit=5000&sort=DATE ISSUED desc`;
+      if (Object.keys(filters).length) url += `&filters=${encodeURIComponent(JSON.stringify(filters))}`;
+      return url;
+    },
+    normalize(r) {
+      const pt = (r['PERMIT TYPE'] || '').toLowerCase();
+      let type = '';
+      if (pt.includes('res')) type = 'Residential';
+      else if (pt.includes('comm')) type = 'Commercial';
+      let work = r['WORK TYPE'] || '';
+      if (!work && pt.includes('new')) work = 'New';
+      return {
+        date: r['DATE ISSUED'] || '',
+        address: r['ADDRESS'] || r['PROJECT NAME'] || '',
+        city: 'San Antonio',
+        zip: '',
+        type,
+        work,
+        description: r['PERMIT TYPE'] || '',
+        sqft: parseFloat(r['AREA (SF)']) || 0,
+        value: parseFloat(r['DECLARED VALUATION']) || 0,
+        contractor: cleanName(r['PRIMARY CONTACT'] || ''),
+        phone: '',
+        lat: r['Y_COORD'] || '',
+        lng: r['X_COORD'] || ''
+      };
+    }
+  },
+  dallas: {
+    name: 'Dallas',
+    state: 'TX',
+    api: 'https://www.dallasopendata.com/resource/e7gq-4sah.json',
+    type: 'socrata',
+    note: 'Historical data (2019). Updated dataset pending.',
+    buildQuery(since, permitClass, workClass) {
+      let w = "issued_date > '01/01/19'";
+      if (permitClass === 'Residential') w += " AND permit_type LIKE '%Single Family%'";
+      else if (permitClass === 'Commercial') w += " AND permit_type LIKE '%Multi Family%'";
+      return `${this.api}?$where=${encodeURIComponent(w)}&$order=${encodeURIComponent('issued_date DESC')}&$limit=5000`;
+    },
+    normalize(p) {
+      // Dallas puts contractor info in one field: "COMPANY NAME ADDRESS (PHONE)"
+      let contractor = '', phone = '';
+      const raw = p.contractor || '';
+      const phoneMatch = raw.match(/\((\d{3})\)\s*(\d{3})-(\d{4})/);
+      if (phoneMatch) phone = phoneMatch[0];
+      // Name is everything before the first number in address
+      const nameMatch = raw.match(/^([A-Z][A-Z &.\-/']+?)(?:\s+\d)/i);
+      contractor = nameMatch ? nameMatch[1].trim() : raw.split(/\d/)[0].trim();
+
+      const pt = (p.permit_type || '').toLowerCase();
+      let type = '';
+      if (pt.includes('single family')) type = 'Residential';
+      else if (pt.includes('multi family') || pt.includes('commercial')) type = 'Commercial';
+
+      return {
+        date: p.issued_date ? '20' + p.issued_date.split('/')[2] + '-' + p.issued_date.split('/')[0].padStart(2,'0') + '-' + p.issued_date.split('/')[1].padStart(2,'0') : '',
+        address: p.street_address || '',
+        city: 'Dallas',
+        zip: p.zip_code || '',
+        type,
+        work: p.work_description || '',
+        description: p.permit_type || '',
+        sqft: parseInt(p.area) || 0,
+        value: parseFloat(p.value) || 0,
+        contractor: cleanName(contractor),
+        phone,
+        lat: '', lng: ''
+      };
+    }
+  }
+};
+
+// Pick city from URL param or default to Austin
+const urlCity = new URLSearchParams(window.location.search).get('city') || 'austin';
+const CITY = CITIES[urlCity] || CITIES.austin;
+
 const PAGE_SIZE = 50;
 let currentPage = 0, allData = [], filteredData = [], activeContractor = null;
 
@@ -744,6 +867,11 @@ function showDashboard() {
   const dash = document.getElementById('dashboard');
   dash.classList.add('active');
   fetchPermits();
+}
+
+// ─── City switcher ───
+function switchCity(city) {
+  window.location.search = '?city=' + city;
 }
 
 // ─── Scroll reveal ───
@@ -786,12 +914,6 @@ function fmtDate(d) { if (!d) return '\u2014'; const dt=new Date(d); return ['Ja
 function fmtPhone(p) { if (!p) return '\u2014'; const d=p.replace(/\D/g,''); if (d.length===10) return '('+d.slice(0,3)+') '+d.slice(3,6)+'-'+d.slice(6); return p; }
 function esc(s) { if (!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
-function getSqft(p) {
-  const n = parseInt(p.total_new_add_sqft) || 0;
-  const r = parseInt(p.remodel_repair_sqft) || 0;
-  return Math.max(n, r) || (n + r) || 0;
-}
-
 // ─── Fetch ───
 async function fetchPermits() {
   const loading = document.getElementById('loading');
@@ -811,20 +933,34 @@ async function fetchPermits() {
 
   const since = new Date();
   since.setDate(since.getDate() - parseInt(days));
+  const sinceStr = since.toISOString().split('T')[0];
 
-  let where = `issue_date >= '${since.toISOString().split('T')[0]}' AND permittype='BP'`;
-  if (permitClass) where += ` AND permit_class_mapped='${permitClass}'`;
-  if (workClass) where += ` AND work_class='${workClass}'`;
+  const url = CITY.buildQuery(sinceStr, permitClass, workClass);
 
   try {
-    const resp = await fetch(`${API}?$where=${encodeURIComponent(where)}&$order=issue_date DESC&$limit=5000`);
+    const resp = await fetch(url);
     if (!resp.ok) throw new Error(resp.status);
-    allData = await resp.json();
+    let raw = await resp.json();
 
-    // Client-side sqft filter (API field is string, easier to filter here)
+    // CKAN wraps results differently
+    if (CITY.type === 'ckan') {
+      raw = raw.result.records;
+      // Client-side date filter for CKAN
+      raw = raw.filter(r => (r['DATE ISSUED']||'') >= sinceStr);
+    }
+
+    // Normalize all records to common shape
+    allData = raw.map(r => CITY.normalize(r)).filter(r => r.contractor || r.address);
+
+    // Client-side sqft filter
     if (minSqft) {
       const min = parseInt(minSqft);
-      allData = allData.filter(p => getSqft(p) >= min);
+      allData = allData.filter(p => p.sqft >= min);
+    }
+
+    // Client-side work filter (for cities that don't support it in API)
+    if (workClass && CITY.type === 'ckan') {
+      allData = allData.filter(p => p.work.toLowerCase().includes(workClass.toLowerCase()));
     }
 
     filteredData = allData;
@@ -839,10 +975,10 @@ async function fetchPermits() {
 
 function updateStats() {
   const total = filteredData.length;
-  const totalSqft = filteredData.reduce((s,p) => s + getSqft(p), 0);
-  const res = filteredData.filter(p => p.permit_class_mapped==='Residential').length;
-  const com = filteredData.filter(p => p.permit_class_mapped==='Commercial').length;
-  const contractors = new Set(filteredData.map(p => cleanName(p.contractor_company_name)).filter(Boolean)).size;
+  const totalSqft = filteredData.reduce((s,p) => s + (p.sqft||0), 0);
+  const res = filteredData.filter(p => p.type==='Residential').length;
+  const com = filteredData.filter(p => p.type==='Commercial').length;
+  const contractors = new Set(filteredData.map(p => p.contractor).filter(Boolean)).size;
 
   animateVal('stat-total', total);
   animateVal('stat-residential', res);
@@ -868,7 +1004,7 @@ function animateVal(id, end) {
 
 function updateTopContractors() {
   const counts = {};
-  filteredData.forEach(p => { const n = cleanName(p.contractor_company_name); if (n) counts[n] = (counts[n]||0)+1; });
+  filteredData.forEach(p => { const n = p.contractor; if (n) counts[n] = (counts[n]||0)+1; });
   const sorted = Object.entries(counts).sort((a,b) => b[1]-a[1]).slice(0,12);
   const list = document.getElementById('top-list');
   list.innerHTML = sorted.map(([name,count]) =>
@@ -887,7 +1023,7 @@ function toggleContractor(el, name) {
   document.querySelectorAll('.top-chip').forEach(c => c.classList.remove('active'));
   el.classList.add('active');
   document.getElementById('reset-filter').style.display = 'inline';
-  filteredData = allData.filter(p => cleanName(p.contractor_company_name) === name);
+  filteredData = allData.filter(p => p.contractor === name);
   currentPage = 0;
   updateStats();
   renderPage();
@@ -919,23 +1055,19 @@ function renderPage() {
   const page = filteredData.slice(start, start + PAGE_SIZE);
 
   tbody.innerHTML = page.map((p,i) => {
-    const sqft = getSqft(p);
-    const classType = p.permit_class_mapped || '';
-    const classBadge = classType==='Residential' ? 'badge-residential' : 'badge-commercial';
-    const workType = p.work_class || '';
-    const workBadge = workType.includes('New') ? 'badge-new' : workType.includes('Dem') ? 'badge-demolition' : 'badge-remodel';
-    const phone = p.contractor_phone;
-    const phoneLink = phone ? `<a class="contractor-phone" href="tel:${phone.replace(/\D/g,'')}">${fmtPhone(phone)}</a>` : '\u2014';
-    const cname = cleanName(p.contractor_company_name) || cleanName(p.contractor_full_name) || '\u2014';
+    const classBadge = p.type==='Residential' ? 'badge-residential' : 'badge-commercial';
+    const workBadge = (p.work||'').toLowerCase().includes('new') ? 'badge-new' : (p.work||'').toLowerCase().includes('dem') ? 'badge-demolition' : 'badge-remodel';
+    const phoneLink = p.phone ? `<a class="contractor-phone" href="tel:${p.phone.replace(/\D/g,'')}">${fmtPhone(p.phone)}</a>` : '\u2014';
+    const valStr = p.value > 1 ? fmtMoney(p.value) : '';
 
     return `<tr style="animation:fadeRow .3s ${i*12}ms both">
-      <td style="white-space:nowrap">${fmtDate(p.issue_date)}</td>
-      <td class="address-cell">${esc(p.original_address1||p.permit_location)||'\u2014'}</td>
-      <td><span class="permit-type-badge ${classBadge}">${classType||'\u2014'}</span></td>
-      <td><span class="permit-type-badge ${workBadge}">${esc(workType)||'\u2014'}</span></td>
+      <td style="white-space:nowrap">${fmtDate(p.date)}</td>
+      <td class="address-cell">${esc(p.address)||'\u2014'}</td>
+      <td><span class="permit-type-badge ${classBadge}">${p.type||'\u2014'}</span></td>
+      <td><span class="permit-type-badge ${workBadge}">${esc(p.work)||'\u2014'}</span></td>
       <td class="description-cell" title="${esc(p.description)}">${esc(p.description)||'\u2014'}</td>
-      <td class="sqft-cell">${sqft ? sqft.toLocaleString() : '\u2014'}</td>
-      <td class="contractor-name">${esc(cname)}</td>
+      <td class="sqft-cell">${p.sqft ? p.sqft.toLocaleString() : '\u2014'}${valStr ? `<br><span style="font-size:11px;color:var(--sage)">${valStr}</span>` : ''}</td>
+      <td class="contractor-name">${esc(p.contractor)||'\u2014'}</td>
       <td style="white-space:nowrap">${phoneLink}</td>
     </tr>`;
   }).join('');
@@ -959,22 +1091,22 @@ function goPage(n) { currentPage=n; renderPage(); document.querySelector('.card-
 
 function downloadCSV() {
   if (!filteredData.length) { alert('No data to export.'); return; }
-  const hdr = ['Issue Date','Address','City','Zip','Type','Work Class','Description','Sq Ft','Contractor','Phone','Lat','Lng'];
+  const hdr = ['Issue Date','Address','City','Zip','Type','Work Class','Description','Sq Ft','Value','Contractor','Phone','Lat','Lng'];
   const rows = filteredData.map(p => [
-    fmtDate(p.issue_date),
-    (p.original_address1||p.permit_location||'').replace(/,/g,''),
-    p.original_city||'Austin', p.original_zip||'',
-    p.permit_class_mapped||'', p.work_class||'',
+    fmtDate(p.date),
+    (p.address||'').replace(/,/g,''),
+    p.city||'', p.zip||'',
+    p.type||'', p.work||'',
     (p.description||'').replace(/,/g,' ').replace(/\n/g,' '),
-    getSqft(p)||'',
-    cleanName(p.contractor_company_name||p.contractor_full_name||'').replace(/,/g,''),
-    p.contractor_phone||'',
-    p.latitude||'', p.longitude||''
+    p.sqft||'', p.value||'',
+    (p.contractor||'').replace(/,/g,''),
+    p.phone||'',
+    p.lat||'', p.lng||''
   ]);
   const csv = [hdr,...rows].map(r=>r.map(c=>`"${c}"`).join(',')).join('\n');
   const a = document.createElement('a');
   a.href = URL.createObjectURL(new Blob([csv],{type:'text/csv'}));
-  a.download = `austin-permits-${new Date().toISOString().split('T')[0]}.csv`;
+  a.download = `${CITY.name.toLowerCase().replace(/\s/g,'-')}-permits-${new Date().toISOString().split('T')[0]}.csv`;
   a.click();
 }
 
@@ -983,6 +1115,14 @@ function handleSubscribe() {
   if (!email||!email.includes('@')) { document.getElementById('cta-email-input').focus(); return; }
   document.getElementById('cta-form').innerHTML = '<span style="color:var(--sage);font-weight:600;font-size:14px;">Subscribed. You\'ll hear from us shortly.</span>';
 }
+
+// ─── Init city labels ───
+document.getElementById('landing-city-badge').textContent = CITY.name + ', ' + CITY.state;
+document.getElementById('landing-city-name').textContent = CITY.name;
+document.getElementById('topbar-brand').textContent = CITY.name + ' Permits';
+// Highlight active city button
+const cityBtn = document.getElementById('city-btn-' + urlCity);
+if (cityBtn) cityBtn.classList.add('active');
 </script>
 </body>
 </html>
