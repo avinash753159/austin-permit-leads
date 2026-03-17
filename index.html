@@ -1340,25 +1340,16 @@ if (cityBtn) cityBtn.classList.add('active');
 const dashBtn = document.getElementById('dash-btn-' + urlCity);
 if (dashBtn) dashBtn.classList.add('active');
 
-// ─── Live indicator animation (flash Down → Live on dashboard open) ───
+// ─── Live indicator ───
 function flashLiveIndicator() {
+  // Always show Live
   const dot = document.getElementById('live-dot');
   const txt = document.getElementById('live-text');
   if (!dot || !txt) return;
-  // Flash red "Down"
-  dot.style.background = '#e53e3e';
-  dot.style.boxShadow = '0 0 8px rgba(229,62,62,0.6)';
-  txt.style.color = '#e53e3e';
-  txt.textContent = 'Down';
-  // Switch to green "Live" after 3 seconds
-  setTimeout(() => {
-    dot.style.transition = 'all 0.5s ease';
-    txt.style.transition = 'color 0.5s ease';
-    dot.style.background = '#4CAF50';
-    dot.style.boxShadow = '0 0 8px rgba(76,175,80,0.6)';
-    txt.style.color = 'var(--sage)';
-    txt.textContent = 'Live';
-  }, 3000);
+  dot.style.background = '#4CAF50';
+  dot.style.boxShadow = '0 0 8px rgba(76,175,80,0.6)';
+  txt.style.color = 'var(--sage)';
+  txt.textContent = 'Live';
 }
 
 // Auto-open dashboard if came from city switcher (URL param)
