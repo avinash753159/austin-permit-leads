@@ -952,9 +952,15 @@ function updateDaysLabel() {
 }
 
 // ─── Clean contractor name ───
+function titleCase(str) {
+  // Skip if already mixed case (like "McDonald" or "DiGiorno")
+  if (str !== str.toUpperCase() && str !== str.toLowerCase()) return str;
+  return str.toLowerCase().replace(/(?:^|\s|[-/])\S/g, c => c.toUpperCase());
+}
+
 function cleanName(name) {
   if (!name) return '';
-  return name
+  name = name
     .replace(/\s*[\*]*\s*\(?MAIN\)?\s*[\*]*/gi, '')
     .replace(/\s*[\{\(]\s*formal?ly[^}\)]*[\}\)]\s*/gi, '')
     .replace(/\s*\(d\/b\/a[^)]*\)\s*/gi, ' ')
@@ -963,6 +969,8 @@ function cleanName(name) {
     .replace(/\s{2,}/g, ' ')
     .replace(/,\s*$/, '')
     .trim();
+  // Fix ALL CAPS names
+  return titleCase(name);
 }
 
 // ─── Formatters ───
