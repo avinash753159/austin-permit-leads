@@ -1225,8 +1225,14 @@ function closeExportGate() {
 function submitExportEmail() {
   const email = document.getElementById('export-email').value;
   if (!email || !email.includes('@')) { document.getElementById('export-email').focus(); return; }
-  collectedEmails.push({ email, date: new Date().toISOString(), city: CITY.name });
+  collectedEmails.push(email);
   localStorage.setItem('brimstone_emails', JSON.stringify(collectedEmails));
+  // Send to server
+  fetch('/api/collect-email', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email, city: CITY.name })
+  }).catch(() => {});
   closeExportGate();
   downloadCSV();
 }
@@ -1234,6 +1240,11 @@ function submitExportEmail() {
 function handleSubscribe() {
   const email = document.getElementById('cta-email-input').value;
   if (!email||!email.includes('@')) { document.getElementById('cta-email-input').focus(); return; }
+  fetch('/api/subscribe', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ email })
+  }).catch(() => {});
   document.getElementById('cta-form').innerHTML = '<span style="color:var(--sage);font-weight:600;font-size:14px;">Subscribed. You\'ll hear from us shortly.</span>';
 }
 
