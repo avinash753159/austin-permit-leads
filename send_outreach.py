@@ -13,7 +13,7 @@ import webbrowser
 import time
 from urllib.parse import quote
 
-DASHBOARD_URL = "https://avinash753159.github.io/austin-permit-leads/"
+DASHBOARD_URL = "https://permits.brimstonepartner.com"
 
 def build_email_body(company, category):
     return f"""Hi,
