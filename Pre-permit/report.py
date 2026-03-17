@@ -1,14 +1,15 @@
 """
 Report generator for the Pre-Construction Intelligence Engine.
-Produces CSV export and markdown report from the leads database.
+Produces CSV export, markdown report, and dashboard HTML from the leads database.
 """
 import csv
+import json
 import sys
 import os
 from datetime import datetime
 
 sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from config import CSV_PATH, REPORT_PATH
+from config import CSV_PATH, REPORT_PATH, BASE_DIR
 from db import (get_conn, get_all_leads, get_leads_by_stage, get_leads_by_source,
                 get_recent_leads, get_top_leads_by_value, get_stats)
 from scrapers.base import setup_logging
@@ -149,10 +150,70 @@ def generate_report():
     return stats['total']
 
 
+def generate_dashboard():
+    """Generate the dashboard HTML with embedded lead data (no fetch needed)."""
+    conn = get_conn()
+    leads = get_all_leads(conn, include_duplicates=False)
+    conn.close()
+
+    # Convert leads to JSON-safe list
+    json_leads = []
+    for lead in leads:
+        json_leads.append({
+            'discovered_date': lead.get('discovered_date', ''),
+            'source': lead.get('source', ''),
+            'project_name': lead.get('project_name', ''),
+            'address': lead.get('address', ''),
+            'developer_owner': lead.get('developer_owner', ''),
+            'architect': lead.get('architect', ''),
+            'contractor': lead.get('contractor', ''),
+            'description': lead.get('description', ''),
+            'estimated_value_raw': lead.get('estimated_value_raw', ''),
+            'estimated_sqft': lead.get('estimated_sqft', ''),
+            'project_type': lead.get('project_type', ''),
+            'stage': lead.get('stage', ''),
+            'source_url': lead.get('source_url', ''),
+            'contact_info': lead.get('contact_info', ''),
+            'ai_confidence': lead.get('ai_confidence', 'LOW'),
+            'analysis_method': lead.get('analysis_method', 'regex'),
+        })
+
+    # Read the dashboard template
+    dashboard_path = os.path.join(BASE_DIR, 'dashboard.html')
+    with open(dashboard_path, 'r', encoding='utf-8') as f:
+        html = f.read()
+
+    # Replace the loadData function with embedded data using string markers
+    json_str = json.dumps(json_leads, ensure_ascii=True)
+
+    # Find and replace the loadData function between markers
+    marker_start = 'async function loadData() {'
+    marker_end = '}\n\nloadData();'
+
+    start_idx = html.find(marker_start)
+    end_idx = html.find(marker_end)
+
+    if start_idx >= 0 and end_idx >= 0:
+        replacement = f"""async function loadData() {{
+  ALL_LEADS = {json_str};
+  updateStats();
+  applyFilters();
+}}
+
+loadData();"""
+        html = html[:start_idx] + replacement + html[end_idx + len(marker_end):]
+
+    with open(dashboard_path, 'w', encoding='utf-8') as f:
+        f.write(html)
+
+    logger.info(f"Dashboard updated with {len(json_leads)} embedded leads")
+
+
 def generate_all():
-    """Generate both CSV and report."""
+    """Generate CSV, report, and dashboard."""
     csv_count = generate_csv()
     report_count = generate_report()
+    generate_dashboard()
     return csv_count
 
 
