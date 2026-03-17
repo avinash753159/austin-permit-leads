@@ -672,7 +672,7 @@ footer a:hover { color: var(--accent); }
   <div class="topbar">
     <div class="topbar-left">
       <span class="topbar-brand" id="topbar-brand">Austin Permits</span>
-      <span class="topbar-live"><span class="live-dot"></span> Live</span>
+      <span class="topbar-live" id="live-indicator"><span class="live-dot" id="live-dot" style="background:#e53e3e; box-shadow:0 0 8px rgba(229,62,62,0.6);"></span> <span id="live-text" style="color:#e53e3e;">Down</span></span>
     </div>
     <div class="topbar-right" style="display:flex; gap:6px; align-items:center;">
       <div class="toggle-group" id="topbar-cities" style="display:flex; gap:4px;">
@@ -1319,6 +1319,20 @@ const cityBtn = document.getElementById('city-btn-' + urlCity);
 if (cityBtn) cityBtn.classList.add('active');
 const dashBtn = document.getElementById('dash-btn-' + urlCity);
 if (dashBtn) dashBtn.classList.add('active');
+
+// ─── Live indicator animation (Down → Live) ───
+setTimeout(() => {
+  const dot = document.getElementById('live-dot');
+  const txt = document.getElementById('live-text');
+  if (dot && txt) {
+    dot.style.background = '#4CAF50';
+    dot.style.boxShadow = '0 0 8px rgba(76,175,80,0.6)';
+    dot.style.transition = 'all 0.5s ease';
+    txt.style.color = 'var(--sage)';
+    txt.style.transition = 'color 0.5s ease';
+    txt.textContent = 'Live';
+  }
+}, 3000);
 
 // Auto-open dashboard if came from city switcher (URL param)
 if (new URLSearchParams(window.location.search).get('open') === '1') {
