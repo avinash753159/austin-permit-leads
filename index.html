@@ -1140,7 +1140,9 @@ function renderPage() {
     const classBadge = p.type==='Residential' ? 'badge-residential' : 'badge-commercial';
     const workBadge = (p.work||'').toLowerCase().includes('new') ? 'badge-new' : (p.work||'').toLowerCase().includes('dem') ? 'badge-demolition' : 'badge-remodel';
     const cleanPhone = p.phone ? p.phone.replace(/\D/g,'').slice(-10) : '';
-    const phoneLink = cleanPhone.length === 10 ? `<a class="contractor-phone" href="tel:${cleanPhone}">${fmtPhone(p.phone)}</a>` : '\u2014';
+    const phoneLink = cleanPhone.length === 10
+      ? `<a class="contractor-phone" href="tel:${cleanPhone}">${fmtPhone(p.phone)}</a>`
+      : '<span style="color:var(--accent);font-size:11px;font-weight:600;cursor:pointer;opacity:0.7;" title="Upgrade for full contact details">Hidden</span>';
     const valStr = p.value > 1 ? fmtMoney(p.value) : '';
 
     return `<tr style="animation:fadeRow .3s ${i*12}ms both">
