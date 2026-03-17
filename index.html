@@ -826,16 +826,15 @@ const CITIES = {
   sanantonio: {
     name: 'San Antonio',
     state: 'TX',
-    api: 'https://data.sanantonio.gov/api/3/action/datastore_search',
-    type: 'ckan',
+    api: 'https://data.sanantonio.gov/api/3/action/datastore_search_sql',
+    type: 'ckan_sql',
     buildQuery(since, permitClass, workClass) {
-      let filters = {};
-      // Filter to building-related permits only
-      if (permitClass === 'Residential') filters['PERMIT TYPE'] = 'Res New Building Permit';
-      else if (permitClass === 'Commercial') filters['PERMIT TYPE'] = 'Comm New Building Permit';
-      let url = `${this.api}?resource_id=c21106f9-3ef5-4f3a-8604-f992b4db7512&limit=5000&sort=DATE ISSUED desc`;
-      if (Object.keys(filters).length) url += `&filters=${encodeURIComponent(JSON.stringify(filters))}`;
-      return url;
+      let where = `"DATE ISSUED" >= '${since}'`;
+      if (permitClass === 'Residential') where += ` AND "PERMIT TYPE" LIKE '%Res%'`;
+      else if (permitClass === 'Commercial') where += ` AND "PERMIT TYPE" LIKE '%Comm%'`;
+      if (workClass) where += ` AND "WORK TYPE" = '${workClass}'`;
+      const sql = `SELECT * FROM "c21106f9-3ef5-4f3a-8604-f992b4db7512" WHERE ${where} ORDER BY "DATE ISSUED" DESC LIMIT 5000`;
+      return `${this.api}?sql=${encodeURIComponent(sql)}`;
     },
     normalize(r) {
       const pt = (r['PERMIT TYPE'] || '').toLowerCase();
@@ -1032,10 +1031,8 @@ async function fetchPermits() {
     let raw = await resp.json();
 
     // CKAN wraps results differently
-    if (CITY.type === 'ckan') {
-      raw = raw.result.records;
-      // Client-side date filter for CKAN
-      raw = raw.filter(r => (r['DATE ISSUED']||'') >= sinceStr);
+    if (CITY.type === 'ckan_sql' || CITY.type === 'ckan') {
+      raw = raw.result.records || [];
     }
 
     // Normalize all records to common shape
@@ -1047,10 +1044,6 @@ async function fetchPermits() {
       allData = allData.filter(p => p.sqft >= min);
     }
 
-    // Client-side work filter (for cities that don't support it in API)
-    if (workClass && CITY.type === 'ckan') {
-      allData = allData.filter(p => p.work.toLowerCase().includes(workClass.toLowerCase()));
-    }
 
     filteredData = allData;
     currentPage = 0;
