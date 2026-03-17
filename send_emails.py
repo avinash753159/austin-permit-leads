@@ -1,15 +1,15 @@
 """
-Fully automated email sender with PDF attachments.
-Opens Gmail in the browser, composes the email, attaches the PDF, and sends it.
-Uses Playwright to automate Gmail's web interface.
+Creates Gmail DRAFTS with personalized emails and PDF attachments.
+Does NOT send anything. You review the drafts in Gmail and send manually.
 
 Usage:
-    python send_emails.py              # Send to all HIGH priority leads
-    python send_emails.py 1            # Send to first lead only (test)
-    python send_emails.py 5            # Send to first 5 leads
-    python send_emails.py all          # Send to all leads
+    python send_emails.py              # Draft all HIGH priority leads
+    python send_emails.py 1            # Draft first lead only (test)
+    python send_emails.py 5            # Draft first 5 leads
+    python send_emails.py all          # Draft all leads
 
 First run: it will ask you to log into Gmail manually. After that, it reuses the session.
+PDFs must exist in the PDFs/ folder. Run generate_pdfs.py first.
 """
 import asyncio
 import csv
@@ -316,26 +316,29 @@ async def send_all(leads):
                 except Exception as e:
                     print(f"    Could not attach PDF: {e}")
 
-            # Wait for review
+            # Save as draft (don't send)
             await asyncio.sleep(2)
 
-            # Click send
+            # Close the compose window to save as draft
             try:
-                send_btn = await page.query_selector('[aria-label*="Send"]')
-                if not send_btn:
-                    send_btn = await page.query_selector('[data-tooltip*="Send"]')
-                if send_btn:
-                    await send_btn.click()
-                    print(f"    Sent!")
-                    await asyncio.sleep(2)
+                close_btn = await page.query_selector('[aria-label="Save & close"]')
+                if not close_btn:
+                    close_btn = await page.query_selector('[aria-label="Close"]')
+                if close_btn:
+                    await close_btn.click()
+                    print(f"    Saved as draft!")
+                    await asyncio.sleep(1)
                 else:
-                    print(f"    Could not find Send button. Please send manually.")
-                    await asyncio.sleep(5)
+                    # Press Escape to close and save as draft
+                    await page.keyboard.press('Escape')
+                    print(f"    Saved as draft!")
+                    await asyncio.sleep(1)
             except Exception as e:
-                print(f"    Send error: {e}")
-                await asyncio.sleep(3)
+                await page.keyboard.press('Escape')
+                print(f"    Saved as draft!")
+                await asyncio.sleep(1)
 
-        print(f"\n  Done! {len(leads)} emails sent.")
+        print(f"\n  Done! {len(leads)} drafts created in Gmail.")\n        print(f"  Go to Gmail > Drafts to review and send.")
         await browser.close()
 
 
