@@ -37,9 +37,9 @@ if "%choice%"=="7" start "" "%~dp0outreach-leads.csv"
 if "%choice%"=="8" start "" "%~dp0outreach-email.md"
 if "%choice%"=="9" (
     echo.
-    echo How many emails to open? (Enter a number, or 'all')
+    echo How many emails to send? (Enter a number, or 'all')
     set /p num=Number:
-    python "%~dp0send_outreach.py" %num%
+    python "%~dp0send_emails.py" %num%
     pause
 )
 if "%choice%"=="0" exit
