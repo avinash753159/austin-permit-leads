@@ -567,7 +567,7 @@ footer a:hover { color: var(--accent); }
 <!-- ══════════ LANDING PAGE ══════════ -->
 <section class="landing" id="landing-page">
 
-  <div style="font-family: var(--serif); font-size: 22px; color: var(--espresso); margin-bottom: 8px; letter-spacing: -0.01em;">Brimstone Partner</div>
+  <div style="font-family: var(--serif); font-size: 22px; color: var(--espresso); margin-bottom: 8px; letter-spacing: -0.01em;">Wide Brimstone</div>
   <div class="landing-badge">
     <span class="live-dot"></span>
     Texas Construction Intelligence &middot; Live
@@ -579,30 +579,26 @@ footer a:hover { color: var(--accent); }
     Every new construction permit filed across Texas &mdash; contractor name, phone number, project size, and address. Updated in real time from city records.
   </p>
 
-  <!-- ── Texas Map ── -->
+  <!-- ── Texas Map (real geographic outline) ── -->
   <div style="margin: 32px 0; position: relative; display: inline-block;">
-    <svg viewBox="0 0 500 500" width="340" style="fill: none;">
-      <!-- Actual Texas outline path -->
-      <path d="M187,2 L187,107 L140,107 L140,112 L106,112 L106,117 L80,117 L80,125 L46,143 L36,154 L28,170 L18,181 L6,194 L2,210 L14,222 L20,233 L30,240 L36,252 L46,260 L56,264 L62,272 L72,278 L82,290 L94,298 L106,308 L114,320 L118,332 L126,344 L134,350 L140,362 L148,370 L152,382 L160,394 L166,406 L174,416 L178,430 L186,444 L194,454 L202,462 L208,470 L220,478 L230,486 L242,490 L254,496 L268,498 L282,494 L290,486 L296,476 L300,466 L296,454 L292,444 L298,434 L310,428 L318,420 L322,410 L330,402 L340,398 L348,390 L354,380 L358,370 L360,358 L358,346 L354,336 L358,326 L366,318 L374,312 L382,308 L386,298 L382,286 L376,276 L380,266 L390,258 L400,254 L408,248 L412,238 L416,226 L420,216 L428,208 L436,200 L446,196 L456,190 L462,180 L466,168 L470,156 L474,144 L480,130 L486,116 L490,102 L494,88 L496,74 L494,60 L488,48 L478,38 L466,30 L452,24 L438,20 L424,16 L410,12 L396,10 L382,8 L368,6 L354,4 L340,4 L326,4 L312,4 L298,4 L284,2 L270,2 L256,2 L242,2 L228,2 L214,2 L200,2 Z"
-        fill="var(--cream-deep)" stroke="var(--warm-gray-light)" stroke-width="1.5"/>
-      <!-- City dots — real proportional locations -->
-      <!-- Dallas: ~32.78°N, 96.80°W -->
-      <circle cx="348" cy="88" r="8" fill="var(--accent)" stroke="white" stroke-width="2.5"/>
-      <!-- Austin: ~30.27°N, 97.74°W -->
-      <circle cx="300" cy="278" r="8" fill="var(--accent)" stroke="white" stroke-width="2.5"/>
-      <!-- San Antonio: ~29.42°N, 98.49°W -->
-      <circle cx="272" cy="320" r="8" fill="var(--accent)" stroke="white" stroke-width="2.5"/>
-      <!-- City labels -->
-      <text x="362" y="92" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="13" font-weight="700" fill="#2C1810">Dallas</text>
-      <text x="314" y="282" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="13" font-weight="700" fill="#2C1810">Austin</text>
-      <text x="286" y="328" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="13" font-weight="700" fill="#2C1810">San Antonio</text>
-      <!-- Coming soon dots (hollow) -->
-      <!-- Houston: ~29.76°N, 95.37°W -->
-      <circle cx="400" cy="290" r="6" fill="none" stroke="var(--warm-gray-light)" stroke-width="1.5" stroke-dasharray="3,3"/>
-      <text x="412" y="294" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="10" fill="#B8ADA5" font-style="italic">Houston (soon)</text>
-      <!-- Fort Worth: ~32.75°N, 97.33°W -->
-      <circle cx="320" cy="90" r="6" fill="none" stroke="var(--warm-gray-light)" stroke-width="1.5" stroke-dasharray="3,3"/>
-      <text x="292" y="80" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="10" fill="#B8ADA5" font-style="italic">Ft Worth (soon)</text>
+    <svg xmlns="http://www.w3.org/2000/svg" viewBox="395 420 310 310" width="340" height="340">
+      <!-- Real Texas state boundary -->
+      <path fill="#F7F3EC" stroke="#B8ADA5" stroke-width="1.2" d="M531.1,433.4l22.7,1.1l31.1,1.1l-2.3,23.5l-0.3,18.2l0.1,2.1l4.3,3.8l1.7,0.8l1.8,0.3l0.7-1.3l0.9,0.9l1.7,0.5l1.6-0.7l1.1,0.4l-0.3,3.4l4.3,1l2.7,0.8l4,0.5l2.2,1.8l3.2-1.6l2.8,0.4l2,2.8l1.1,0.3l-0.2,2l3.1,1.2l2.8-1.8l1.5,0.4l2.4,0.2l0.4,1.9l4.6,2l2.7-0.2l2-4.1h0.3l1.1,1.9l4.4,1l3.3,1.2l3.3,0.8l2.1-0.8l0.8-2.5h3.7l1.9,0.8l3.1-1.6h0.7l0.4,1.1h4.3l2.4-1.3l1.7,0.3l1.4,1.9l2.9,1.7l3.5,1.1l2.7,1.4l2.4,1.6l3.3-0.9l1.9,1l0.5,10.1l0.3,9.7l0.7,9.5l0.5,4l2.7,4.6l1.1,4.1l3.9,6.3l0.5,2.9l0.5,1l-0.7,7.5l-2.7,4.4l1,2.9l-0.4,2.5l-0.8,7.3l-1.4,2.7l0.6,4.4l-5.7,1.6l-9.9,4.5l-1,1.9l-2.6,1.9l-2.1,1.5l-1.3,0.8l-5.7,5.3l-2.7,2.1l-5.3,3.2l-5.7,2.4l-6.3,3.4l-1.8,1.5l-5.8,3.6l-3.4,0.6l-3.9,5.5l-4,0.3l-1,1.9l2.3,1.9l-1.5,5.5l-1.3,4.5l-1.1,3.9l-0.8,4.5l0.8,2.4l1.8,7l1,6.1l1.8,2.7l-1,1.5l-3.1,1.9l-5.7-3.9l-5.5-1.1l-1.3,0.5l-3.2-0.6l-4.2-3.1l-5.2-1.1l-7.6-3.4l-2.1-3.9l-1.3-6.5l-3.2-1.9l-0.6-2.3l0.6-0.6l0.3-3.4l-1.3-0.6l-0.6-1l1.3-4.4l-1.6-2.3l-3.2-1.3l-3.4-4.4l-3.6-6.6l-4.2-2.6l0.2-1.9l-5.3-12.3l-0.8-4.2l-1.8-1.9l-0.2-1.5l-6-5.3l-2.6-3.1v-1.1l-2.6-2.1l-6.8-1.1l-7.4-0.6l-3.1-2.3l-4.5,1.8l-3.6,1.5l-2.3,3.2l-1,3.7l-4.4,6.1l-2.4,2.4l-2.6-1l-1.8-1.1l-1.9-0.6l-3.9-2.3v-0.6l-1.8-1.9l-5.2-2.1l-7.4-7.8l-2.3-4.7v-8.1l-3.2-6.5l-0.5-2.7l-1.6-1l-1.1-2.1l-5-2.1l-1.3-1.6l-7.1-7.9l-1.3-3.2l-4.7-2.3l-1.5-4.4l-2.6-2.9l-1.9-0.5l-0.6-4.7l8,0.7l29,2.7l29,1.6l2.3-23.8l3.9-55.6l1.6-18.7l1.4,0"/>
+      <!-- ★ Dallas — 32.78°N, 96.80°W -->
+      <polygon points="623,476 626,482 633,482 628,487 629,494 623,490 617,494 618,487 613,482 620,482" fill="#C4763A"/>
+      <text x="636" y="488" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="9" font-weight="700" fill="#2C1810">Dallas</text>
+      <!-- ★ Fort Worth — 32.75°N, 97.33°W -->
+      <polygon points="608,478 610,482 615,482 611,485 612,490 608,487 604,490 605,485 601,482 606,482" fill="none" stroke="#B8ADA5" stroke-width="0.8"/>
+      <text x="583" y="476" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="7.5" fill="#B8ADA5" font-style="italic">Ft Worth (soon)</text>
+      <!-- ★ Austin — 30.27°N, 97.74°W -->
+      <polygon points="580,555 583,561 590,561 585,566 586,573 580,569 574,573 575,566 570,561 577,561" fill="#C4763A"/>
+      <text x="593" y="567" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="9" font-weight="700" fill="#2C1810">Austin</text>
+      <!-- ★ San Antonio — 29.42°N, 98.49°W -->
+      <polygon points="560,585 563,591 570,591 565,596 566,603 560,599 554,603 555,596 550,591 557,591" fill="#C4763A"/>
+      <text x="573" y="597" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="9" font-weight="700" fill="#2C1810">San Antonio</text>
+      <!-- ★ Houston — 29.76°N, 95.37°W -->
+      <polygon points="650,570 652,574 657,574 653,577 654,582 650,579 646,582 647,577 643,574 648,574" fill="none" stroke="#B8ADA5" stroke-width="0.8"/>
+      <text x="660" y="578" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="7.5" fill="#B8ADA5" font-style="italic">Houston (soon)</text>
     </svg>
   </div>
 
@@ -638,69 +634,43 @@ footer a:hover { color: var(--accent); }
     </div>
   </div>
 
-  <button class="btn-access" onclick="showDashboard()">
-    Access the data
-    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
-  </button>
+  <!-- ── Why Wide Brimstone ── -->
+  <div style="margin-top: 48px; max-width: 660px; width: 100%; padding: 0 20px;">
+    <h2 style="font-family: var(--serif); font-size: 1.4rem; font-weight: 400; color: var(--espresso); text-align: center; margin-bottom: 24px;">
+      Why Wide Brimstone
+    </h2>
+    <div style="background: white; border: 1px solid var(--warm-border); border-radius: var(--radius-lg); overflow: hidden; box-shadow: 0 8px 24px var(--warm-shadow);">
+      <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
+        <thead>
+          <tr>
+            <th style="padding: 14px 16px; text-align: left; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light); background: var(--cream); border-bottom: 2px solid var(--warm-border);"></th>
+            <th style="padding: 14px 16px; text-align: center; font-size: 10px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent); background: rgba(196,118,58,0.04); border-bottom: 2px solid var(--accent);">Wide Brimstone</th>
+            <th style="padding: 14px 16px; text-align: center; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warm-gray-light); background: var(--cream); border-bottom: 2px solid var(--warm-border);">Construction Monitor</th>
+            <th style="padding: 14px 16px; text-align: center; font-size: 9px; font-weight: 600; letter-spacing: 0.08em; text-transform: uppercase; color: var(--warm-gray-light); background: var(--cream); border-bottom: 2px solid var(--warm-border);">ConstructConnect</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid var(--warm-border);">Focus</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; border-bottom: 1px solid var(--warm-border); background: rgba(196,118,58,0.02);">Texas only</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">National</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">National</td></tr>
+          <tr><td style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid var(--warm-border);">Contractor phones</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; border-bottom: 1px solid var(--warm-border); background: rgba(196,118,58,0.02);">Included</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Extra cost</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Not included</td></tr>
+          <tr><td style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid var(--warm-border);">Price</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; border-bottom: 1px solid var(--warm-border); background: rgba(196,118,58,0.02);">Free to start</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">$96/mo</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">$299/mo</td></tr>
+          <tr><td style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid var(--warm-border);">Updates</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; border-bottom: 1px solid var(--warm-border); background: rgba(196,118,58,0.02);">Real-time</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Weekly</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Delayed</td></tr>
+          <tr><td style="padding: 12px 16px; font-weight: 600; border-bottom: 1px solid var(--warm-border);">CSV export</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; border-bottom: 1px solid var(--warm-border); background: rgba(196,118,58,0.02);">Included</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Included</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light); border-bottom: 1px solid var(--warm-border);">Add-on</td></tr>
+          <tr><td style="padding: 12px 16px; font-weight: 600;">Contracts</td><td style="padding: 12px 16px; text-align: center; color: var(--sage); font-weight: 700; background: rgba(196,118,58,0.02);">None</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light);">Monthly</td><td style="padding: 12px 16px; text-align: center; color: var(--warm-gray-light);">Annual</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
 
-  <p class="landing-proof">
+  <div style="margin-top: 40px;">
+    <button class="btn-access" onclick="showDashboard()">
+      Access the data
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="5" y1="12" x2="19" y2="12"/><polyline points="12 5 19 12 12 19"/></svg>
+    </button>
+  </div>
+
+  <p class="landing-proof" style="margin-top: 24px;">
     <strong>2.3 million+</strong> permits in the database &middot; Updated continuously from city records
   </p>
-
-  <!-- ── Why Brimstone vs competitors ── -->
-  <div style="margin-top: 56px; max-width: 700px; text-align: left;">
-    <h2 style="font-family: var(--serif); font-size: 1.5rem; font-weight: 400; color: var(--espresso); text-align: center; margin-bottom: 24px;">
-      Why Brimstone Partner?
-    </h2>
-    <table style="width: 100%; border-collapse: collapse; font-size: 13px;">
-      <thead>
-        <tr style="border-bottom: 2px solid var(--warm-border);">
-          <th style="padding: 10px 12px; text-align: left; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light);"></th>
-          <th style="padding: 10px 12px; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--accent);">Brimstone</th>
-          <th style="padding: 10px 12px; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light);">Construction Monitor</th>
-          <th style="padding: 10px 12px; text-align: center; font-size: 10px; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--warm-gray-light);">ConstructConnect</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr style="border-bottom: 1px solid var(--warm-border);">
-          <td style="padding: 10px 12px; font-weight: 600;">Texas-focused</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">Yes</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">National</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">National</td>
-        </tr>
-        <tr style="border-bottom: 1px solid var(--warm-border);">
-          <td style="padding: 10px 12px; font-weight: 600;">Contractor phone numbers</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">Included</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Extra cost</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Not included</td>
-        </tr>
-        <tr style="border-bottom: 1px solid var(--warm-border);">
-          <td style="padding: 10px 12px; font-weight: 600;">Starting price</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">Free</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">$96/mo</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">$299/mo</td>
-        </tr>
-        <tr style="border-bottom: 1px solid var(--warm-border);">
-          <td style="padding: 10px 12px; font-weight: 600;">Real-time updates</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">Live API</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Weekly reports</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Delayed</td>
-        </tr>
-        <tr style="border-bottom: 1px solid var(--warm-border);">
-          <td style="padding: 10px 12px; font-weight: 600;">CSV export</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">Included</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Included</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Add-on</td>
-        </tr>
-        <tr>
-          <td style="padding: 10px 12px; font-weight: 600;">Contracts</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--sage); font-weight: 700;">None</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Monthly</td>
-          <td style="padding: 10px 12px; text-align: center; color: var(--warm-gray-light);">Annual</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
 </section>
 
 <!-- ══════════ DASHBOARD ══════════ -->
