@@ -581,22 +581,28 @@ footer a:hover { color: var(--accent); }
 
   <!-- ── Texas Map ── -->
   <div style="margin: 32px 0; position: relative; display: inline-block;">
-    <svg viewBox="0 0 400 380" width="320" style="fill: none; stroke: var(--warm-gray-light); stroke-width: 1.5;">
-      <!-- Simplified Texas outline -->
-      <path d="M120,10 L200,10 L210,25 L230,20 L260,30 L290,15 L310,25 L330,20 L350,30 L360,50 L365,80 L360,110 L370,140 L375,170 L365,200 L350,230 L340,260 L350,290 L330,310 L300,320 L270,350 L240,370 L210,360 L190,340 L170,350 L150,340 L130,320 L110,300 L90,310 L70,290 L60,260 L50,230 L40,200 L45,170 L50,140 L60,110 L70,80 L80,50 L90,30 Z" fill="var(--cream-deep)" stroke="var(--warm-gray-light)" stroke-width="1.5"/>
-      <!-- City dots -->
-      <circle cx="220" cy="240" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/><!-- Austin -->
-      <circle cx="195" cy="270" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/><!-- San Antonio -->
-      <circle cx="235" cy="130" r="7" fill="var(--accent)" stroke="white" stroke-width="2"/><!-- Dallas -->
+    <svg viewBox="0 0 500 500" width="340" style="fill: none;">
+      <!-- Actual Texas outline path -->
+      <path d="M187,2 L187,107 L140,107 L140,112 L106,112 L106,117 L80,117 L80,125 L46,143 L36,154 L28,170 L18,181 L6,194 L2,210 L14,222 L20,233 L30,240 L36,252 L46,260 L56,264 L62,272 L72,278 L82,290 L94,298 L106,308 L114,320 L118,332 L126,344 L134,350 L140,362 L148,370 L152,382 L160,394 L166,406 L174,416 L178,430 L186,444 L194,454 L202,462 L208,470 L220,478 L230,486 L242,490 L254,496 L268,498 L282,494 L290,486 L296,476 L300,466 L296,454 L292,444 L298,434 L310,428 L318,420 L322,410 L330,402 L340,398 L348,390 L354,380 L358,370 L360,358 L358,346 L354,336 L358,326 L366,318 L374,312 L382,308 L386,298 L382,286 L376,276 L380,266 L390,258 L400,254 L408,248 L412,238 L416,226 L420,216 L428,208 L436,200 L446,196 L456,190 L462,180 L466,168 L470,156 L474,144 L480,130 L486,116 L490,102 L494,88 L496,74 L494,60 L488,48 L478,38 L466,30 L452,24 L438,20 L424,16 L410,12 L396,10 L382,8 L368,6 L354,4 L340,4 L326,4 L312,4 L298,4 L284,2 L270,2 L256,2 L242,2 L228,2 L214,2 L200,2 Z"
+        fill="var(--cream-deep)" stroke="var(--warm-gray-light)" stroke-width="1.5"/>
+      <!-- City dots — real proportional locations -->
+      <!-- Dallas: ~32.78°N, 96.80°W -->
+      <circle cx="348" cy="88" r="8" fill="var(--accent)" stroke="white" stroke-width="2.5"/>
+      <!-- Austin: ~30.27°N, 97.74°W -->
+      <circle cx="300" cy="278" r="8" fill="var(--accent)" stroke="white" stroke-width="2.5"/>
+      <!-- San Antonio: ~29.42°N, 98.49°W -->
+      <circle cx="272" cy="320" r="8" fill="var(--accent)" stroke="white" stroke-width="2.5"/>
       <!-- City labels -->
-      <text x="235" y="244" font-family="var(--sans)" font-size="11" font-weight="600" fill="var(--espresso)">Austin</text>
-      <text x="210" y="278" font-family="var(--sans)" font-size="11" font-weight="600" fill="var(--espresso)">San Antonio</text>
-      <text x="250" y="134" font-family="var(--sans)" font-size="11" font-weight="600" fill="var(--espresso)">Dallas</text>
+      <text x="362" y="92" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="13" font-weight="700" fill="#2C1810">Dallas</text>
+      <text x="314" y="282" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="13" font-weight="700" fill="#2C1810">Austin</text>
+      <text x="286" y="328" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="13" font-weight="700" fill="#2C1810">San Antonio</text>
       <!-- Coming soon dots (hollow) -->
-      <circle cx="300" cy="260" r="5" fill="none" stroke="var(--warm-gray-light)" stroke-width="1.5" stroke-dasharray="2,2"/><!-- Houston -->
-      <circle cx="250" cy="115" r="5" fill="none" stroke="var(--warm-gray-light)" stroke-width="1.5" stroke-dasharray="2,2"/><!-- Fort Worth -->
-      <text x="310" y="264" font-family="var(--sans)" font-size="9" fill="var(--warm-gray-light)" font-style="italic">Houston (soon)</text>
-      <text x="260" y="112" font-family="var(--sans)" font-size="9" fill="var(--warm-gray-light)" font-style="italic">Ft Worth (soon)</text>
+      <!-- Houston: ~29.76°N, 95.37°W -->
+      <circle cx="400" cy="290" r="6" fill="none" stroke="var(--warm-gray-light)" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <text x="412" y="294" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="10" fill="#B8ADA5" font-style="italic">Houston (soon)</text>
+      <!-- Fort Worth: ~32.75°N, 97.33°W -->
+      <circle cx="320" cy="90" r="6" fill="none" stroke="var(--warm-gray-light)" stroke-width="1.5" stroke-dasharray="3,3"/>
+      <text x="292" y="80" font-family="Plus Jakarta Sans,system-ui,sans-serif" font-size="10" fill="#B8ADA5" font-style="italic">Ft Worth (soon)</text>
     </svg>
   </div>
 
