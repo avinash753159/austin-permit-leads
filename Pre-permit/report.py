@@ -183,13 +183,16 @@ def generate_dashboard():
     with open(dashboard_path, 'r', encoding='utf-8') as f:
         html = f.read()
 
-    # Embed data directly into the initial ALL_LEADS declaration
+    # Inject data between the INLINE_DATA markers
     json_str = json.dumps(json_leads, ensure_ascii=True)
+    marker_start = '<!--INLINE_DATA-->'
+    marker_end = '<!--END_INLINE_DATA-->'
+    replacement = f'{marker_start}\n<script>\nvar ALL_LEADS = {json_str};\n</script>\n{marker_end}'
 
-    # Replace the empty array initialization with actual data
-    old_init = 'let ALL_LEADS = [];'
-    new_init = f'let ALL_LEADS = {json_str};'
-    html = html.replace(old_init, new_init, 1)
+    start_idx = html.find(marker_start)
+    end_idx = html.find(marker_end)
+    if start_idx >= 0 and end_idx >= 0:
+        html = html[:start_idx] + replacement + html[end_idx + len(marker_end):]
 
     with open(dashboard_path, 'w', encoding='utf-8') as f:
         f.write(html)
