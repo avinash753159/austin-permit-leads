@@ -660,7 +660,7 @@ footer a:hover { color: var(--accent); }
         <div class="filter-row">
           <span class="filter-label">Period</span>
           <div class="range-group">
-            <input type="range" id="filter-days" min="1" max="90" value="30" oninput="updateDaysLabel()">
+            <input type="range" id="filter-days" min="1" max="90" value="30" oninput="updateDaysLabel()" onchange="fetchPermits()">
             <span class="range-value" id="days-label">30 days</span>
           </div>
         </div>
@@ -681,13 +681,8 @@ footer a:hover { color: var(--accent); }
         </div>
         <div class="filter-row">
           <span class="filter-label">Min sqft</span>
-          <input type="number" class="value-input" id="filter-min-sqft" placeholder="e.g. 1000" min="0" step="100">
-          <div class="filter-actions">
-            <button class="btn btn-primary" onclick="fetchPermits()">
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>
-              Search
-            </button>
-          </div>
+          <input type="number" class="value-input" id="filter-min-sqft" placeholder="e.g. 1000" min="0" step="100" onchange="fetchPermits()">
+          <!-- filters auto-apply -->
         </div>
       </div>
 
@@ -892,6 +887,7 @@ document.querySelectorAll('.toggle-group').forEach(group => {
     btn.addEventListener('click', () => {
       group.querySelectorAll('.toggle-btn').forEach(b => b.classList.remove('active'));
       btn.classList.add('active');
+      fetchPermits();
     });
   });
 });
