@@ -239,23 +239,29 @@ def build_email(company, category):
     lines.append("")
 
     if is_gc and top and top[0]['contractor']:
-        # GC gets competitive intel angle
         p = top[0]
-        lines.append(f"{p['contractor']} just filed for {p['sqft']:,} sqft at {p['addr']}.")
+        line = f"{p['contractor']} just filed for {p['sqft']:,} sqft at {p['addr']}."
         if len(top) > 1 and top[1]['contractor']:
             p2 = top[1]
-            lines.append(f"{p2['contractor']} also filed for {p2['sqft']:,} sqft at {p2['addr']}.")
-        lines.append(f"I put together a competitive landscape report for {short}. It shows who's filing what and where. It's attached.")
+            line += f" {p2['contractor']} also filed for {p2['sqft']:,} sqft at {p2['addr']}."
+        lines.append(line)
+        lines.append(f"I put together a competitive landscape report for {short} showing who's filing what and where. It's attached.")
     elif top and top[0]['contractor']:
         p = top[0]
-        phone_bit = f" Their contact is {p['phone']}." if p['phone'] else ""
-        lines.append(f"{p['contractor']} just pulled a permit for a {p['sqft']:,} sqft project at {p['addr']}.{phone_bit} Since {short} {does_what}, this could be a {opp_type} worth looking into.")
+        phone_bit = f" at {p['phone']}" if p['phone'] else ""
+        line = f"{p['contractor']} just pulled a permit for a {p['sqft']:,} sqft project at {p['addr']}{phone_bit}."
 
         if len(top) > 1 and top[1]['contractor']:
             p2 = top[1]
-            phone_bit2 = f" at {p2['phone']}" if p2['phone'] else ""
-            lines.append(f"{p2['contractor']}{phone_bit2} also filed for a {p2['sqft']:,} sqft {p2['work'].lower()} at {p2['addr']}.")
+            if p2['contractor'] == p['contractor']:
+                # Same contractor, merge into one sentence
+                line += f" They also filed for a {p2['sqft']:,} sqft {p2['work'].lower()} at {p2['addr']}."
+            else:
+                phone_bit2 = f" at {p2['phone']}" if p2['phone'] else ""
+                line += f" {p2['contractor']}{phone_bit2} also filed for a {p2['sqft']:,} sqft {p2['work'].lower()} at {p2['addr']}."
 
+        line += f" Since {short} {does_what}, these could be worth looking into."
+        lines.append(line)
         lines.append("")
         lines.append(f"I put together a personalized one-page report for {short} with the top opportunities in your space. It's attached.")
     else:
