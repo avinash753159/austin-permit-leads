@@ -675,7 +675,14 @@ footer a:hover { color: var(--accent); }
       <span class="topbar-brand" id="topbar-brand">Austin Permits</span>
       <span class="topbar-live"><span class="live-dot"></span> Live</span>
     </div>
-    <div class="topbar-right">
+    <div class="topbar-right" style="display:flex; gap:6px; align-items:center;">
+      <div class="toggle-group" id="topbar-cities" style="display:flex; gap:4px;">
+        <button class="toggle-btn" onclick="switchCity('austin')" id="dash-btn-austin" style="padding:6px 12px; font-size:11px;">Austin</button>
+        <button class="toggle-btn" onclick="switchCity('sanantonio')" id="dash-btn-sanantonio" style="padding:6px 12px; font-size:11px;">San Antonio</button>
+        <button class="toggle-btn" onclick="switchCity('dallas')" id="dash-btn-dallas" style="padding:6px 12px; font-size:11px;">Dallas</button>
+        <button class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;" disabled>Houston</button>
+        <button class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;" disabled>Fort Worth</button>
+      </div>
       <button class="btn btn-export" onclick="downloadCSV()">
         <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         Export CSV
@@ -957,7 +964,15 @@ function cleanName(name) {
 // ─── Formatters ───
 function fmtMoney(v) { if (!v || v <= 1) return '\u2014'; if (v>=1e6) return '$'+(v/1e6).toFixed(1)+'M'; if (v>=1e3) return '$'+Math.round(v/1e3).toLocaleString()+'K'; return '$'+v.toLocaleString(); }
 function fmtDate(d) { if (!d) return '\u2014'; const dt=new Date(d); return ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'][dt.getMonth()]+' '+dt.getDate(); }
-function fmtPhone(p) { if (!p) return '\u2014'; const d=p.replace(/\D/g,''); if (d.length===10) return '('+d.slice(0,3)+') '+d.slice(3,6)+'-'+d.slice(6); return p; }
+function fmtPhone(p) {
+  if (!p) return '\u2014';
+  let d = p.replace(/\D/g,'');
+  // Take last 10 digits if longer (strip country code or junk)
+  if (d.length > 10) d = d.slice(-10);
+  if (d.length === 10) return '(' + d.slice(0,3) + ') ' + d.slice(3,6) + '-' + d.slice(6);
+  if (d.length < 7) return '\u2014'; // too short to be valid
+  return p;
+}
 function esc(s) { if (!s) return ''; return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
 
 // ─── Fetch ───
@@ -1103,7 +1118,8 @@ function renderPage() {
   tbody.innerHTML = page.map((p,i) => {
     const classBadge = p.type==='Residential' ? 'badge-residential' : 'badge-commercial';
     const workBadge = (p.work||'').toLowerCase().includes('new') ? 'badge-new' : (p.work||'').toLowerCase().includes('dem') ? 'badge-demolition' : 'badge-remodel';
-    const phoneLink = p.phone ? `<a class="contractor-phone" href="tel:${p.phone.replace(/\D/g,'')}">${fmtPhone(p.phone)}</a>` : '\u2014';
+    const cleanPhone = p.phone ? p.phone.replace(/\D/g,'').slice(-10) : '';
+    const phoneLink = cleanPhone.length === 10 ? `<a class="contractor-phone" href="tel:${cleanPhone}">${fmtPhone(p.phone)}</a>` : '\u2014';
     const valStr = p.value > 1 ? fmtMoney(p.value) : '';
 
     return `<tr style="animation:fadeRow .3s ${i*12}ms both">
@@ -1166,9 +1182,11 @@ function handleSubscribe() {
 document.getElementById('landing-city-badge').textContent = CITY.name + ', ' + CITY.state;
 document.getElementById('landing-city-name').textContent = CITY.name;
 document.getElementById('topbar-brand').textContent = CITY.name + ' Permits';
-// Highlight active city button
+// Highlight active city button (landing + dashboard)
 const cityBtn = document.getElementById('city-btn-' + urlCity);
 if (cityBtn) cityBtn.classList.add('active');
+const dashBtn = document.getElementById('dash-btn-' + urlCity);
+if (dashBtn) dashBtn.classList.add('active');
 </script>
 </body>
 </html>
