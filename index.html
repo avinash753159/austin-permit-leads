@@ -597,9 +597,9 @@ footer a:hover { color: var(--accent); }
 
   <div style="margin-bottom: 20px;">
     <div class="toggle-group" style="justify-content: center; display: flex;">
-      <a class="toggle-btn" href="?city=austin&open=1" id="city-btn-austin" style="text-decoration:none;">Austin</a>
-      <a class="toggle-btn" href="?city=sanantonio&open=1" id="city-btn-sanantonio" style="text-decoration:none;">San Antonio</a>
-      <a class="toggle-btn" href="?city=dallas&open=1" id="city-btn-dallas" style="text-decoration:none;">Dallas</a>
+      <a class="toggle-btn" href="?city=austin&open=1" onclick="localStorage.setItem('openCity','austin'); return true;" id="city-btn-austin" style="text-decoration:none;">Austin</a>
+      <a class="toggle-btn" href="?city=sanantonio&open=1" onclick="localStorage.setItem('openCity','sanantonio'); return true;" id="city-btn-sanantonio" style="text-decoration:none;">San Antonio</a>
+      <a class="toggle-btn" href="?city=dallas&open=1" onclick="localStorage.setItem('openCity','dallas'); return true;" id="city-btn-dallas" style="text-decoration:none;">Dallas</a>
     </div>
   </div>
 
@@ -677,9 +677,9 @@ footer a:hover { color: var(--accent); }
     </div>
     <div class="topbar-right" style="display:flex; gap:6px; align-items:center;">
       <div class="toggle-group" id="topbar-cities" style="display:flex; gap:4px;">
-        <a class="toggle-btn" href="?city=austin&open=1" id="dash-btn-austin" style="padding:6px 12px; font-size:11px; text-decoration:none;">Austin</a>
-        <a class="toggle-btn" href="?city=sanantonio&open=1" id="dash-btn-sanantonio" style="padding:6px 12px; font-size:11px; text-decoration:none;">San Antonio</a>
-        <a class="toggle-btn" href="?city=dallas&open=1" id="dash-btn-dallas" style="padding:6px 12px; font-size:11px; text-decoration:none;">Dallas</a>
+        <a class="toggle-btn" href="?city=austin&open=1" onclick="localStorage.setItem('openCity','austin'); return true;" id="dash-btn-austin" style="padding:6px 12px; font-size:11px; text-decoration:none;">Austin</a>
+        <a class="toggle-btn" href="?city=sanantonio&open=1" onclick="localStorage.setItem('openCity','sanantonio'); return true;" id="dash-btn-sanantonio" style="padding:6px 12px; font-size:11px; text-decoration:none;">San Antonio</a>
+        <a class="toggle-btn" href="?city=dallas&open=1" onclick="localStorage.setItem('openCity','dallas'); return true;" id="dash-btn-dallas" style="padding:6px 12px; font-size:11px; text-decoration:none;">Dallas</a>
         <span class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;">Houston</span>
         <span class="toggle-btn" style="padding:6px 12px; font-size:11px; opacity:0.4; cursor:default;">Fort Worth</span>
       </div>
@@ -906,8 +906,10 @@ const CITIES = {
   }
 };
 
-// Pick city from URL param or default to Austin
-const urlCity = new URLSearchParams(window.location.search).get('city') || 'austin';
+// Pick city from URL param, localStorage, or default to Austin
+const urlCity = new URLSearchParams(window.location.search).get('city')
+  || localStorage.getItem('openCity')
+  || 'austin';
 const CITY = CITIES[urlCity] || CITIES.austin;
 
 const PAGE_SIZE = 50;
@@ -1201,7 +1203,10 @@ const dashBtn = document.getElementById('dash-btn-' + urlCity);
 if (dashBtn) dashBtn.classList.add('active');
 
 // Auto-open dashboard if came from city switcher
-if (new URLSearchParams(window.location.search).get('open') === '1') {
+const shouldOpen = new URLSearchParams(window.location.search).get('open') === '1'
+  || localStorage.getItem('openCity');
+if (shouldOpen) {
+  localStorage.removeItem('openCity');
   showDashboard();
 }
 </script>
