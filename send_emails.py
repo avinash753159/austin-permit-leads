@@ -232,9 +232,7 @@ def build_email(company, category):
         lines.append(f"462 building permits were filed in Austin in the last two weeks. I put together a personalized report for {short} with the most relevant opportunities. It's attached.")
 
     lines.append("")
-    lines.append("I also put together a tool (looking for feedback) that tracks every new permit filed in Austin in real time:")
-    lines.append("")
-    lines.append(DASHBOARD_URL)
+    lines.append(f"I also put together a tool (looking for feedback) that tracks every new permit filed in Austin in real time:\n{DASHBOARD_URL}")
     lines.append("")
     lines.append("Avinash Nayak, PhD")
     lines.append("Brimstone Partner")
@@ -298,7 +296,8 @@ async def send_all(leads):
             subject, body = build_email(company, category)
 
             try:
-                # Use compose URL but don't wait for full load (Gmail redirects)
+                # Open compose in a new tab
+                page = await browser.new_page()
                 compose_url = f"https://mail.google.com/mail/?view=cm&to={quote(email)}&su={quote(subject)}"
                 await page.goto(compose_url, wait_until='commit', timeout=15000)
                 await asyncio.sleep(5)
@@ -360,12 +359,12 @@ async def send_all(leads):
 
                 await asyncio.sleep(2)
                 print(f"    Saved as draft!")
+                await page.close()
 
             except Exception as e:
                 print(f"    Error: {e}")
                 try:
-                    await page.keyboard.press('Escape')
-                    await asyncio.sleep(1)
+                    await page.close()
                 except:
                     pass
 
