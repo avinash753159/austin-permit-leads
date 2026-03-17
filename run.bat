@@ -13,7 +13,7 @@ echo  [5] Pull Contractor Leads (CSV)
 echo  [6] Open Lead CSV File
 echo  [7] Open Outreach Leads (with emails)
 echo  [8] Open Email Templates
-echo  [9] Setup Email (sign in with Google)
+echo  [9] Send Outreach Emails (opens Gmail)
 echo  [0] Exit
 echo.
 set /p choice=Choose:
@@ -37,8 +37,9 @@ if "%choice%"=="7" start "" "%~dp0outreach-leads.csv"
 if "%choice%"=="8" start "" "%~dp0outreach-email.md"
 if "%choice%"=="9" (
     echo.
-    echo Setting up email for avinash@brimstonepartner.com...
-    python "%~dp0setup_email.py"
+    echo How many emails to open? (Enter a number, or 'all')
+    set /p num=Number:
+    python "%~dp0send_outreach.py" %num%
     pause
 )
 if "%choice%"=="0" exit
